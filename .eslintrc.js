@@ -9,4 +9,7 @@ module.exports = {
     ecmaVersion: 2019,
     sourceType: 'module',
   },
+  rules: {
+    '@typescript-eslint/explicit-function-return-type': 'off',
+  },
 }

@@ -24,6 +24,7 @@ const typeDefs = gql`
 const resolvers = {
   Query: { movies: () => mockData },
 }
+
 const server = new ApolloServer({
   typeDefs,
   resolvers,
