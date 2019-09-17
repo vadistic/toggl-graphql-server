@@ -1,0 +1,1249 @@
+_type: export
+__export_format: 4
+__export_date: 2019-09-17T14:44:04.128Z
+__export_source: insomnia.desktop.app:v6.6.2
+resources:
+  - _id: req_fc0d9f30c5824fe7915c2c5d926206d6
+    authentication:
+      disabled: false
+      password: api_token
+      type: basic
+      username: "{{ token  }}"
+    body: {}
+    created: 1568725349187
+    description: ""
+    headers: []
+    isPrivate: false
+    metaSortKey: -1568723437894
+    method: GET
+    modified: 1568729159610
+    name: user
+    parameters: []
+    parentId: fld_8df1e099251a406fb16582a7f86b6718
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: "{{ endpoint  }}/me"
+    _type: request
+  - _id: fld_8df1e099251a406fb16582a7f86b6718
+    created: 1568727945693
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1568727945693
+    modified: 1568727945693
+    name: users
+    parentId: wrk_ea818c6129c5458b9765614d9be8d3df
+    _type: request_group
+  - _id: wrk_ea818c6129c5458b9765614d9be8d3df
+    created: 1568725338273
+    description: ""
+    modified: 1568725338273
+    name: Toggl
+    parentId: null
+    _type: workspace
+  - _id: req_e7ac96a1c12a4406b039ef4941bd46c6
+    authentication:
+      disabled: false
+      password: api_token
+      type: basic
+      username: "{{ token  }}"
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"user": {
+        		"fullname": "John Smith"
+        	}
+        }
+    created: 1568729162089
+    description: ""
+    headers:
+      - id: pair_628acc4b752c46e19f893c3d2edea60e
+        name: Content-Type
+        value: application/json
+    isPrivate: false
+    metaSortKey: -1568723437869
+    method: PUT
+    modified: 1568729186949
+    name: update-user
+    parameters: []
+    parentId: fld_8df1e099251a406fb16582a7f86b6718
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: "{{ endpoint  }}/me"
+    _type: request
+  - _id: req_181233f7edaf4d6998ae4607bd69ccb1
+    authentication:
+      disabled: false
+      password: api_token
+      type: basic
+      username: "{{ token  }}"
+    body: {}
+    created: 1568729200164
+    description: https://github.com/toggl/toggl_api_docs/blob/master/chapters/users.md#reset-api-token
+    headers: []
+    isPrivate: false
+    metaSortKey: -1568723437856.5
+    method: POST
+    modified: 1568729237816
+    name: reset-token
+    parameters: []
+    parentId: fld_8df1e099251a406fb16582a7f86b6718
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: "{{ endpoint  }}/reset_token"
+    _type: request
+  - _id: req_9d8284da53f640b3ad325462fcf8d99e
+    authentication:
+      disabled: false
+      password: api_token
+      type: basic
+      username: "{{ token  }}"
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"user": {
+        		"email": "test.user@toggl.com",
+        		"password": "StrongPassword"
+        	}
+        }
+    created: 1568729274251
+    description: https://github.com/toggl/toggl_api_docs/blob/master/chapters/users.md#reset-api-token
+    headers:
+      - id: pair_18182df335cd47d7a35a6ce659aa7546
+        name: Content-Type
+        value: application/json
+    isPrivate: false
+    metaSortKey: -1568723437850.25
+    method: POST
+    modified: 1568729297574
+    name: signups
+    parameters: []
+    parentId: fld_8df1e099251a406fb16582a7f86b6718
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: "{{ endpoint  }}/signups"
+    _type: request
+  - _id: req_ac60e2f1a3854757ae93ff7392cdb98e
+    authentication:
+      disabled: false
+      password: api_token
+      type: basic
+      username: "{{ token  }}"
+    body: {}
+    created: 1568729347755
+    description: ""
+    headers: []
+    isPrivate: false
+    metaSortKey: -1568723437881.5
+    method: GET
+    modified: 1568729398499
+    name: current
+    parameters: []
+    parentId: fld_11a32f66d9974127ac839a04a52df9b1
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: "{{ endpoint  }}/time_entries/current"
+    _type: request
+  - _id: fld_11a32f66d9974127ac839a04a52df9b1
+    created: 1568727942728
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1568727942728
+    modified: 1568729341462
+    name: time-entries
+    parentId: wrk_ea818c6129c5458b9765614d9be8d3df
+    _type: request_group
+  - _id: req_f3025830a6294ef6b776b39fef850e57
+    authentication:
+      disabled: false
+      password: api_token
+      type: basic
+      username: "{{ token  }}"
+    body: {}
+    created: 1568730108425
+    description: ""
+    headers: []
+    isPrivate: false
+    metaSortKey: -1568723437880.7188
+    method: PUT
+    modified: 1568730156365
+    name: stop
+    parameters: []
+    parentId: fld_11a32f66d9974127ac839a04a52df9b1
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: "{{ endpoint  }}/time_entries/{{ time_entry_id  }}/stop"
+    _type: request
+  - _id: req_bd7eb845022c4500bc1bf798ec0b1dc4
+    authentication:
+      disabled: false
+      password: api_token
+      type: basic
+      username: "{{ token  }}"
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"time_entry": {
+        		"description": "Meeting with possible clients",
+        		"tags": [
+        			"{{ tag_name  }}"
+        		],
+        		"pid": {{ project_id  }},
+        		"created_with": "insomnia"
+        	}
+        }
+    created: 1568730158365
+    description: ""
+    headers:
+      - id: pair_edb24b057d824a66937cc13bd4ab75f4
+        name: Content-Type
+        value: application/json
+    isPrivate: false
+    metaSortKey: -1568723437880.3281
+    method: POST
+    modified: 1568730299991
+    name: start
+    parameters: []
+    parentId: fld_11a32f66d9974127ac839a04a52df9b1
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: "{{ endpoint  }}/time_entries/start"
+    _type: request
+  - _id: req_76e68137607742a1a81c118b6f9cf897
+    authentication:
+      disabled: false
+      password: api_token
+      type: basic
+      username: "{{ token  }}"
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"time_entry": {
+        		"description": "Meeting with possible clients",
+        		"tags": [
+        			"{{ tag_name  }}"
+        		],
+        		"duration": 1200,
+        		"start": "2083-03-05T07:58:58.000Z",
+        		"pid": {{ project_id  }},
+        		"created_with": "insomnia"
+        	}
+        }
+    created: 1568730351774
+    description: ""
+    headers:
+      - id: pair_edb24b057d824a66937cc13bd4ab75f4
+        name: Content-Type
+        value: application/json
+    isPrivate: false
+    metaSortKey: -1568723437880.1328
+    method: POST
+    modified: 1568730396357
+    name: create
+    parameters: []
+    parentId: fld_11a32f66d9974127ac839a04a52df9b1
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: "{{ endpoint  }}/time_entries"
+    _type: request
+  - _id: req_2babae860a614f1c8b8b1cb4be58cf8e
+    authentication:
+      disabled: false
+      password: api_token
+      type: basic
+      username: "{{ token  }}"
+    body: {}
+    created: 1568730061111
+    description: ""
+    headers: []
+    isPrivate: false
+    metaSortKey: -1568723437879.9375
+    method: GET
+    modified: 1568730073858
+    name: time-entry
+    parameters: []
+    parentId: fld_11a32f66d9974127ac839a04a52df9b1
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: "{{ endpoint  }}/time_entries/{{ time_entry_id  }}"
+    _type: request
+  - _id: req_3e2a0478f4b74fc9be00cddd28b0612c
+    authentication:
+      disabled: false
+      password: api_token
+      type: basic
+      username: "{{ token  }}"
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"time_entry": {
+        		"description": "Meeting with possible clients",
+        		"tags": [
+        			""
+        		],
+        		"duration": 1240,
+        		"start": "2013-03-05T07:58:58.000Z",
+        		"stop": "2013-03-05T08:58:58.000Z",
+        		"duronly": true,
+        		"pid": 123,
+        		"billable": true
+        	}
+        }
+    created: 1568729861041
+    description: ""
+    headers:
+      - id: pair_8a8f27c74a7440eb8b07550e5eeea971
+        name: Content-Type
+        value: application/json
+    isPrivate: false
+    metaSortKey: -1568723437878.375
+    method: PUT
+    modified: 1568729919975
+    name: update-time-entry
+    parameters: []
+    parentId: fld_11a32f66d9974127ac839a04a52df9b1
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: "{{ endpoint  }}/time_entries/{{ time_entry_id  }}"
+    _type: request
+  - _id: req_c8114c05f6bf4b20bb1b048d356c648b
+    authentication:
+      disabled: false
+      password: api_token
+      type: basic
+      username: "{{ token  }}"
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"time_entry": {
+        		"tags": [
+        			"billed",
+        			"productive"
+        		],
+        		"tag_action": "add"
+        	}
+        }
+    created: 1568729960157
+    description: ""
+    headers:
+      - id: pair_8a8f27c74a7440eb8b07550e5eeea971
+        name: Content-Type
+        value: application/json
+    isPrivate: false
+    metaSortKey: -1568723437877.5938
+    method: PUT
+    modified: 1568730012610
+    name: update-many-tags
+    parameters: []
+    parentId: fld_11a32f66d9974127ac839a04a52df9b1
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: "{{ endpoint  }}/time_entries/{{ time_entry_ids  }}"
+    _type: request
+  - _id: req_27cfe5b272474b6bb7dd01837a7ef247
+    authentication:
+      disabled: false
+      password: api_token
+      type: basic
+      username: "{{ token  }}"
+    body: {}
+    created: 1568729926763
+    description: ""
+    headers: []
+    isPrivate: false
+    metaSortKey: -1568723437876.8125
+    method: DELETE
+    modified: 1568729937404
+    name: delete-time-entry
+    parameters: []
+    parentId: fld_11a32f66d9974127ac839a04a52df9b1
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: "{{ endpoint  }}/time_entries/{{ time_entry_id  }}"
+    _type: request
+  - _id: req_581c720708004aca9522a8a97a5d9805
+    authentication:
+      disabled: false
+      password: api_token
+      type: basic
+      username: "{{ token  }}"
+    body: {}
+    created: 1568729402196
+    description: https://github.com/toggl/toggl_api_docs/blob/master/chapters/time_entries.md#get-time-entries-started-in-a-specific-time-range
+    headers: []
+    isPrivate: false
+    metaSortKey: -1568723437875.25
+    method: GET
+    modified: 1568730045345
+    name: time-entries
+    parameters:
+      - disabled: false
+        id: pair_b233de57102d481ab7f0a11d407083b2
+        multiline: false
+        name: start_date
+        type: text
+        value: 2016-09-17T12:14:05+02:00
+      - disabled: false
+        id: pair_507447d12ffb40c8ab126eda41e94469
+        name: end_date
+        value: 2018-09-17T12:14:05+00:00
+    parentId: fld_11a32f66d9974127ac839a04a52df9b1
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: "{{ endpoint  }}/time_entries"
+    _type: request
+  - _id: req_ce0bebb37ff342b8b8e55be6a12c242d
+    authentication:
+      disabled: false
+      password: api_token
+      type: basic
+      username: "{{ token  }}"
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"tag": {
+        		"name": "billed",
+        		"wid": {{ workspace_id  }}
+        	}
+        }
+    created: 1568728513077
+    description: ""
+    headers:
+      - id: pair_ac3f8942768e42e0ab0828c849fe111c
+        name: Content-Type
+        value: application/json
+    isPrivate: false
+    metaSortKey: -1568728492427
+    method: POST
+    modified: 1568728739680
+    name: create-tag
+    parameters: []
+    parentId: fld_f09dc42ce27f48f89efd59044c64030c
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: "{{ endpoint  }}/tags"
+    _type: request
+  - _id: fld_f09dc42ce27f48f89efd59044c64030c
+    created: 1568727931971
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1568727931971
+    modified: 1568727931971
+    name: tags
+    parentId: wrk_ea818c6129c5458b9765614d9be8d3df
+    _type: request_group
+  - _id: req_b9b670194bce498186393c3e32510288
+    authentication:
+      disabled: false
+      password: api_token
+      type: basic
+      username: "{{ token  }}"
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"tag": {
+        		"name": "learning"
+        	}
+        }
+    created: 1568728756201
+    description: ""
+    headers:
+      - id: pair_ac3f8942768e42e0ab0828c849fe111c
+        name: Content-Type
+        value: application/json
+    isPrivate: false
+    metaSortKey: -1568725965160.5
+    method: PUT
+    modified: 1568729056620
+    name: update-tag
+    parameters: []
+    parentId: fld_f09dc42ce27f48f89efd59044c64030c
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: "{{ endpoint  }}/tags/{{ tag_id  }}"
+    _type: request
+  - _id: req_ea172923e96e4e669d028d70832e56e1
+    authentication:
+      disabled: false
+      password: api_token
+      type: basic
+      username: "{{ token  }}"
+    body: {}
+    created: 1568729075996
+    description: ""
+    headers: []
+    isPrivate: false
+    metaSortKey: -1568724701527.25
+    method: DELETE
+    modified: 1568729091815
+    name: delete-tag
+    parameters: []
+    parentId: fld_f09dc42ce27f48f89efd59044c64030c
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: "{{ endpoint  }}/tags/{{ tag_id  }}"
+    _type: request
+  - _id: req_989a2f6ede6941f993653ee9b39dc735
+    authentication:
+      disabled: false
+      password: api_token
+      type: basic
+      username: "{{ token  }}"
+    body: {}
+    created: 1568730954024
+    description: ""
+    headers: []
+    isPrivate: false
+    metaSortKey: -1568727925858.5
+    method: GET
+    modified: 1568730992580
+    name: get
+    parameters: []
+    parentId: wrk_ea818c6129c5458b9765614d9be8d3df
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: "{{ endpoint  }}/projects/{{ project_id  }}"
+    _type: request
+  - _id: req_0ffaf3d02b6a4f5f88db23efb6f50d8e
+    authentication:
+      disabled: false
+      password: api_token
+      type: basic
+      username: "{{ token  }}"
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"project": {
+        		"name": "An awesome project",
+        		"wid": {{ workspace_id  }},
+        		"template_id": 10237,
+        		"is_private": true,
+        		"cid": {{ client_id  }}
+        	}
+        }
+    created: 1568731001023
+    description: ""
+    headers:
+      - id: pair_a403079c8ed2470eadcfe09d3bd14610
+        name: Content-Type
+        value: application/json
+    isPrivate: false
+    metaSortKey: -1568727925435.875
+    method: POST
+    modified: 1568731152048
+    name: create
+    parameters: []
+    parentId: wrk_ea818c6129c5458b9765614d9be8d3df
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: "{{ endpoint  }}/projects"
+    _type: request
+  - _id: req_30c7f53edc1243319025bcdf858ce2bb
+    authentication:
+      disabled: false
+      password: api_token
+      type: basic
+      username: "{{ token  }}"
+    body: {}
+    created: 1568730896798
+    description: ""
+    headers: []
+    isPrivate: false
+    metaSortKey: -1568727925013.25
+    method: DELETE
+    modified: 1568730994622
+    name: delete
+    parameters: []
+    parentId: wrk_ea818c6129c5458b9765614d9be8d3df
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: "{{ endpoint  }}/projects/{{ project_id  }}"
+    _type: request
+  - _id: req_5c1c5e804eef415dbc1f6bf28c06fadf
+    authentication:
+      disabled: false
+      password: api_token
+      type: basic
+      username: "{{ token  }}"
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"project": {
+        		"name": "Changed the name",
+        		"is_private": false,
+        		"cid": 123398,
+        		"color": "6"
+        	}
+        }
+    created: 1568730911360
+    description: ""
+    headers:
+      - name: Content-Type
+        value: application/json
+    isPrivate: false
+    metaSortKey: -1568727924590.625
+    method: PUT
+    modified: 1568730995929
+    name: update
+    parameters: []
+    parentId: wrk_ea818c6129c5458b9765614d9be8d3df
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: "{{ endpoint  }}/projects/{{ project_id  }}"
+    _type: request
+  - _id: req_63cd806a7f8044d1be36abf57b717765
+    authentication:
+      disabled: false
+      password: api_token
+      type: basic
+      username: "{{ token  }}"
+    body: {}
+    created: 1568730802230
+    description: ""
+    headers: []
+    isPrivate: false
+    metaSortKey: -1568727924168
+    method: GET
+    modified: 1568730852234
+    name: project-tasks
+    parameters: []
+    parentId: wrk_ea818c6129c5458b9765614d9be8d3df
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: "{{ endpoint  }}/projects/{{ project_id  }}/tasks"
+    _type: request
+  - _id: req_95641d2f318c47bf9803feb0d4e9467a
+    authentication:
+      disabled: false
+      password: api_token
+      type: basic
+      username: "{{ token  }}"
+    body: {}
+    created: 1568730839599
+    description: ""
+    headers: []
+    isPrivate: false
+    metaSortKey: -1568727922477.5
+    method: GET
+    modified: 1568730873495
+    name: project-users
+    parameters: []
+    parentId: wrk_ea818c6129c5458b9765614d9be8d3df
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: "{{ endpoint  }}/projects/{{ project_id  }}/project_users"
+    _type: request
+  - _id: req_6b9d41d4d1b940c39623350161ca1576
+    authentication:
+      disabled: false
+      password: api_token
+      type: basic
+      username: "{{ token  }}"
+    body: {}
+    created: 1568725349213
+    description: https://github.com/toggl/toggl_api_docs/blob/master/chapters/workspaces.md#get-workspaces
+    headers: []
+    isPrivate: false
+    metaSortKey: -1568723437694
+    method: GET
+    modified: 1568726562109
+    name: workspaces
+    parameters: []
+    parentId: fld_c4fb37548bae4a94968b0c789abd318a
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: "{{ endpoint  }}/workspaces"
+    _type: request
+  - _id: fld_c4fb37548bae4a94968b0c789abd318a
+    created: 1568725381271
+    description: ""
+    environment: {}
+    environmentPropertyOrder: {}
+    metaSortKey: -1568723433608
+    modified: 1568728563928
+    name: workspaces
+    parentId: wrk_ea818c6129c5458b9765614d9be8d3df
+    _type: request_group
+  - _id: req_831b85302b0c4f67bce25f7d72bb5f25
+    authentication:
+      disabled: false
+      password: api_token
+      type: basic
+      username: "{{ token  }}"
+    body: {}
+    created: 1568725864686
+    description: https://github.com/toggl/toggl_api_docs/blob/master/chapters/workspaces.md#get-workspaces
+    headers: []
+    isPrivate: false
+    metaSortKey: -1568723437644
+    method: GET
+    modified: 1568726642078
+    name: workspace
+    parameters: []
+    parentId: fld_c4fb37548bae4a94968b0c789abd318a
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: "{{ endpoint  }}/workspaces/{{ workspace_id  }}"
+    _type: request
+  - _id: req_e24f5c70d9434f58a7756d8bb19e4417
+    authentication:
+      disabled: false
+      password: api_token
+      type: basic
+      username: "{{ token  }}"
+    body: {}
+    created: 1568726377988
+    description: https://github.com/toggl/toggl_api_docs/blob/master/chapters/workspaces.md#get-workspace-users
+    headers: []
+    isPrivate: false
+    metaSortKey: -1568723437619
+    method: GET
+    modified: 1568726790240
+    name: workspace-users
+    parameters: []
+    parentId: fld_c4fb37548bae4a94968b0c789abd318a
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: "{{ endpoint  }}/workspaces/{{ workspace_id  }}/users"
+    _type: request
+  - _id: req_5c5f4f0e27344b44b69949e56dae0aa4
+    authentication:
+      disabled: false
+      password: api_token
+      type: basic
+      username: "{{ token  }}"
+    body: {}
+    created: 1568726744126
+    description: https://github.com/toggl/toggl_api_docs/blob/master/chapters/workspaces.md#get-workspace-clients
+    headers: []
+    isPrivate: false
+    metaSortKey: -1568723437606.5
+    method: GET
+    modified: 1568726776424
+    name: workspace-clients
+    parameters: []
+    parentId: fld_c4fb37548bae4a94968b0c789abd318a
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: "{{ endpoint  }}/workspaces/{{ workspace_id  }}/clients"
+    _type: request
+  - _id: req_e65e14af15a34c8ab6760978739938e3
+    authentication:
+      disabled: false
+      password: api_token
+      type: basic
+      username: "{{ token  }}"
+    body: {}
+    created: 1568726804432
+    description: https://github.com/toggl/toggl_api_docs/blob/master/chapters/workspaces.md#get-workspace-groups
+    headers: []
+    isPrivate: false
+    metaSortKey: -1568723437600.25
+    method: GET
+    modified: 1568726829809
+    name: workspace-groups
+    parameters: []
+    parentId: fld_c4fb37548bae4a94968b0c789abd318a
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: "{{ endpoint  }}/workspaces/{{ workspace_id  }}/groups"
+    _type: request
+  - _id: req_3a2f49e1334f416ca20ceaf3dc049905
+    authentication:
+      disabled: false
+      password: api_token
+      type: basic
+      username: "{{ token  }}"
+    body: {}
+    created: 1568726917830
+    description: https://www.toggl.com/api/v8/workspaces/{workspace_id}/projects
+    headers: []
+    isPrivate: false
+    metaSortKey: -1568723437597.125
+    method: GET
+    modified: 1568726945541
+    name: workspace-projects
+    parameters: []
+    parentId: fld_c4fb37548bae4a94968b0c789abd318a
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: "{{ endpoint  }}/workspaces/{{ workspace_id  }}/projects"
+    _type: request
+  - _id: req_e09a18684d8147bca695f8a31bca18c0
+    authentication:
+      disabled: false
+      password: api_token
+      type: basic
+      username: "{{ token  }}"
+    body: {}
+    created: 1568726964433
+    description: https://www.toggl.com/api/v8/workspaces/{workspace_id}/tasks
+    headers: []
+    isPrivate: false
+    metaSortKey: -1568723437595.5625
+    method: GET
+    modified: 1568726978819
+    name: workspace-tasks
+    parameters: []
+    parentId: fld_c4fb37548bae4a94968b0c789abd318a
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: "{{ endpoint  }}/workspaces/{{ workspace_id  }}/tasks"
+    _type: request
+  - _id: req_c417add88f2843f79a5b4f781e4a96d0
+    authentication:
+      disabled: false
+      password: api_token
+      type: basic
+      username: "{{ token  }}"
+    body: {}
+    created: 1568727705924
+    description: https://github.com/toggl/toggl_api_docs/blob/master/chapters/workspaces.md#get-workspace-tags
+    headers: []
+    isPrivate: false
+    metaSortKey: -1568723437594.7812
+    method: GET
+    modified: 1568727720007
+    name: workspace-tags
+    parameters: []
+    parentId: fld_c4fb37548bae4a94968b0c789abd318a
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: "{{ endpoint  }}/workspaces/{{ workspace_id  }}/tags"
+    _type: request
+  - _id: req_280f499bfb0e4fe0b68bd734605ff928
+    authentication:
+      disabled: false
+      password: api_token
+      type: basic
+      username: "{{ token  }}"
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"workspace": {
+        		"name": "Mine",
+        		"only_admins_may_create_projects": false
+        	}
+        }
+    created: 1568725954753
+    description: https://github.com/toggl/toggl_api_docs/blob/master/chapters/workspaces.md#update-workspace
+    headers:
+      - id: pair_792c6ed11a294451804dcd6f3bf243f1
+        name: Content-Type
+        value: application/json
+    isPrivate: false
+    metaSortKey: -1568723437594
+    method: POST
+    modified: 1568728023214
+    name: update-workspace
+    parameters: []
+    parentId: fld_c4fb37548bae4a94968b0c789abd318a
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: "{{ endpoint  }}/workspaces/{{ workspace_id  }}"
+    _type: request
+  - _id: req_be113a1257f742588cf01bf716b9d6ee
+    authentication:
+      disabled: false
+      password: api_token
+      type: basic
+      username: "{{ token  }}"
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"emails": [
+        		"john.doe@toggl.com",
+        		"Jane.Swift@toggl.com"
+        	]
+        }
+    created: 1568728017580
+    description: https://github.com/toggl/toggl_api_docs/blob/master/chapters/workspace_users.md#invite-users-to-workspace
+    headers:
+      - id: pair_792c6ed11a294451804dcd6f3bf243f1
+        name: Content-Type
+        value: application/json
+    isPrivate: false
+    metaSortKey: -1568723437544
+    method: POST
+    modified: 1568728086115
+    name: invite-workspace-user
+    parameters: []
+    parentId: fld_c4fb37548bae4a94968b0c789abd318a
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: "{{ endpoint  }}/workspaces/{{ workspace_id  }}/invite"
+    _type: request
+  - _id: req_71511017dce543b382fa7a6f70b32739
+    authentication:
+      disabled: false
+      password: api_token
+      type: basic
+      username: "{{ token  }}"
+    body: {}
+    created: 1568728426815
+    description: https://github.com/toggl/toggl_api_docs/blob/master/chapters/workspace_users.md#get-workspace-users
+    headers: []
+    isPrivate: false
+    metaSortKey: -1568723437544
+    method: GET
+    modified: 1568728458792
+    name: workspace-users
+    parameters: []
+    parentId: fld_fc1463b1d03a4790b616f22c410a7ca1
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: "{{ endpoint  }}/workspaces/{{ workspace_id  }}/workspace_users"
+    _type: request
+  - _id: fld_fc1463b1d03a4790b616f22c410a7ca1
+    created: 1568728195204
+    description: ""
+    environment: {}
+    environmentPropertyOrder: {}
+    metaSortKey: -1568723433558
+    modified: 1568728606738
+    name: workspace-user
+    parentId: wrk_ea818c6129c5458b9765614d9be8d3df
+    _type: request_group
+  - _id: req_ef172d8e2ee640ddb4f8721e8230a95f
+    authentication:
+      disabled: false
+      password: api_token
+      type: basic
+      username: "{{ token  }}"
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"workspace_user": {
+        		"admin": true
+        	}
+        }
+    created: 1568728149688
+    description: https://github.com/toggl/toggl_api_docs/blob/master/chapters/workspace_users.md#update-workspace-user
+    headers:
+      - id: pair_792c6ed11a294451804dcd6f3bf243f1
+        name: Content-Type
+        value: application/json
+    isPrivate: false
+    metaSortKey: -1568723437494
+    method: PUT
+    modified: 1568728369672
+    name: update-workspace-user
+    parameters: []
+    parentId: fld_fc1463b1d03a4790b616f22c410a7ca1
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: "{{ endpoint  }}/workspace_users/{{ workspace_user_id  }}"
+    _type: request
+  - _id: req_d0166397e5ca49d38ca9bfa5f271a38a
+    authentication:
+      disabled: false
+      password: api_token
+      type: basic
+      username: "{{ token  }}"
+    body: {}
+    created: 1568728325437
+    description: https://github.com/toggl/toggl_api_docs/blob/master/chapters/workspace_users.md#delete-workspace-user
+    headers: []
+    isPrivate: false
+    metaSortKey: -1568723437444
+    method: DELETE
+    modified: 1568728357008
+    name: delete-workspace-user
+    parameters: []
+    parentId: fld_fc1463b1d03a4790b616f22c410a7ca1
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: "{{ endpoint  }}/workspace_users/{{ workspace_user_id  }}"
+    _type: request
+  - _id: req_93db39394749495998007800c8a3eb5a
+    authentication:
+      disabled: false
+      password: api_token
+      type: basic
+      username: "{{ token  }}"
+    body: {}
+    created: 1568725349192
+    description: ""
+    headers: []
+    isPrivate: false
+    metaSortKey: -1568723437844
+    method: GET
+    modified: 1568725349192
+    name: clients
+    parameters: []
+    parentId: fld_ace5042f79a1413aaeb954ad5c65e410
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: https://www.toggl.com/api/v8/clients
+    _type: request
+  - _id: fld_ace5042f79a1413aaeb954ad5c65e410
+    created: 1568725349181
+    description: ""
+    environment: {}
+    environmentPropertyOrder: {}
+    metaSortKey: -1568723433508
+    modified: 1568728617584
+    name: clients
+    parentId: wrk_ea818c6129c5458b9765614d9be8d3df
+    _type: request_group
+  - _id: req_11ddb8253e024c53807b1a0571e72c35
+    authentication:
+      disabled: false
+      password: api_token
+      type: basic
+      username: "{{ token  }}"
+    body: {}
+    created: 1568727809593
+    description: ""
+    headers: []
+    isPrivate: false
+    metaSortKey: -1568723437831.5
+    method: GET
+    modified: 1568727859168
+    name: client-projects
+    parameters: []
+    parentId: fld_ace5042f79a1413aaeb954ad5c65e410
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: "{{ endpoint  }}/clients/{{ client_id  }}"
+    _type: request
+  - _id: req_5b25a31791654333ae36ca8eb23ff244
+    authentication:
+      disabled: false
+      password: api_token
+      type: basic
+      username: "{{ token  }}"
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"client": {
+        		"name": "Test"
+        	}
+        }
+    created: 1568725349207
+    description: ""
+    headers:
+      - id: pair_ab2630d8393f4c7ab11bf48295034158
+        name: Content-Type
+        value: application/json
+    isPrivate: false
+    metaSortKey: -1568723437819
+    method: POST
+    modified: 1568727988051
+    name: create-client
+    parameters: []
+    parentId: fld_ace5042f79a1413aaeb954ad5c65e410
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: https://www.toggl.com/api/v8/clients
+    _type: request
+  - _id: req_306d7311b0004db485d79be45902416f
+    authentication:
+      disabled: false
+      password: api_token
+      type: basic
+      username: "{{ token  }}"
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"client": {
+        		"name": "Myself",
+        		"notes": "Some notes"
+        	}
+        }
+    created: 1568725349198
+    description: ""
+    headers:
+      - id: pair_ab2630d8393f4c7ab11bf48295034158
+        name: Content-Type
+        value: application/json
+    isPrivate: false
+    metaSortKey: -1568723437794
+    method: PUT
+    modified: 1568727992786
+    name: update-client
+    parameters: []
+    parentId: fld_ace5042f79a1413aaeb954ad5c65e410
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: https://www.toggl.com/api/v8/clients/38990030
+    _type: request
+  - _id: req_5750ec9f90b7408d8533657581e24cf1
+    authentication:
+      disabled: false
+      password: api_token
+      type: basic
+      username: "{{ token  }}"
+    body: {}
+    created: 1568725349203
+    description: ""
+    headers: []
+    isPrivate: false
+    metaSortKey: -1568723437744
+    method: DELETE
+    modified: 1568727996330
+    name: delete-client
+    parameters: []
+    parentId: fld_ace5042f79a1413aaeb954ad5c65e410
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: https://www.toggl.com/api/v8/clients/45240003
+    _type: request
+  - _id: env_802c9cc8608d8235c905443a3f16d24111179af3
+    color: null
+    created: 1568725338342
+    data:
+      token: ""
+    dataPropertyOrder:
+      "&":
+        - token
+    isPrivate: false
+    metaSortKey: 1568725338342
+    modified: 1568725707056
+    name: Base Environment
+    parentId: wrk_ea818c6129c5458b9765614d9be8d3df
+    _type: environment
+  - _id: jar_802c9cc8608d8235c905443a3f16d24111179af3
+    cookies: []
+    created: 1568725338348
+    modified: 1568725338348
+    name: Default Jar
+    parentId: wrk_ea818c6129c5458b9765614d9be8d3df
+    _type: cookie_jar
