@@ -1,34 +1,13 @@
+import 'reflect-metadata'
+
 import { ApolloServer, gql } from 'apollo-server-micro'
-
-const mockData = [
-  {
-    director: 'Bryan Singer',
-    title: 'Bohemian Rhapsody',
-  },
-  {
-    director: 'Bob Persichetti',
-    title: 'Spider-Man: Into the Spider-Verse',
-  },
-]
-
-const typeDefs = gql`
-  type Movie {
-    title: String
-    director: String
-  }
-  type Query {
-    movies: [Movie]
-  }
-`
-
-const resolvers = {
-  Query: { movies: () => mockData },
-}
+import { ProjectsModule } from './modules/projects-module'
 
 const server = new ApolloServer({
-  typeDefs,
-  resolvers,
+  modules: [ProjectsModule],
+  context: session => session,
   introspection: true,
+  debug: true,
   playground: true,
 })
 
