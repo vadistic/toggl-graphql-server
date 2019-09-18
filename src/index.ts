@@ -8,9 +8,10 @@ import { TagModule } from './modules/tag'
 import { UserModule } from './modules/user'
 import { WorkspaceModule } from './modules/workspace'
 import { ClientModule } from './modules/clients'
+import { TimeEntriesModule } from './modules/time-entries'
 
 const AppModule = new GraphQLModule({
-  imports: [TaskModule, TagModule, UserModule, WorkspaceModule, ClientModule],
+  imports: [TaskModule, TagModule, UserModule, WorkspaceModule, ClientModule, TimeEntriesModule],
 })
 
 const server = new ApolloServer({

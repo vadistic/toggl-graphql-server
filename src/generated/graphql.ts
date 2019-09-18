@@ -30,7 +30,6 @@ export type Client = {
   notes?: Maybe<Scalars['String']>,
   /** indicates the time client was last updated (UTC time) */
   at: Scalars['DateTime'],
-  /** active: possible values true/false/both. By default true. If false, only archived projects are returned */
   projects: Array<Project>,
 };
 
@@ -178,6 +177,13 @@ export type Mutation = {
   createClient: Client,
   updateClient: Client,
   deleteClient: Scalars['Boolean'],
+  createTimeEntry: TimeEntry,
+  updateTimeEntry: TimeEntry,
+  deleteTimeEntry: Scalars['Boolean'],
+  startTimeEntry: TimeEntry,
+  stopTimeEntry: TimeEntry,
+  currentTimeEntry?: Maybe<TimeEntry>,
+  updateManyTimeEntries?: Maybe<Array<Maybe<TimeEntry>>>,
 };
 
 
@@ -336,6 +342,38 @@ export type MutationDeleteClientArgs = {
   client_id: Scalars['ID']
 };
 
+
+export type MutationCreateTimeEntryArgs = {
+  data: TimeEntryCreateInput
+};
+
+
+export type MutationUpdateTimeEntryArgs = {
+  time_entry_id: Scalars['ID'],
+  data: TimeEntryUpdateInput
+};
+
+
+export type MutationDeleteTimeEntryArgs = {
+  time_entry_id: Scalars['ID']
+};
+
+
+export type MutationStartTimeEntryArgs = {
+  data: TimeEntryStartInput
+};
+
+
+export type MutationStopTimeEntryArgs = {
+  time_entry_id: Scalars['ID']
+};
+
+
+export type MutationUpdateManyTimeEntriesArgs = {
+  time_entry_ids: Array<Scalars['ID']>,
+  data: TimeEntryUpdateManyInput
+};
+
 /** ??? */
 export type Obm = {
    __typename?: 'Obm',
@@ -475,6 +513,9 @@ export type Query = {
   workspaces: Array<Workspace>,
   client?: Maybe<Client>,
   clients: Array<Client>,
+  timeEntry?: Maybe<TimeEntry>,
+  currentTimeEntry?: Maybe<TimeEntry>,
+  timeEntries?: Maybe<Array<Maybe<TimeEntry>>>,
 };
 
 
@@ -490,6 +531,17 @@ export type QueryWorkspaceArgs = {
 
 export type QueryClientArgs = {
   client_id: Scalars['ID']
+};
+
+
+export type QueryTimeEntryArgs = {
+  time_entry_id: Scalars['ID']
+};
+
+
+export type QueryTimeEntriesArgs = {
+  start_date?: Maybe<Scalars['DateTime']>,
+  end_date?: Maybe<Scalars['DateTime']>
 };
 
 export type Tag = {
@@ -545,6 +597,135 @@ export type TaskCreateInput = {
 export type TaskUpdateInput = {
   name: Scalars['String'],
   active?: Maybe<Scalars['Boolean']>,
+};
+
+export type TimeEntry = {
+   __typename?: 'TimeEntry',
+  id: Scalars['ID'],
+  /** strongly suggested to be used */
+  description?: Maybe<Scalars['String']>,
+  /** workspace ID (required if pid or tid not supplied) */
+  wid?: Maybe<Scalars['ID']>,
+  /** project ID */
+  pid?: Maybe<Scalars['ID']>,
+  /** task ID */
+  tid?: Maybe<Scalars['ID']>,
+  /** default false, available for pro workspaces */
+  billable?: Maybe<Scalars['Boolean']>,
+  /** the name of your client app */
+  created_with?: Maybe<Scalars['String']>,
+  /** a list of tag names */
+  tags?: Maybe<Array<Maybe<Scalars['String']>>>,
+  /** should Toggl show the start and stop time of this time entry? */
+  duronly?: Maybe<Scalars['Boolean']>,
+  /** 
+ * time entry duration in seconds
+   * 
+   * If the time entry is currently running, the duration attribute contains a negative value,
+   * denoting the start of the time entry in seconds since epoch (Jan 1 1970).
+   * 
+   * The correct duration can be calculated as current_time + duration,
+   * where current_time is the current time in seconds since epoch.
+ **/
+  duration: Scalars['Int'],
+  /** time entry start time (ISO 8601 date and time) */
+  start: Scalars['DateTime'],
+  /** time entry stop time (ISO 8601 date and time) */
+  stop?: Maybe<Scalars['DateTime']>,
+  /** indicates the time item was last updated */
+  at: Scalars['DateTime'],
+};
+
+export type TimeEntryCreateInput = {
+  /** strongly suggested to be used */
+  description?: Maybe<Scalars['String']>,
+  /** workspace ID (required if pid or tid not supplied) */
+  wid?: Maybe<Scalars['ID']>,
+  /** project ID */
+  pid?: Maybe<Scalars['ID']>,
+  /** task ID */
+  tid?: Maybe<Scalars['ID']>,
+  /** default false, available for pro workspaces */
+  billable?: Maybe<Scalars['Boolean']>,
+  /** the name of your client app */
+  created_with?: Maybe<Scalars['String']>,
+  /** a list of tag names */
+  tags?: Maybe<Array<Maybe<Scalars['String']>>>,
+  /** should Toggl show the start and stop time of this time entry? */
+  duronly?: Maybe<Scalars['Boolean']>,
+  /** 
+ * time entry duration in seconds
+   * 
+   * If the time entry is currently running, the duration attribute contains a negative value,
+   * denoting the start of the time entry in seconds since epoch (Jan 1 1970).
+   * 
+   * The correct duration can be calculated as current_time + duration,
+   * where current_time is the current time in seconds since epoch.
+ **/
+  duration: Scalars['Int'],
+  /** time entry start time (ISO 8601 date and time) */
+  start: Scalars['DateTime'],
+  /** time entry stop time (ISO 8601 date and time) */
+  stop?: Maybe<Scalars['DateTime']>,
+};
+
+export type TimeEntryStartInput = {
+  /** strongly suggested to be used */
+  description?: Maybe<Scalars['String']>,
+  /** workspace ID (required if pid or tid not supplied) */
+  wid?: Maybe<Scalars['ID']>,
+  /** project ID */
+  pid?: Maybe<Scalars['ID']>,
+  /** task ID */
+  tid?: Maybe<Scalars['ID']>,
+  /** default false, available for pro workspaces */
+  billable?: Maybe<Scalars['Boolean']>,
+  /** the name of your client app */
+  created_with?: Maybe<Scalars['String']>,
+  /** a list of tag names */
+  tags?: Maybe<Array<Maybe<Scalars['String']>>>,
+  /** should Toggl show the start and stop time of this time entry? */
+  duronly?: Maybe<Scalars['Boolean']>,
+};
+
+export type TimeEntryUpdateInput = {
+  /** strongly suggested to be used */
+  description?: Maybe<Scalars['String']>,
+  /** workspace ID (required if pid or tid not supplied) */
+  wid?: Maybe<Scalars['ID']>,
+  /** project ID */
+  pid?: Maybe<Scalars['ID']>,
+  /** task ID */
+  tid?: Maybe<Scalars['ID']>,
+  /** default false, available for pro workspaces */
+  billable?: Maybe<Scalars['Boolean']>,
+  /** the name of your client app */
+  created_with?: Maybe<Scalars['String']>,
+  /** a list of tag names */
+  tags?: Maybe<Array<Maybe<Scalars['String']>>>,
+  /** should Toggl show the start and stop time of this time entry? */
+  duronly?: Maybe<Scalars['Boolean']>,
+  /** 
+ * time entry duration in seconds
+   * 
+   * If the time entry is currently running, the duration attribute contains a negative value,
+   * denoting the start of the time entry in seconds since epoch (Jan 1 1970).
+   * 
+   * The correct duration can be calculated as current_time + duration,
+   * where current_time is the current time in seconds since epoch.
+ **/
+  duration: Scalars['Int'],
+  /** time entry start time (ISO 8601 date and time) */
+  start: Scalars['DateTime'],
+  /** time entry stop time (ISO 8601 date and time) */
+  stop?: Maybe<Scalars['DateTime']>,
+};
+
+export type TimeEntryUpdateManyInput = {
+  /** a list of tag names, providing only this atteribute overrides tags on the time entries */
+  tags: Array<Scalars['String']>,
+  /** (add, remove) merges to or removes from the current time entry tags the values */
+  tag_action: Scalars['String'],
 };
 
 /** basic user data */
@@ -628,7 +809,9 @@ export type Workspace = {
   only_admins_may_create_projects: Scalars['Boolean'],
   /** whether only the admins can see billable rates or everybody */
   only_admins_see_billable_rates: Scalars['Boolean'],
+  /** whether only the admins can see team dashboard or everybody */
   only_admins_see_team_dashboard: Scalars['Boolean'],
+  /** pro feature */
   projects_billable_by_default: Scalars['Boolean'],
   /** type of rounding */
   rounding: Scalars['Int'],
@@ -695,7 +878,9 @@ export type WorkspaceUpdateInput = {
   only_admins_may_create_projects: Scalars['Boolean'],
   /** whether only the admins can see billable rates or everybody */
   only_admins_see_billable_rates: Scalars['Boolean'],
+  /** whether only the admins can see team dashboard or everybody */
   only_admins_see_team_dashboard: Scalars['Boolean'],
+  /** pro feature */
   projects_billable_by_default: Scalars['Boolean'],
   /** type of rounding */
   rounding: Scalars['Int'],
@@ -824,6 +1009,7 @@ export type ResolversTypes = {
   Group: ResolverTypeWrapper<Group>,
   BlogPost: ResolverTypeWrapper<BlogPost>,
   Client: ResolverTypeWrapper<Client>,
+  TimeEntry: ResolverTypeWrapper<TimeEntry>,
   Mutation: ResolverTypeWrapper<{}>,
   TaskCreateInput: TaskCreateInput,
   TaskUpdateInput: TaskUpdateInput,
@@ -847,6 +1033,10 @@ export type ResolversTypes = {
   WorkspaceUpdateInput: WorkspaceUpdateInput,
   ClientCreateInput: ClientCreateInput,
   ClientUpdateInput: ClientUpdateInput,
+  TimeEntryCreateInput: TimeEntryCreateInput,
+  TimeEntryUpdateInput: TimeEntryUpdateInput,
+  TimeEntryStartInput: TimeEntryStartInput,
+  TimeEntryUpdateManyInput: TimeEntryUpdateManyInput,
   Obm: ResolverTypeWrapper<Obm>,
 };
 
@@ -870,6 +1060,7 @@ export type ResolversParentTypes = {
   Group: Group,
   BlogPost: BlogPost,
   Client: Client,
+  TimeEntry: TimeEntry,
   Mutation: {},
   TaskCreateInput: TaskCreateInput,
   TaskUpdateInput: TaskUpdateInput,
@@ -893,6 +1084,10 @@ export type ResolversParentTypes = {
   WorkspaceUpdateInput: WorkspaceUpdateInput,
   ClientCreateInput: ClientCreateInput,
   ClientUpdateInput: ClientUpdateInput,
+  TimeEntryCreateInput: TimeEntryCreateInput,
+  TimeEntryUpdateInput: TimeEntryUpdateInput,
+  TimeEntryStartInput: TimeEntryStartInput,
+  TimeEntryUpdateManyInput: TimeEntryUpdateManyInput,
   Obm: Obm,
 };
 
@@ -994,6 +1189,13 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   createClient?: Resolver<ResolversTypes['Client'], ParentType, ContextType, RequireFields<MutationCreateClientArgs, 'data'>>,
   updateClient?: Resolver<ResolversTypes['Client'], ParentType, ContextType, RequireFields<MutationUpdateClientArgs, 'client_id' | 'data'>>,
   deleteClient?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeleteClientArgs, 'client_id'>>,
+  createTimeEntry?: Resolver<ResolversTypes['TimeEntry'], ParentType, ContextType, RequireFields<MutationCreateTimeEntryArgs, 'data'>>,
+  updateTimeEntry?: Resolver<ResolversTypes['TimeEntry'], ParentType, ContextType, RequireFields<MutationUpdateTimeEntryArgs, 'time_entry_id' | 'data'>>,
+  deleteTimeEntry?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeleteTimeEntryArgs, 'time_entry_id'>>,
+  startTimeEntry?: Resolver<ResolversTypes['TimeEntry'], ParentType, ContextType, RequireFields<MutationStartTimeEntryArgs, 'data'>>,
+  stopTimeEntry?: Resolver<ResolversTypes['TimeEntry'], ParentType, ContextType, RequireFields<MutationStopTimeEntryArgs, 'time_entry_id'>>,
+  currentTimeEntry?: Resolver<Maybe<ResolversTypes['TimeEntry']>, ParentType, ContextType>,
+  updateManyTimeEntries?: Resolver<Maybe<Array<Maybe<ResolversTypes['TimeEntry']>>>, ParentType, ContextType, RequireFields<MutationUpdateManyTimeEntriesArgs, 'time_entry_ids' | 'data'>>,
 };
 
 export type ObmResolvers<ContextType = any, ParentType extends ResolversParentTypes['Obm'] = ResolversParentTypes['Obm']> = {
@@ -1039,6 +1241,9 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   workspaces?: Resolver<Array<ResolversTypes['Workspace']>, ParentType, ContextType>,
   client?: Resolver<Maybe<ResolversTypes['Client']>, ParentType, ContextType, RequireFields<QueryClientArgs, 'client_id'>>,
   clients?: Resolver<Array<ResolversTypes['Client']>, ParentType, ContextType>,
+  timeEntry?: Resolver<Maybe<ResolversTypes['TimeEntry']>, ParentType, ContextType, RequireFields<QueryTimeEntryArgs, 'time_entry_id'>>,
+  currentTimeEntry?: Resolver<Maybe<ResolversTypes['TimeEntry']>, ParentType, ContextType>,
+  timeEntries?: Resolver<Maybe<Array<Maybe<ResolversTypes['TimeEntry']>>>, ParentType, ContextType, QueryTimeEntriesArgs>,
 };
 
 export type TagResolvers<ContextType = any, ParentType extends ResolversParentTypes['Tag'] = ResolversParentTypes['Tag']> = {
@@ -1057,6 +1262,22 @@ export type TaskResolvers<ContextType = any, ParentType extends ResolversParentT
   active?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
   at?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>,
   tracked_seconds?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+};
+
+export type TimeEntryResolvers<ContextType = any, ParentType extends ResolversParentTypes['TimeEntry'] = ResolversParentTypes['TimeEntry']> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
+  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  wid?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>,
+  pid?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>,
+  tid?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>,
+  billable?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>,
+  created_with?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  tags?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>,
+  duronly?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>,
+  duration?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  start?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>,
+  stop?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>,
+  at?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>,
 };
 
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
@@ -1135,6 +1356,7 @@ export type Resolvers<ContextType = any> = {
   Query?: QueryResolvers<ContextType>,
   Tag?: TagResolvers<ContextType>,
   Task?: TaskResolvers<ContextType>,
+  TimeEntry?: TimeEntryResolvers<ContextType>,
   User?: UserResolvers<ContextType>,
   Workspace?: WorkspaceResolvers<ContextType>,
   WorkspaceActivity?: WorkspaceActivityResolvers<ContextType>,

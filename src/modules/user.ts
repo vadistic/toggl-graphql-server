@@ -1,5 +1,6 @@
 import { GraphQLModule, ModuleContext } from '@graphql-modules/core'
 import { gql } from 'apollo-server-micro'
+
 import { gql as graphql } from '../gql'
 import {
   QueryResolvers,
@@ -15,7 +16,6 @@ import { SharedModule } from './shared'
 // https://github.com/toggl/toggl_api_docs/blob/master/chapters/users.md
 
 const userFields = graphql`
-    id: ID!
     "default workspace id"
     default_wid: ID!
     "user's email"
@@ -45,6 +45,8 @@ const typeDefs = gql`
   basic user data
   """
   type User {
+    id: ID!
+
     ${userFields}
   }
 
@@ -52,63 +54,50 @@ const typeDefs = gql`
   detailed user data
   """
   type DetailedUser {
+    id: ID!
+
     ${userFields}
 
-
     workspaces: [Workspace]!
-
     "user's language"
     language: String!
-
     "url with the user's profile picture"
     image_url: String
-
     "timestamp of last changes"
     at: DateTime!
-
     "account create date"
     created_at: DateTime!
 
     "an object with toggl blog post title and link"
     new_blog_post: BlogPost
-
     "toggl can send newsletters over e-mail to the user"
     send_product_emails: Boolean!
-
     "if user receives weekly report"
     send_weekly_report: Boolean!
-
     "email user about long-running (more than 8 hours) tasks"
     send_timer_notifications: Boolean!
 
     "???"
     openid_email: String
-
     "openid_enabled: (boolean) google signin enabled"
     openid_enabled: Boolean!
-
     "timezone user has set on the 'My profile' page (IANA TZ timezones)"
-    timezone: String!
 
+    timezone: String!
     "???"
     retention: Int
-
     "???"
     record_timeline: Boolean
     "???"
     render_timeline: Boolean
-
     "???"
     timeline_enabled: Boolean
-
     "???"
     should_upgrade: Boolean
     "???"
     achievements_enabled: Boolean
-
     "??? TODO: Check type!"
     last_blog_entry: String
-
     "???"
     duration_format: String
   }

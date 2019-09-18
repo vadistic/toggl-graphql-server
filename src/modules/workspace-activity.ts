@@ -1,5 +1,6 @@
 import { GraphQLModule, ModuleContext } from '@graphql-modules/core'
 import gql from 'graphql-tag'
+
 import {
   Workspace,
   WorkspaceUserActivity,

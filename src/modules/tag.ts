@@ -1,5 +1,6 @@
 import { GraphQLModule, ModuleContext } from '@graphql-modules/core'
 import gql from 'graphql-tag'
+
 import { MutationResolvers, Tag, TagCreateInput, TagUpdateInput } from '../generated'
 import { DataSource } from '../data-source'
 import { ID } from '../types'

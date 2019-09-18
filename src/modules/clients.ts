@@ -1,5 +1,6 @@
 import { GraphQLModule, ModuleContext } from '@graphql-modules/core'
 import gql from 'graphql-tag'
+
 import {
   QueryResolvers,
   MutationResolvers,
@@ -31,7 +32,6 @@ const typeDefs = gql`
 
     # RELATIONS
 
-    "active: possible values true/false/both. By default true. If false, only archived projects are returned"
     projects(active: String): [Project!]!
   }
 

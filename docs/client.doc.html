@@ -140,6 +140,11 @@
                 Task
             </a>
         </li>
+        <li  title="TimeEntry">
+            <a href="timeentry.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                TimeEntry
+            </a>
+        </li>
         <li  title="User">
             <a href="user.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
                 User
@@ -270,6 +275,26 @@
                 TaskUpdateInput
             </a>
         </li>
+        <li  title="TimeEntryCreateInput">
+            <a href="timeentrycreateinput.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                TimeEntryCreateInput
+            </a>
+        </li>
+        <li  title="TimeEntryStartInput">
+            <a href="timeentrystartinput.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                TimeEntryStartInput
+            </a>
+        </li>
+        <li  title="TimeEntryUpdateInput">
+            <a href="timeentryupdateinput.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                TimeEntryUpdateInput
+            </a>
+        </li>
+        <li  title="TimeEntryUpdateManyInput">
+            <a href="timeentryupdatemanyinput.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                TimeEntryUpdateManyInput
+            </a>
+        </li>
         <li  title="UserCreateInput">
             <a href="usercreateinput.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
                 UserCreateInput
@@ -343,7 +368,7 @@
             </a>
             GraphQL Schema definition
         </h2>
-        <code class="highlight"><ul class="code" style="padding-left:42px"><li><span class="keyword operator ts">type</span> <span class="identifier">Client</span> {</li><li></li><li><span class="tab"><span class="meta">id</span>: <a class="support type" href="id.doc.html">ID</a>! </span></li><li></li><li><span class="tab"><span class="comment line">#   the name of the client</span></span></li><li><span class="tab"><span class="meta">name</span>: <a class="support type" href="string.doc.html">String</a>! </span></li><li></li><li><span class="tab"><span class="comment line">#   workspace ID, where the client will be used</span></span></li><li><span class="tab"><span class="meta">wid</span>: <a class="support type" href="id.doc.html">ID</a>! </span></li><li></li><li><span class="tab"><span class="comment line">#   notes for the client</span></span></li><li><span class="tab"><span class="meta">notes</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="comment line">#   indicates the time client was last updated (UTC time)</span></span></li><li><span class="tab"><span class="meta">at</span>: <a class="support type" href="datetime.doc.html">DateTime</a>! </span></li><li></li><li><span class="tab"><span class="comment line">#   active: possible values true/false/both. By default true. If false, only </span></span></li><li><span class="tab"><span class="comment line">#   archived projects are returned</span></span></li><li><span class="tab"><span class="comment line"># </span></span></li><li><span class="tab"><span class="comment line"># Arguments</span></span></li><li><span class="tab"><span class="comment line">#   <strong>active</strong>: [<strong>Not documented</strong>]</span></span></li><li><span class="tab"><span class="meta">projects</span>(<span class="meta">active</span>: <a class="support type" href="string.doc.html">String</a>): [<a class="support type" href="project.doc.html">Project</a>!]! </span></li><li>}</li></ul></code>
+        <code class="highlight"><ul class="code" style="padding-left:42px"><li><span class="keyword operator ts">type</span> <span class="identifier">Client</span> {</li><li></li><li><span class="tab"><span class="meta">id</span>: <a class="support type" href="id.doc.html">ID</a>! </span></li><li></li><li><span class="tab"><span class="comment line">#   the name of the client</span></span></li><li><span class="tab"><span class="meta">name</span>: <a class="support type" href="string.doc.html">String</a>! </span></li><li></li><li><span class="tab"><span class="comment line">#   workspace ID, where the client will be used</span></span></li><li><span class="tab"><span class="meta">wid</span>: <a class="support type" href="id.doc.html">ID</a>! </span></li><li></li><li><span class="tab"><span class="comment line">#   notes for the client</span></span></li><li><span class="tab"><span class="meta">notes</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="comment line">#   indicates the time client was last updated (UTC time)</span></span></li><li><span class="tab"><span class="meta">at</span>: <a class="support type" href="datetime.doc.html">DateTime</a>! </span></li><li></li><li><span class="tab"><span class="comment line"># Arguments</span></span></li><li><span class="tab"><span class="comment line">#   <strong>active</strong>: [<strong>Not documented</strong>]</span></span></li><li><span class="tab"><span class="meta">projects</span>(<span class="meta">active</span>: <a class="support type" href="string.doc.html">String</a>): [<a class="support type" href="project.doc.html">Project</a>!]! </span></li><li>}</li></ul></code>
     </div>
 </section>
 <section>

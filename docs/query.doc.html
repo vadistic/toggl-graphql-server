@@ -140,6 +140,11 @@
                 Task
             </a>
         </li>
+        <li  title="TimeEntry">
+            <a href="timeentry.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                TimeEntry
+            </a>
+        </li>
         <li  title="User">
             <a href="user.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
                 User
@@ -270,6 +275,26 @@
                 TaskUpdateInput
             </a>
         </li>
+        <li  title="TimeEntryCreateInput">
+            <a href="timeentrycreateinput.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                TimeEntryCreateInput
+            </a>
+        </li>
+        <li  title="TimeEntryStartInput">
+            <a href="timeentrystartinput.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                TimeEntryStartInput
+            </a>
+        </li>
+        <li  title="TimeEntryUpdateInput">
+            <a href="timeentryupdateinput.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                TimeEntryUpdateInput
+            </a>
+        </li>
+        <li  title="TimeEntryUpdateManyInput">
+            <a href="timeentryupdatemanyinput.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                TimeEntryUpdateManyInput
+            </a>
+        </li>
         <li  title="UserCreateInput">
             <a href="usercreateinput.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
                 UserCreateInput
@@ -343,7 +368,7 @@
             </a>
             GraphQL Schema definition
         </h2>
-        <code class="highlight"><ul class="code" style="padding-left:42px"><li><span class="keyword operator ts">type</span> <span class="identifier">Query</span> {</li><li></li><li><span class="tab"><span class="comment line">#   get current user data</span></span></li><li><span class="tab"><span class="meta">user</span>: <a class="support type" href="detaileduser.doc.html">DetailedUser</a>! </span></li><li></li><li><span class="tab"><span class="comment line"># Arguments</span></span></li><li><span class="tab"><span class="comment line">#   <strong>project_id</strong>: [<strong>Not documented</strong>]</span></span></li><li><span class="tab"><span class="meta">project</span>(<span class="meta">project_id</span>: <a class="support type" href="id.doc.html">ID</a>!): <a class="support type" href="project.doc.html">Project</a> </span></li><li></li><li><span class="tab"><span class="comment line"># Arguments</span></span></li><li><span class="tab"><span class="comment line">#   <strong>workspace_id</strong>: [<strong>Not documented</strong>]</span></span></li><li><span class="tab"><span class="meta">workspace</span>(<span class="meta">workspace_id</span>: <a class="support type" href="id.doc.html">ID</a>!): <a class="support type" href="workspace.doc.html">Workspace</a> </span></li><li></li><li><span class="tab"><span class="meta">workspaces</span>: [<a class="support type" href="workspace.doc.html">Workspace</a>!]! </span></li><li></li><li><span class="tab"><span class="comment line"># Arguments</span></span></li><li><span class="tab"><span class="comment line">#   <strong>client_id</strong>: [<strong>Not documented</strong>]</span></span></li><li><span class="tab"><span class="meta">client</span>(<span class="meta">client_id</span>: <a class="support type" href="id.doc.html">ID</a>!): <a class="support type" href="client.doc.html">Client</a> </span></li><li></li><li><span class="tab"><span class="meta">clients</span>: [<a class="support type" href="client.doc.html">Client</a>!]! </span></li><li>}</li></ul></code>
+        <code class="highlight"><ul class="code" style="padding-left:42px"><li><span class="keyword operator ts">type</span> <span class="identifier">Query</span> {</li><li></li><li><span class="tab"><span class="comment line">#   get current user data</span></span></li><li><span class="tab"><span class="meta">user</span>: <a class="support type" href="detaileduser.doc.html">DetailedUser</a>! </span></li><li></li><li><span class="tab"><span class="comment line"># Arguments</span></span></li><li><span class="tab"><span class="comment line">#   <strong>project_id</strong>: [<strong>Not documented</strong>]</span></span></li><li><span class="tab"><span class="meta">project</span>(<span class="meta">project_id</span>: <a class="support type" href="id.doc.html">ID</a>!): <a class="support type" href="project.doc.html">Project</a> </span></li><li></li><li><span class="tab"><span class="comment line"># Arguments</span></span></li><li><span class="tab"><span class="comment line">#   <strong>workspace_id</strong>: [<strong>Not documented</strong>]</span></span></li><li><span class="tab"><span class="meta">workspace</span>(<span class="meta">workspace_id</span>: <a class="support type" href="id.doc.html">ID</a>!): <a class="support type" href="workspace.doc.html">Workspace</a> </span></li><li></li><li><span class="tab"><span class="meta">workspaces</span>: [<a class="support type" href="workspace.doc.html">Workspace</a>!]! </span></li><li></li><li><span class="tab"><span class="comment line"># Arguments</span></span></li><li><span class="tab"><span class="comment line">#   <strong>client_id</strong>: [<strong>Not documented</strong>]</span></span></li><li><span class="tab"><span class="meta">client</span>(<span class="meta">client_id</span>: <a class="support type" href="id.doc.html">ID</a>!): <a class="support type" href="client.doc.html">Client</a> </span></li><li></li><li><span class="tab"><span class="meta">clients</span>: [<a class="support type" href="client.doc.html">Client</a>!]! </span></li><li></li><li><span class="tab"><span class="comment line"># Arguments</span></span></li><li><span class="tab"><span class="comment line">#   <strong>time_entry_id</strong>: [<strong>Not documented</strong>]</span></span></li><li><span class="tab"><span class="meta">timeEntry</span>(<span class="meta">time_entry_id</span>: <a class="support type" href="id.doc.html">ID</a>!): <a class="support type" href="timeentry.doc.html">TimeEntry</a> </span></li><li></li><li><span class="tab"><span class="meta">currentTimeEntry</span>: <a class="support type" href="timeentry.doc.html">TimeEntry</a> </span></li><li></li><li><span class="tab"><span class="comment line"># Arguments</span></span></li><li><span class="tab"><span class="comment line">#   <strong>start_date</strong>: [<strong>Not documented</strong>]</span></span></li><li><span class="tab"><span class="comment line">#   <strong>end_date</strong>: [<strong>Not documented</strong>]</span></span></li><li><span class="tab"><span class="meta">timeEntries</span>(<span class="meta">start_date</span>: <a class="support type" href="datetime.doc.html">DateTime</a>, <span class="meta">end_date</span>: <a class="support type" href="datetime.doc.html">DateTime</a>): [<a class="support type" href="timeentry.doc.html">TimeEntry</a>] </span></li><li>}</li></ul></code>
     </div>
 </section>
 <section>

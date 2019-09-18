@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="./styles/graphdoc.css" />
-    <title>ID</title>
+    <title>TimeEntryCreateInput</title>
     <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700" rel="stylesheet"><link type="text/css" rel="stylesheet" href="./assets/code.css" /><link type="text/css" rel="stylesheet" href="./assets/require-by.css" />
 </head>
 <body class="slds-scrollable--y">
@@ -55,7 +55,7 @@
                 Float
             </a>
         </li>
-        <li class="slds-is-active" title="ID">
+        <li  title="ID">
             <a href="id.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
                 ID
             </a>
@@ -275,7 +275,7 @@
                 TaskUpdateInput
             </a>
         </li>
-        <li  title="TimeEntryCreateInput">
+        <li class="slds-is-active" title="TimeEntryCreateInput">
             <a href="timeentrycreateinput.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
                 TimeEntryCreateInput
             </a>
@@ -355,10 +355,9 @@
         </div>
     </div>
     <div class="container">
-        <p class="slds-text-title--caps slds-text-color--weak">SCALAR</p>
-        <h1 class="slds-text-heading--large">ID</h1>
-        <div class="slds-text-body--regular"><p>The <code>ID</code> scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as <code>&quot;4&quot;</code>) or integer (such as <code>4</code>) input value will be accepted as an ID.</p>
-</div>
+        <p class="slds-text-title--caps slds-text-color--weak">INPUT_OBJECT</p>
+        <h1 class="slds-text-heading--large">TimeEntryCreateInput</h1>
+        <div class="slds-text-body--regular"></div>
     </div>
 </section>
 <section>
@@ -369,7 +368,7 @@
             </a>
             GraphQL Schema definition
         </h2>
-        <code class="highlight"><ul class="code" style="padding-left:28px"><li><span class="keyword operator ts">scalar</span> <span class="identifier">ID</span></li></ul></code>
+        <code class="highlight"><ul class="code" style="padding-left:42px"><li><span class="keyword operator ts">input</span> <span class="identifier">TimeEntryCreateInput</span> {</li><li><span class="tab"><li><span class="tab"><span class="comment line">#   strongly suggested to be used</span></span></li><li><span class="tab"><span class="meta">description</span>: <a class="support type" href="string.doc.html">String</a></span></li></span></li><li><span class="tab"><li><span class="tab"><span class="comment line">#   workspace ID (required if pid or tid not supplied)</span></span></li><li><span class="tab"><span class="meta">wid</span>: <a class="support type" href="id.doc.html">ID</a></span></li></span></li><li><span class="tab"><li><span class="tab"><span class="comment line">#   project ID</span></span></li><li><span class="tab"><span class="meta">pid</span>: <a class="support type" href="id.doc.html">ID</a></span></li></span></li><li><span class="tab"><li><span class="tab"><span class="comment line">#   task ID</span></span></li><li><span class="tab"><span class="meta">tid</span>: <a class="support type" href="id.doc.html">ID</a></span></li></span></li><li><span class="tab"><li><span class="tab"><span class="comment line">#   default false, available for pro workspaces</span></span></li><li><span class="tab"><span class="meta">billable</span>: <a class="support type" href="boolean.doc.html">Boolean</a></span></li></span></li><li><span class="tab"><li><span class="tab"><span class="comment line">#   the name of your client app</span></span></li><li><span class="tab"><span class="meta">created_with</span>: <a class="support type" href="string.doc.html">String</a></span></li></span></li><li><span class="tab"><li><span class="tab"><span class="comment line">#   a list of tag names</span></span></li><li><span class="tab"><span class="meta">tags</span>: [<a class="support type" href="string.doc.html">String</a>]</span></li></span></li><li><span class="tab"><li><span class="tab"><span class="comment line">#   should Toggl show the start and stop time of this time entry?</span></span></li><li><span class="tab"><span class="meta">duronly</span>: <a class="support type" href="boolean.doc.html">Boolean</a></span></li></span></li><li><span class="tab"><li><span class="tab"><span class="comment line">#   time entry duration in seconds</span></span></li><li><span class="tab"><span class="comment line"># </span></span></li><li><span class="tab"><span class="comment line">#   If the time entry is currently running, the duration attribute contains a </span></span></li><li><span class="tab"><span class="comment line">#   negative value,</span></span></li><li><span class="tab"><span class="comment line">#   denoting the start of the time entry in seconds since epoch (Jan 1 1970).</span></span></li><li><span class="tab"><span class="comment line"># </span></span></li><li><span class="tab"><span class="comment line">#   The correct duration can be calculated as current_time + duration,</span></span></li><li><span class="tab"><span class="comment line">#   where current_time is the current time in seconds since epoch.</span></span></li><li><span class="tab"><span class="meta">duration</span>: <a class="support type" href="int.doc.html">Int</a>!</span></li></span></li><li><span class="tab"><li><span class="tab"><span class="comment line">#   time entry start time (ISO 8601 date and time)</span></span></li><li><span class="tab"><span class="meta">start</span>: <a class="support type" href="datetime.doc.html">DateTime</a>!</span></li></span></li><li><span class="tab"><li><span class="tab"><span class="comment line">#   time entry stop time (ISO 8601 date and time)</span></span></li><li><span class="tab"><span class="meta">stop</span>: <a class="support type" href="datetime.doc.html">DateTime</a></span></li></span></li><li>}</li></ul></code>
     </div>
 </section>
 <section>
@@ -380,7 +379,7 @@
             </a>
             Require by
         </h2>
-        <ul class="require-by"><li><a href="client.doc.html" title="Client - ">Client<em>null</em></a><li><li><a href="clientcreateinput.doc.html" title="ClientCreateInput - ">ClientCreateInput<em>null</em></a><li><li><a href="detaileduser.doc.html" title="DetailedUser - detailed user data">DetailedUser<em>detailed user data</em></a><li><li><a href="group.doc.html" title="Group - ">Group<em>null</em></a><li><li><a href="groupcreateinput.doc.html" title="GroupCreateInput - ">GroupCreateInput<em>null</em></a><li><li><a href="mutation.doc.html" title="Mutation - ">Mutation<em>null</em></a><li><li><a href="project.doc.html" title="Project - ">Project<em>null</em></a><li><li><a href="projectcreateinput.doc.html" title="ProjectCreateInput - ">ProjectCreateInput<em>null</em></a><li><li><a href="projectupdateinput.doc.html" title="ProjectUpdateInput - ">ProjectUpdateInput<em>null</em></a><li><li><a href="projectuser.doc.html" title="ProjectUser - ">ProjectUser<em>null</em></a><li><li><a href="projectusercreateinput.doc.html" title="ProjectUserCreateInput - ">ProjectUserCreateInput<em>null</em></a><li><li><a href="projectusercreatemanyinput.doc.html" title="ProjectUserCreateManyInput - ">ProjectUserCreateManyInput<em>null</em></a><li><li><a href="projectuserupdateinput.doc.html" title="ProjectUserUpdateInput - ">ProjectUserUpdateInput<em>null</em></a><li><li><a href="query.doc.html" title="Query - ">Query<em>null</em></a><li><li><a href="tag.doc.html" title="Tag - ">Tag<em>null</em></a><li><li><a href="tagcreateinput.doc.html" title="TagCreateInput - ">TagCreateInput<em>null</em></a><li><li><a href="task.doc.html" title="Task - ">Task<em>null</em></a><li><li><a href="taskcreateinput.doc.html" title="TaskCreateInput - ">TaskCreateInput<em>null</em></a><li><li><a href="timeentry.doc.html" title="TimeEntry - ">TimeEntry<em>null</em></a><li><li><a href="timeentrycreateinput.doc.html" title="TimeEntryCreateInput - ">TimeEntryCreateInput<em>null</em></a><li><li><a href="timeentrystartinput.doc.html" title="TimeEntryStartInput - ">TimeEntryStartInput<em>null</em></a><li><li><a href="timeentryupdateinput.doc.html" title="TimeEntryUpdateInput - ">TimeEntryUpdateInput<em>null</em></a><li><li><a href="user.doc.html" title="User - basic user data">User<em>basic user data</em></a><li><li><a href="workspace.doc.html" title="Workspace - ">Workspace<em>null</em></a><li><li><a href="workspaceactivity.doc.html" title="WorkspaceActivity - ">WorkspaceActivity<em>null</em></a><li><li><a href="workspaceuser.doc.html" title="WorkspaceUser - ">WorkspaceUser<em>null</em></a><li><li><a href="workspaceuseractivity.doc.html" title="WorkspaceUserActivity - ">WorkspaceUserActivity<em>null</em></a><li></ul>
+        <ul class="require-by"><li><a href="mutation.doc.html" title="Mutation - ">Mutation<em>null</em></a><li></ul>
     </div>
 </section>
 <footer>

@@ -1,5 +1,6 @@
 import { GraphQLModule, ModuleContext } from '@graphql-modules/core'
 import gql from 'graphql-tag'
+
 import {
   QueryResolvers,
   MutationResolvers,
@@ -44,7 +45,9 @@ const workspaceFields = graphql`
 
     "whether only the admins can see billable rates or everybody"
     only_admins_see_billable_rates: Boolean!
+    "whether only the admins can see team dashboard or everybody"
     only_admins_see_team_dashboard: Boolean!
+    "pro feature"
     projects_billable_by_default: Boolean!
 
     "type of rounding"
@@ -60,7 +63,6 @@ const typeDefs = gql`
     ${workspaceFields}
 
     api_token: String!
-
     "timestamp that indicates the time workspace was last updated"
     at: DateTime!
     "calendar integration?"
@@ -70,16 +72,12 @@ const typeDefs = gql`
 
     "most active users (from dashboard)"
     user_activity: [WorkspaceUserActivity!]!
-
     "recent user activities (from dashboard)"
     activity: [WorkspaceActivity!]!
-
     "users in workspace"
     users: [WorkspaceUser!]!
-
     "to get a successful response, the token owner must be workspace admin"
     projects: [Project]
-
     "to get a successful response, the token owner must be workspace admin"
     groups: [Group]
   }
