@@ -59,7 +59,7 @@ class WorkspaceUserAPI extends DataSource {
     workspace_id: ID,
     data: WorkspaceUserInviteInput,
   ): Promise<InvitationResponse> {
-    return this.post(`workspaces/${workspace_id}/invite`).then(res => ({
+    return this.post(`workspaces/${workspace_id}/invite`, data).then(res => ({
       workspace_users: res.data,
       notifications: res.notifications,
     }))

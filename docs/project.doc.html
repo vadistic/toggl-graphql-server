@@ -95,9 +95,24 @@
                 BlogPost
             </a>
         </li>
+        <li  title="Client">
+            <a href="client.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                Client
+            </a>
+        </li>
         <li  title="DetailedUser">
             <a href="detaileduser.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
                 DetailedUser
+            </a>
+        </li>
+        <li  title="Group">
+            <a href="group.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                Group
+            </a>
+        </li>
+        <li  title="InvitationResponse">
+            <a href="invitationresponse.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                InvitationResponse
             </a>
         </li>
         <li  title="Obm">
@@ -110,9 +125,19 @@
                 Project
             </a>
         </li>
+        <li  title="ProjectUser">
+            <a href="projectuser.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                ProjectUser
+            </a>
+        </li>
         <li  title="Tag">
             <a href="tag.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
                 Tag
+            </a>
+        </li>
+        <li  title="Task">
+            <a href="task.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                Task
             </a>
         </li>
         <li  title="User">
@@ -123,6 +148,21 @@
         <li  title="Workspace">
             <a href="workspace.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
                 Workspace
+            </a>
+        </li>
+        <li  title="WorkspaceActivity">
+            <a href="workspaceactivity.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                WorkspaceActivity
+            </a>
+        </li>
+        <li  title="WorkspaceUser">
+            <a href="workspaceuser.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                WorkspaceUser
+            </a>
+        </li>
+        <li  title="WorkspaceUserActivity">
+            <a href="workspaceuseractivity.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                WorkspaceUserActivity
             </a>
         </li>
         <li  title="__Directive">
@@ -160,6 +200,26 @@
 <div class="slds-grid slds-grid--vertical slds-navigation-list--vertical">
     <h4 class="slds-text-title--caps slds-p-around--medium">Input Objects</h4>
     <ul>
+        <li  title="ClientCreateInput">
+            <a href="clientcreateinput.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                ClientCreateInput
+            </a>
+        </li>
+        <li  title="ClientUpdateInput">
+            <a href="clientupdateinput.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                ClientUpdateInput
+            </a>
+        </li>
+        <li  title="GroupCreateInput">
+            <a href="groupcreateinput.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                GroupCreateInput
+            </a>
+        </li>
+        <li  title="GroupUpdateInput">
+            <a href="groupupdateinput.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                GroupUpdateInput
+            </a>
+        </li>
         <li  title="ProjectCreateInput">
             <a href="projectcreateinput.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
                 ProjectCreateInput
@@ -180,9 +240,14 @@
                 TagUpdateInput
             </a>
         </li>
-        <li  title="UniqueIdInput">
-            <a href="uniqueidinput.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
-                UniqueIdInput
+        <li  title="TaskCreateInput">
+            <a href="taskcreateinput.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                TaskCreateInput
+            </a>
+        </li>
+        <li  title="TaskUpdateInput">
+            <a href="taskupdateinput.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                TaskUpdateInput
             </a>
         </li>
         <li  title="UserCreateInput">
@@ -198,6 +263,16 @@
         <li  title="WorkspaceUpdateInput">
             <a href="workspaceupdateinput.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
                 WorkspaceUpdateInput
+            </a>
+        </li>
+        <li  title="WorkspaceUserInviteInput">
+            <a href="workspaceuserinviteinput.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                WorkspaceUserInviteInput
+            </a>
+        </li>
+        <li  title="WorkspaceUserUpdateInput">
+            <a href="workspaceuserupdateinput.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                WorkspaceUserUpdateInput
             </a>
         </li>
     </ul>
@@ -248,7 +323,7 @@
             </a>
             GraphQL Schema definition
         </h2>
-        <code class="highlight"><ul class="code" style="padding-left:42px"><li><span class="keyword operator ts">type</span> <span class="identifier">Project</span> {</li><li></li><li><span class="tab"><span class="comment line">#   the name of the project (string, required, unique for client and workspace)</span></span></li><li><span class="tab"><span class="meta">name</span>: <a class="support type" href="string.doc.html">String</a>! </span></li><li></li><li><span class="tab"><span class="comment line">#   workspace ID, where the project will be saved (integer, required)</span></span></li><li><span class="tab"><span class="meta">wid</span>: <a class="support type" href="id.doc.html">ID</a>! </span></li><li></li><li><span class="tab"><span class="comment line">#   client ID (integer, not required)</span></span></li><li><span class="tab"><span class="meta">cid</span>: <a class="support type" href="id.doc.html">ID</a> </span></li><li></li><li><span class="tab"><span class="comment line">#   whether the project is archived or not (boolean, by default true)</span></span></li><li><span class="tab"><span class="meta">active</span>: <a class="support type" href="boolean.doc.html">Boolean</a>! </span></li><li></li><li><span class="tab"><span class="comment line">#   whether project is accessible for only project users or for all workspace users </span></span></li><li><span class="tab"><span class="comment line">#   (boolean, default true)</span></span></li><li><span class="tab"><span class="meta">is_private</span>: <a class="support type" href="boolean.doc.html">Boolean</a>! </span></li><li></li><li><span class="tab"><span class="comment line">#   whether the project can be used as a template (boolean, not required)</span></span></li><li><span class="tab"><span class="meta">template</span>: <a class="support type" href="boolean.doc.html">Boolean</a> </span></li><li></li><li><span class="tab"><span class="comment line">#   id of the template project used on current project's creation</span></span></li><li><span class="tab"><span class="meta">template_id</span>: <a class="support type" href="id.doc.html">ID</a> </span></li><li></li><li><span class="tab"><span class="comment line">#   whether the project is billable or not (boolean, default true, available only </span></span></li><li><span class="tab"><span class="comment line">#   for pro workspaces)</span></span></li><li><span class="tab"><span class="meta">billable</span>: <a class="support type" href="boolean.doc.html">Boolean</a> </span></li><li></li><li><span class="tab"><span class="comment line">#   whether the estimated hours are automatically calculated based on task </span></span></li><li><span class="tab"><span class="comment line">#   estimations or manually fixed based on the value of 'estimated_hours' (boolean, </span></span></li><li><span class="tab"><span class="comment line">#   default false, not required, premium functionality)</span></span></li><li><span class="tab"><span class="meta">auto_estimates</span>: <a class="support type" href="boolean.doc.html">Boolean</a> </span></li><li></li><li><span class="tab"><span class="comment line">#   if auto_estimates is true then the sum of task estimations is returned, </span></span></li><li><span class="tab"><span class="comment line">#   otherwise user inserted hours (integer, not required, premium functionality)</span></span></li><li><span class="tab"><span class="meta">estimated_hours</span>: <a class="support type" href="int.doc.html">Int</a> </span></li><li></li><li><span class="tab"><span class="comment line">#   id of the color selected for the project</span></span></li><li><span class="tab"><span class="meta">color</span>: <a class="support type" href="int.doc.html">Int</a> </span></li><li></li><li><span class="tab"><span class="comment line">#   hex of project's color</span></span></li><li><span class="tab"><span class="meta">hex_color</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="comment line">#   hourly rate of the project (float, not required, premium functionality)</span></span></li><li><span class="tab"><span class="meta">rate</span>: <a class="support type" href="float.doc.html">Float</a> </span></li><li></li><li><span class="tab"><span class="comment line">#   timestamp indicating when the project was last updated (UTC time), read-only</span></span></li><li><span class="tab"><span class="meta">at</span>: <a class="support type" href="datetime.doc.html">DateTime</a>! </span></li><li>}</li></ul></code>
+        <code class="highlight"><ul class="code" style="padding-left:42px"><li><span class="keyword operator ts">type</span> <span class="identifier">Project</span> {</li><li></li><li><span class="tab"><span class="meta">id</span>: <a class="support type" href="id.doc.html">ID</a>! </span></li><li></li><li><span class="tab"><span class="comment line">#   the name of the project (string, required, unique for client and workspace)</span></span></li><li><span class="tab"><span class="meta">name</span>: <a class="support type" href="string.doc.html">String</a>! </span></li><li></li><li><span class="tab"><span class="comment line">#   workspace ID, where the project will be saved (integer, required)</span></span></li><li><span class="tab"><span class="meta">wid</span>: <a class="support type" href="id.doc.html">ID</a>! </span></li><li></li><li><span class="tab"><span class="comment line">#   client ID (integer, not required)</span></span></li><li><span class="tab"><span class="meta">cid</span>: <a class="support type" href="id.doc.html">ID</a> </span></li><li></li><li><span class="tab"><span class="comment line">#   whether the project is archived or not (boolean, by default true)</span></span></li><li><span class="tab"><span class="meta">active</span>: <a class="support type" href="boolean.doc.html">Boolean</a>! </span></li><li></li><li><span class="tab"><span class="comment line">#   whether project is accessible for only project users or for all workspace users </span></span></li><li><span class="tab"><span class="comment line">#   (boolean, default true)</span></span></li><li><span class="tab"><span class="meta">is_private</span>: <a class="support type" href="boolean.doc.html">Boolean</a>! </span></li><li></li><li><span class="tab"><span class="comment line">#   whether the project can be used as a template (boolean, not required)</span></span></li><li><span class="tab"><span class="meta">template</span>: <a class="support type" href="boolean.doc.html">Boolean</a> </span></li><li></li><li><span class="tab"><span class="comment line">#   id of the template project used on current project's creation</span></span></li><li><span class="tab"><span class="meta">template_id</span>: <a class="support type" href="id.doc.html">ID</a> </span></li><li></li><li><span class="tab"><span class="comment line">#   whether the project is billable or not (boolean, default true, available only </span></span></li><li><span class="tab"><span class="comment line">#   for pro workspaces)</span></span></li><li><span class="tab"><span class="meta">billable</span>: <a class="support type" href="boolean.doc.html">Boolean</a> </span></li><li></li><li><span class="tab"><span class="comment line">#   whether the estimated hours are automatically calculated based on task </span></span></li><li><span class="tab"><span class="comment line">#   estimations or manually fixed based on the value of 'estimated_hours' (boolean, </span></span></li><li><span class="tab"><span class="comment line">#   default false, not required, premium functionality)</span></span></li><li><span class="tab"><span class="meta">auto_estimates</span>: <a class="support type" href="boolean.doc.html">Boolean</a> </span></li><li></li><li><span class="tab"><span class="comment line">#   if auto_estimates is true then the sum of task estimations is returned, </span></span></li><li><span class="tab"><span class="comment line">#   otherwise user inserted hours (integer, not required, premium functionality)</span></span></li><li><span class="tab"><span class="meta">estimated_hours</span>: <a class="support type" href="int.doc.html">Int</a> </span></li><li></li><li><span class="tab"><span class="comment line">#   id of the color selected for the project</span></span></li><li><span class="tab"><span class="meta">color</span>: <a class="support type" href="int.doc.html">Int</a> </span></li><li></li><li><span class="tab"><span class="comment line">#   hex of project's color</span></span></li><li><span class="tab"><span class="meta">hex_color</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="comment line">#   hourly rate of the project (float, not required, premium functionality)</span></span></li><li><span class="tab"><span class="meta">rate</span>: <a class="support type" href="float.doc.html">Float</a> </span></li><li></li><li><span class="tab"><span class="comment line">#   timestamp indicating when the project was last updated (UTC time), read-only</span></span></li><li><span class="tab"><span class="meta">at</span>: <a class="support type" href="datetime.doc.html">DateTime</a>! </span></li><li></li><li><span class="tab"><span class="meta">users</span>: [<a class="support type" href="projectuser.doc.html">ProjectUser</a>] </span></li><li></li><li><span class="tab"><span class="meta">tasks</span>: [<a class="support type" href="task.doc.html">Task</a>] </span></li><li>}</li></ul></code>
     </div>
 </section>
 <section>
@@ -259,7 +334,7 @@
             </a>
             Require by
         </h2>
-        <ul class="require-by"><li><a href="mutation.doc.html" title="Mutation - ">Mutation<em>null</em></a><li><li><a href="query.doc.html" title="Query - ">Query<em>null</em></a><li></ul>
+        <ul class="require-by"><li><a href="client.doc.html" title="Client - ">Client<em>null</em></a><li><li><a href="mutation.doc.html" title="Mutation - ">Mutation<em>null</em></a><li><li><a href="query.doc.html" title="Query - ">Query<em>null</em></a><li><li><a href="workspace.doc.html" title="Workspace - ">Workspace<em>null</em></a><li></ul>
     </div>
 </section>
 <footer>

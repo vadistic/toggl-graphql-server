@@ -95,9 +95,24 @@
                 BlogPost
             </a>
         </li>
+        <li  title="Client">
+            <a href="client.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                Client
+            </a>
+        </li>
         <li  title="DetailedUser">
             <a href="detaileduser.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
                 DetailedUser
+            </a>
+        </li>
+        <li  title="Group">
+            <a href="group.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                Group
+            </a>
+        </li>
+        <li  title="InvitationResponse">
+            <a href="invitationresponse.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                InvitationResponse
             </a>
         </li>
         <li  title="Obm">
@@ -110,9 +125,19 @@
                 Project
             </a>
         </li>
+        <li  title="ProjectUser">
+            <a href="projectuser.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                ProjectUser
+            </a>
+        </li>
         <li  title="Tag">
             <a href="tag.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
                 Tag
+            </a>
+        </li>
+        <li  title="Task">
+            <a href="task.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                Task
             </a>
         </li>
         <li  title="User">
@@ -123,6 +148,21 @@
         <li class="slds-is-active" title="Workspace">
             <a href="workspace.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
                 Workspace
+            </a>
+        </li>
+        <li  title="WorkspaceActivity">
+            <a href="workspaceactivity.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                WorkspaceActivity
+            </a>
+        </li>
+        <li  title="WorkspaceUser">
+            <a href="workspaceuser.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                WorkspaceUser
+            </a>
+        </li>
+        <li  title="WorkspaceUserActivity">
+            <a href="workspaceuseractivity.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                WorkspaceUserActivity
             </a>
         </li>
         <li  title="__Directive">
@@ -160,6 +200,26 @@
 <div class="slds-grid slds-grid--vertical slds-navigation-list--vertical">
     <h4 class="slds-text-title--caps slds-p-around--medium">Input Objects</h4>
     <ul>
+        <li  title="ClientCreateInput">
+            <a href="clientcreateinput.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                ClientCreateInput
+            </a>
+        </li>
+        <li  title="ClientUpdateInput">
+            <a href="clientupdateinput.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                ClientUpdateInput
+            </a>
+        </li>
+        <li  title="GroupCreateInput">
+            <a href="groupcreateinput.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                GroupCreateInput
+            </a>
+        </li>
+        <li  title="GroupUpdateInput">
+            <a href="groupupdateinput.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                GroupUpdateInput
+            </a>
+        </li>
         <li  title="ProjectCreateInput">
             <a href="projectcreateinput.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
                 ProjectCreateInput
@@ -180,9 +240,14 @@
                 TagUpdateInput
             </a>
         </li>
-        <li  title="UniqueIdInput">
-            <a href="uniqueidinput.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
-                UniqueIdInput
+        <li  title="TaskCreateInput">
+            <a href="taskcreateinput.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                TaskCreateInput
+            </a>
+        </li>
+        <li  title="TaskUpdateInput">
+            <a href="taskupdateinput.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                TaskUpdateInput
             </a>
         </li>
         <li  title="UserCreateInput">
@@ -198,6 +263,16 @@
         <li  title="WorkspaceUpdateInput">
             <a href="workspaceupdateinput.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
                 WorkspaceUpdateInput
+            </a>
+        </li>
+        <li  title="WorkspaceUserInviteInput">
+            <a href="workspaceuserinviteinput.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                WorkspaceUserInviteInput
+            </a>
+        </li>
+        <li  title="WorkspaceUserUpdateInput">
+            <a href="workspaceuserupdateinput.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
+                WorkspaceUserUpdateInput
             </a>
         </li>
     </ul>
@@ -248,7 +323,7 @@
             </a>
             GraphQL Schema definition
         </h2>
-        <code class="highlight"><ul class="code" style="padding-left:42px"><li><span class="keyword operator ts">type</span> <span class="identifier">Workspace</span> {</li><li></li><li><span class="tab"><span class="meta">id</span>: <a class="support type" href="id.doc.html">ID</a>! </span></li><li></li><li><span class="tab"><span class="meta">name</span>: <a class="support type" href="string.doc.html">String</a>! </span></li><li></li><li><span class="tab"><span class="meta">logo_url</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="meta">profile</span>: <a class="support type" href="int.doc.html">Int</a> </span></li><li></li><li><span class="tab"><span class="meta">premium</span>: <a class="support type" href="boolean.doc.html">Boolean</a>! </span></li><li></li><li><span class="tab"><span class="meta">admin</span>: <a class="support type" href="boolean.doc.html">Boolean</a>! </span></li><li></li><li><span class="tab"><span class="meta">default_hourly_rate</span>: <a class="support type" href="float.doc.html">Float</a> </span></li><li></li><li><span class="tab"><span class="meta">default_currency</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="meta">only_admins_may_create_projects</span>: <a class="support type" href="boolean.doc.html">Boolean</a>! </span></li><li></li><li><span class="tab"><span class="meta">only_admins_see_billable_rates</span>: <a class="support type" href="boolean.doc.html">Boolean</a>! </span></li><li></li><li><span class="tab"><span class="meta">only_admins_see_team_dashboard</span>: <a class="support type" href="boolean.doc.html">Boolean</a>! </span></li><li></li><li><span class="tab"><span class="meta">projects_billable_by_default</span>: <a class="support type" href="boolean.doc.html">Boolean</a>! </span></li><li></li><li><span class="tab"><span class="meta">rounding</span>: <a class="support type" href="int.doc.html">Int</a>! </span></li><li></li><li><span class="tab"><span class="meta">rounding_minutes</span>: <a class="support type" href="int.doc.html">Int</a>! </span></li><li></li><li><span class="tab"><span class="meta">api_token</span>: <a class="support type" href="string.doc.html">String</a>! </span></li><li></li><li><span class="tab"><span class="meta">at</span>: <a class="support type" href="datetime.doc.html">DateTime</a>! </span></li><li></li><li><span class="tab"><span class="meta">ical_enabled</span>: <a class="support type" href="boolean.doc.html">Boolean</a>! </span></li><li>}</li></ul></code>
+        <code class="highlight"><ul class="code" style="padding-left:42px"><li><span class="keyword operator ts">type</span> <span class="identifier">Workspace</span> {</li><li></li><li><span class="tab"><span class="meta">id</span>: <a class="support type" href="id.doc.html">ID</a>! </span></li><li></li><li><span class="tab"><span class="comment line">#   the name of the workspace</span></span></li><li><span class="tab"><span class="meta">name</span>: <a class="support type" href="string.doc.html">String</a>! </span></li><li></li><li><span class="tab"><span class="comment line">#   (if set, otherwise omited)</span></span></li><li><span class="tab"><span class="meta">logo_url</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="comment line">#   ???</span></span></li><li><span class="tab"><span class="meta">profile</span>: <a class="support type" href="int.doc.html">Int</a> </span></li><li></li><li><span class="tab"><span class="comment line">#   if it's a pro workspace or not. Shows if someone is paying for the workspace or </span></span></li><li><span class="tab"><span class="comment line">#   not</span></span></li><li><span class="tab"><span class="meta">premium</span>: <a class="support type" href="boolean.doc.html">Boolean</a>! </span></li><li></li><li><span class="tab"><span class="comment line">#   shows whether currently requesting user has admin access to the workspace</span></span></li><li><span class="tab"><span class="meta">admin</span>: <a class="support type" href="boolean.doc.html">Boolean</a>! </span></li><li></li><li><span class="tab"><span class="comment line">#   default hourly rate for workspace,</span></span></li><li><span class="tab"><span class="comment line">#   won't be shown to non-admins if the only_admins_see_billable_rates flag is set </span></span></li><li><span class="tab"><span class="comment line">#   to true</span></span></li><li><span class="tab"><span class="meta">default_hourly_rate</span>: <a class="support type" href="float.doc.html">Float</a> </span></li><li></li><li><span class="tab"><span class="comment line">#   default currency for workspace</span></span></li><li><span class="tab"><span class="meta">default_currency</span>: <a class="support type" href="string.doc.html">String</a> </span></li><li></li><li><span class="tab"><span class="comment line">#   whether only the admins can create projects or everybody</span></span></li><li><span class="tab"><span class="meta">only_admins_may_create_projects</span>: <a class="support type" href="boolean.doc.html">Boolean</a>! </span></li><li></li><li><span class="tab"><span class="comment line">#   whether only the admins can see billable rates or everybody</span></span></li><li><span class="tab"><span class="meta">only_admins_see_billable_rates</span>: <a class="support type" href="boolean.doc.html">Boolean</a>! </span></li><li></li><li><span class="tab"><span class="meta">only_admins_see_team_dashboard</span>: <a class="support type" href="boolean.doc.html">Boolean</a>! </span></li><li></li><li><span class="tab"><span class="meta">projects_billable_by_default</span>: <a class="support type" href="boolean.doc.html">Boolean</a>! </span></li><li></li><li><span class="tab"><span class="comment line">#   type of rounding</span></span></li><li><span class="tab"><span class="meta">rounding</span>: <a class="support type" href="int.doc.html">Int</a>! </span></li><li></li><li><span class="tab"><span class="comment line">#   round up to nearest minute</span></span></li><li><span class="tab"><span class="meta">rounding_minutes</span>: <a class="support type" href="int.doc.html">Int</a>! </span></li><li></li><li><span class="tab"><span class="meta">api_token</span>: <a class="support type" href="string.doc.html">String</a>! </span></li><li></li><li><span class="tab"><span class="comment line">#   timestamp that indicates the time workspace was last updated</span></span></li><li><span class="tab"><span class="meta">at</span>: <a class="support type" href="datetime.doc.html">DateTime</a>! </span></li><li></li><li><span class="tab"><span class="comment line">#   calendar integration?</span></span></li><li><span class="tab"><span class="meta">ical_enabled</span>: <a class="support type" href="boolean.doc.html">Boolean</a>! </span></li><li></li><li><span class="tab"><span class="comment line">#   most active users (from dashboard)</span></span></li><li><span class="tab"><span class="meta">user_activity</span>: [<a class="support type" href="workspaceuseractivity.doc.html">WorkspaceUserActivity</a>!]! </span></li><li></li><li><span class="tab"><span class="comment line">#   recent user activities (from dashboard)</span></span></li><li><span class="tab"><span class="meta">activity</span>: [<a class="support type" href="workspaceactivity.doc.html">WorkspaceActivity</a>!]! </span></li><li></li><li><span class="tab"><span class="comment line">#   users in workspace</span></span></li><li><span class="tab"><span class="meta">users</span>: [<a class="support type" href="workspaceuser.doc.html">WorkspaceUser</a>!]! </span></li><li></li><li><span class="tab"><span class="comment line">#   to get a successful response, the token owner must be workspace admin</span></span></li><li><span class="tab"><span class="meta">projects</span>: [<a class="support type" href="project.doc.html">Project</a>] </span></li><li></li><li><span class="tab"><span class="comment line">#   to get a successful response, the token owner must be workspace admin</span></span></li><li><span class="tab"><span class="meta">groups</span>: [<a class="support type" href="group.doc.html">Group</a>] </span></li><li>}</li></ul></code>
     </div>
 </section>
 <section>
