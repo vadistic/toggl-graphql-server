@@ -28,3 +28,7 @@ Alternatively 'Authorization': 'Basic xxx', where xxx is base64 encoded token:ap
 - [`graphdoc`](https://github.com/2fd/graphdoc)
 
 - [`json-to-simple-graphql`](https://github.com/walmartlabs/json-to-simple-graphql-schema) (cool idea)
+
+## TODO
+
+- [] Get project tasks

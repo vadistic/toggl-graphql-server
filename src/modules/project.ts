@@ -8,15 +8,17 @@ import {
   Project,
   ProjectUpdateInput,
   Scalars,
-  UniqueIdInput,
-} from '../generated/graphql'
-import { DataSource, AuthModule } from '../data-source'
-import { SharedModule } from './shared-module'
+} from '../generated'
+import { DataSource } from '../data-source'
+import { ID } from '../types'
+import { SharedModule, ProjectUserModule } from '.'
 
 // https://github.com/toggl/toggl_api_docs/blob/master/chapters/projects.md
 
 const typeDefs = gql`
   type Project {
+    id: ID!
+
     "the name of the project (string, required, unique for client and workspace)"
     name: String!
     "workspace ID, where the project will be saved (integer, required)"
@@ -45,6 +47,10 @@ const typeDefs = gql`
     rate: Float
     "timestamp indicating when the project was last updated (UTC time), read-only"
     at: DateTime!
+
+    # RELATIONS
+    users: [ProjectUser]
+    # tasks: Task!
   }
 
   input ProjectCreateInput {
@@ -63,54 +69,54 @@ const typeDefs = gql`
   }
 
   type Query {
-    project(where: UniqueIdInput!): Project
+    project(project_id: ID!): Project
   }
 
   type Mutation {
     createProject(data: ProjectCreateInput!): Project!
-    updateProject(where: UniqueIdInput!, data: ProjectUpdateInput!): Project!
-    deleteProject(where: UniqueIdInput!): [ID!]!
+    updateProject(project_id: ID!, data: ProjectUpdateInput!): Project!
+    deleteProject(project_id: ID!): [ID!]!
   }
 `
 
-export class ProjectsAPI extends DataSource {
-  async getProject({ id }: UniqueIdInput): Promise<Maybe<Project>> {
-    return this.get(`projects/${id}`).then(res => res.data)
+export class ProjectAPI extends DataSource {
+  async getProject(project_id: ID): Promise<Maybe<Project>> {
+    return this.get(`projects/${project_id}`).then(res => res.data)
   }
 
   async createProject(data: ProjectCreateInput): Promise<Project> {
     return this.post(`projects`, { project: data }).then(res => res.data)
   }
 
-  async updateProject({ id }: UniqueIdInput, data: ProjectUpdateInput): Promise<Project> {
-    return this.put(`projects/${id}`, { project: data }).then(res => res.data)
+  async updateProject(project_id: ID, data: ProjectUpdateInput): Promise<Project> {
+    return this.put(`projects/${project_id}`, { project: data }).then(res => res.data)
   }
 
-  async deleteProject({ id }: UniqueIdInput): Promise<Scalars['ID'][]> {
-    return this.delete(`projects/${id}`).then(res => res.data)
+  async deleteProject(project_id: ID): Promise<Scalars['ID'][]> {
+    return this.delete(`projects/${project_id}`).then(res => res.data)
   }
 }
 
 const Query: QueryResolvers<ModuleContext> = {
-  project: async (root, { where }, { injector }, info) =>
-    injector.get(ProjectsAPI).getProject(where),
+  project: async (root, { project_id }, { injector }, info) =>
+    injector.get(ProjectAPI).getProject(project_id),
 }
 
 const Mutation: MutationResolvers<ModuleContext> = {
   createProject: async (root, { data }, { injector }, info) =>
-    injector.get(ProjectsAPI).createProject(data),
+    injector.get(ProjectAPI).createProject(data),
 
-  updateProject: async (root, { where, data }, { injector }, info) =>
-    injector.get(ProjectsAPI).updateProject(where, data),
+  updateProject: async (root, { project_id, data }, { injector }, info) =>
+    injector.get(ProjectAPI).updateProject(project_id, data),
 
-  deleteProject: async (root, { where }, { injector }, info) =>
-    injector.get(ProjectsAPI).deleteProject(where),
+  deleteProject: async (root, { project_id }, { injector }, info) =>
+    injector.get(ProjectAPI).deleteProject(project_id),
 }
 
-export const ProjectsModule = new GraphQLModule({
+export const ProjectModule = new GraphQLModule({
   typeDefs,
-  imports: [SharedModule, AuthModule],
-  providers: [ProjectsAPI],
+  imports: [SharedModule, ProjectUserModule],
+  providers: [ProjectAPI],
   resolvers: {
     Query,
     Mutation,

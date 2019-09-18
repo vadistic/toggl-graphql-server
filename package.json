@@ -10,7 +10,7 @@
   "private": false,
   "scripts": {
     "start": "micro ./build/index.js",
-    "dev": "node -r ts-node/register node_modules/.bin/micro-dev ./src/index.ts",
+    "dev": "ts-node -T --log-error node_modules/.bin/micro-dev ./src/index.ts",
     "build": "tsc -b",
     "gen:doc": "graphdoc --force -e http://localhost:3000 -o ./docs",
     "gen:gql": "graphql-codegen --config codegen.yml",

@@ -19,6 +19,38 @@ export type BlogPost = {
   pub_date: Scalars['DateTime'],
 };
 
+export type Client = {
+   __typename?: 'Client',
+  id: Scalars['ID'],
+  /** the name of the client */
+  name: Scalars['String'],
+  /** workspace ID, where the client will be used */
+  wid: Scalars['ID'],
+  /** notes for the client */
+  notes?: Maybe<Scalars['String']>,
+  /** indicates the time client was last updated (UTC time) */
+  at: Scalars['DateTime'],
+  /** active: possible values true/false/both. By default true. If false, only archived projects are returned */
+  projects: Array<Project>,
+};
+
+
+export type ClientProjectsArgs = {
+  active?: Maybe<Scalars['String']>
+};
+
+export type ClientCreateInput = {
+  name: Scalars['String'],
+  wid: Scalars['ID'],
+  notes?: Maybe<Scalars['String']>,
+};
+
+/** workspace id can't be changed! */
+export type ClientUpdateInput = {
+  name: Scalars['String'],
+  notes?: Maybe<Scalars['String']>,
+};
+
 
 /** detailed user data */
 export type DetailedUser = {
@@ -87,34 +119,86 @@ export type DetailedUser = {
   duration_format?: Maybe<Scalars['String']>,
 };
 
+export type Group = {
+   __typename?: 'Group',
+  /** Unique ID of the group */
+  id: Scalars['ID'],
+  /** The name of the group (unique in workspace) */
+  name: Scalars['String'],
+  /** workspace ID, where the group will be used */
+  wid: Scalars['ID'],
+  /** indicates the time group was last updated */
+  at: Scalars['DateTime'],
+};
+
+export type GroupCreateInput = {
+  name: Scalars['String'],
+  wid: Scalars['ID'],
+};
+
+export type GroupUpdateInput = {
+  name: Scalars['String'],
+};
+
+export type InvitationResponse = {
+   __typename?: 'InvitationResponse',
+  workspace_users: Array<WorkspaceUser>,
+  notifications: Array<Scalars['String']>,
+};
+
 export type Mutation = {
    __typename?: 'Mutation',
-  createProject: Project,
-  updateProject: Project,
-  deleteProject: Array<Scalars['ID']>,
+  createTask: Task,
+  updateTask: Task,
+  deleteTask: Scalars['Boolean'],
+  updateManyTasks: Array<Task>,
+  deleteManyTasks: Scalars['Boolean'],
   createTag: Tag,
   updateTag: Tag,
-  deleteTag: Array<Scalars['ID']>,
+  deleteTag: Scalars['Boolean'],
   createUser: User,
   updateUser: User,
   resetToken: Scalars['String'],
+  inviteWorkspaceUser: InvitationResponse,
+  updateWorkspaceUser: WorkspaceUser,
+  deleteWorkspaceUser: Scalars['Boolean'],
+  createGroup: Group,
+  updateGroup: Group,
+  deleteGroup: Scalars['Boolean'],
+  createProject: Project,
+  updateProject: Project,
+  deleteProject: Array<Scalars['ID']>,
   updateWorkspace: Workspace,
+  createClient: Client,
+  updateClient: Client,
+  deleteClient: Scalars['Boolean'],
 };
 
 
-export type MutationCreateProjectArgs = {
-  data: ProjectCreateInput
+export type MutationCreateTaskArgs = {
+  data: TaskCreateInput
 };
 
 
-export type MutationUpdateProjectArgs = {
-  where: UniqueIdInput,
-  data: ProjectUpdateInput
+export type MutationUpdateTaskArgs = {
+  task_id: Scalars['ID'],
+  data: TaskUpdateInput
 };
 
 
-export type MutationDeleteProjectArgs = {
-  where: UniqueIdInput
+export type MutationDeleteTaskArgs = {
+  task_id: Scalars['ID']
+};
+
+
+export type MutationUpdateManyTasksArgs = {
+  task_ids: Array<Scalars['ID']>,
+  data: TaskUpdateInput
+};
+
+
+export type MutationDeleteManyTasksArgs = {
+  task_ids: Array<Scalars['ID']>
 };
 
 
@@ -124,13 +208,13 @@ export type MutationCreateTagArgs = {
 
 
 export type MutationUpdateTagArgs = {
-  where: UniqueIdInput,
+  tag_id: Scalars['ID'],
   data: TagUpdateInput
 };
 
 
 export type MutationDeleteTagArgs = {
-  where: UniqueIdInput
+  tag_id: Scalars['ID']
 };
 
 
@@ -144,9 +228,74 @@ export type MutationUpdateUserArgs = {
 };
 
 
+export type MutationInviteWorkspaceUserArgs = {
+  workspace_id: Scalars['ID'],
+  data: WorkspaceUserInviteInput
+};
+
+
+export type MutationUpdateWorkspaceUserArgs = {
+  workspace_user_id: Scalars['ID'],
+  data: WorkspaceUserUpdateInput
+};
+
+
+export type MutationDeleteWorkspaceUserArgs = {
+  workspace_user_id: Scalars['ID']
+};
+
+
+export type MutationCreateGroupArgs = {
+  data: GroupCreateInput
+};
+
+
+export type MutationUpdateGroupArgs = {
+  group_id: Scalars['ID'],
+  data: GroupUpdateInput
+};
+
+
+export type MutationDeleteGroupArgs = {
+  group_id: Scalars['ID']
+};
+
+
+export type MutationCreateProjectArgs = {
+  data: ProjectCreateInput
+};
+
+
+export type MutationUpdateProjectArgs = {
+  project_id: Scalars['ID'],
+  data: ProjectUpdateInput
+};
+
+
+export type MutationDeleteProjectArgs = {
+  project_id: Scalars['ID']
+};
+
+
 export type MutationUpdateWorkspaceArgs = {
-  where: UniqueIdInput,
+  workspace_id: Scalars['ID'],
   data: WorkspaceUpdateInput
+};
+
+
+export type MutationCreateClientArgs = {
+  data: ClientCreateInput
+};
+
+
+export type MutationUpdateClientArgs = {
+  client_id: Scalars['ID'],
+  data: ClientUpdateInput
+};
+
+
+export type MutationDeleteClientArgs = {
+  client_id: Scalars['ID']
 };
 
 /** ??? */
@@ -159,6 +308,7 @@ export type Obm = {
 
 export type Project = {
    __typename?: 'Project',
+  id: Scalars['ID'],
   /** the name of the project (string, required, unique for client and workspace) */
   name: Scalars['String'],
   /** workspace ID, where the project will be saved (integer, required) */
@@ -194,6 +344,7 @@ export type Project = {
   rate?: Maybe<Scalars['Float']>,
   /** timestamp indicating when the project was last updated (UTC time), read-only */
   at: Scalars['DateTime'],
+  users?: Maybe<Array<Maybe<ProjectUser>>>,
 };
 
 export type ProjectCreateInput = {
@@ -211,23 +362,51 @@ export type ProjectUpdateInput = {
   color?: Maybe<Scalars['Int']>,
 };
 
+export type ProjectUser = {
+   __typename?: 'ProjectUser',
+  id: Scalars['ID'],
+  /** project ID */
+  pid: Scalars['ID'],
+  /** user ID, who is added to the project */
+  uid: Scalars['ID'],
+  /** workspace ID, where the project belongs to */
+  wid: Scalars['ID'],
+  /** admin rights for this project */
+  manager: Scalars['Boolean'],
+  /** 
+ * hourly rate for the project user,
+   * only for pro workspaces,
+   * in the currency of the project's client or in workspace default currency.
+ **/
+  rate?: Maybe<Scalars['Float']>,
+  /** when the project user was last updated */
+  at: Scalars['DateTime'],
+};
+
 export type Query = {
    __typename?: 'Query',
-  project?: Maybe<Project>,
   /** get current user data */
   user: DetailedUser,
+  project?: Maybe<Project>,
   workspace?: Maybe<Workspace>,
   workspaces: Array<Workspace>,
+  client?: Maybe<Client>,
+  clients: Array<Client>,
 };
 
 
 export type QueryProjectArgs = {
-  where: UniqueIdInput
+  project_id: Scalars['ID']
 };
 
 
 export type QueryWorkspaceArgs = {
-  where: UniqueIdInput
+  workspace_id: Scalars['ID']
+};
+
+
+export type QueryClientArgs = {
+  client_id: Scalars['ID']
 };
 
 export type Tag = {
@@ -249,9 +428,40 @@ export type TagUpdateInput = {
   name: Scalars['String'],
 };
 
-/** identifies entity by unique ID */
-export type UniqueIdInput = {
+export type Task = {
+   __typename?: 'Task',
   id: Scalars['ID'],
+  /** the name of the task */
+  name: Scalars['String'],
+  /** project ID for a task */
+  pid: Scalars['ID'],
+  /** 
+ * workspace ID, where the task will be saved
+   * (project's workspace id is used when not supplied
+ **/
+  wid: Scalars['ID'],
+  /** user ID, to whom the task is assigned to */
+  uid?: Maybe<Scalars['ID']>,
+  /** estimated duration of task in seconds */
+  estimated_seconds?: Maybe<Scalars['Int']>,
+  /** whether the task is done or not (by default true) */
+  active: Scalars['Boolean'],
+  /** indicates the time task was last updated */
+  at: Scalars['DateTime'],
+  /** total time tracked (in seconds) for the task */
+  tracked_seconds: Scalars['Int'],
+};
+
+export type TaskCreateInput = {
+  name: Scalars['String'],
+  pid: Scalars['ID'],
+  wid?: Maybe<Scalars['ID']>,
+  active?: Maybe<Scalars['Boolean']>,
+};
+
+export type TaskUpdateInput = {
+  name: Scalars['String'],
+  active?: Maybe<Scalars['Boolean']>,
 };
 
 /** basic user data */
@@ -314,38 +524,133 @@ export type UserUpdateInput = {
 export type Workspace = {
    __typename?: 'Workspace',
   id: Scalars['ID'],
+  /** the name of the workspace */
   name: Scalars['String'],
+  /** (if set, otherwise omited) */
   logo_url?: Maybe<Scalars['String']>,
+  /** ??? */
   profile?: Maybe<Scalars['Int']>,
+  /** if it's a pro workspace or not. Shows if someone is paying for the workspace or not */
   premium: Scalars['Boolean'],
+  /** shows whether currently requesting user has admin access to the workspace */
   admin: Scalars['Boolean'],
+  /** 
+ * default hourly rate for workspace,
+   * won't be shown to non-admins if the only_admins_see_billable_rates flag is set to true
+ **/
   default_hourly_rate?: Maybe<Scalars['Float']>,
+  /** default currency for workspace */
   default_currency?: Maybe<Scalars['String']>,
+  /** whether only the admins can create projects or everybody */
   only_admins_may_create_projects: Scalars['Boolean'],
+  /** whether only the admins can see billable rates or everybody */
   only_admins_see_billable_rates: Scalars['Boolean'],
   only_admins_see_team_dashboard: Scalars['Boolean'],
   projects_billable_by_default: Scalars['Boolean'],
+  /** type of rounding */
   rounding: Scalars['Int'],
+  /** round up to nearest minute */
   rounding_minutes: Scalars['Int'],
   api_token: Scalars['String'],
+  /** timestamp that indicates the time workspace was last updated */
   at: Scalars['DateTime'],
+  /** calendar integration? */
   ical_enabled: Scalars['Boolean'],
+  /** most active users (from dashboard) */
+  user_activity: Array<WorkspaceUserActivity>,
+  /** recent user activities (from dashboard) */
+  activity: Array<WorkspaceActivity>,
+  /** users in workspace */
+  users: Array<WorkspaceUser>,
+  /** to get a successful response, the token owner must be workspace admin */
+  projects?: Maybe<Array<Maybe<Project>>>,
+  /** to get a successful response, the token owner must be workspace admin */
+  groups?: Maybe<Array<Maybe<Group>>>,
+};
+
+export type WorkspaceActivity = {
+   __typename?: 'WorkspaceActivity',
+  /** user ID */
+  user_id: Scalars['ID'],
+  /** project ID (ID is 0 if time entry doesn't have project connected to it) */
+  project_id: Scalars['ID'],
+  /** 
+ * Time entry duration in seconds.
+   * If the time entry is currently running, the duration attribute contains a
+   * negative value, denoting the start of the time entry in seconds since epoch (Jan 1 1970).
+   * The correct duration can be calculated as current_time + duration, where
+   * current_time is the current time in seconds since epoch.
+ **/
+  duration: Scalars['Int'],
+  /** Description property is not present if time entry description is empty */
+  description?: Maybe<Scalars['String']>,
+  /** time entry stop time (ISO 8601 date and time. Stop property is not present when time entry is still running) */
+  stop?: Maybe<Scalars['DateTime']>,
+  /** task id, if applicable */
+  tid?: Maybe<Scalars['ID']>,
 };
 
 export type WorkspaceUpdateInput = {
+  /** the name of the workspace */
   name: Scalars['String'],
+  /** (if set, otherwise omited) */
   logo_url?: Maybe<Scalars['String']>,
+  /** ??? */
   profile?: Maybe<Scalars['Int']>,
+  /** if it's a pro workspace or not. Shows if someone is paying for the workspace or not */
   premium: Scalars['Boolean'],
+  /** shows whether currently requesting user has admin access to the workspace */
   admin: Scalars['Boolean'],
+  /** 
+ * default hourly rate for workspace,
+   * won't be shown to non-admins if the only_admins_see_billable_rates flag is set to true
+ **/
   default_hourly_rate?: Maybe<Scalars['Float']>,
+  /** default currency for workspace */
   default_currency?: Maybe<Scalars['String']>,
+  /** whether only the admins can create projects or everybody */
   only_admins_may_create_projects: Scalars['Boolean'],
+  /** whether only the admins can see billable rates or everybody */
   only_admins_see_billable_rates: Scalars['Boolean'],
   only_admins_see_team_dashboard: Scalars['Boolean'],
   projects_billable_by_default: Scalars['Boolean'],
+  /** type of rounding */
   rounding: Scalars['Int'],
+  /** round up to nearest minute */
   rounding_minutes: Scalars['Int'],
+};
+
+export type WorkspaceUser = {
+   __typename?: 'WorkspaceUser',
+  id: Scalars['ID'],
+  /** user id of the workspace user */
+  uid: Scalars['ID'],
+  /** if user is workspace admin */
+  admin: Scalars['Boolean'],
+  /** if the workspace user has accepted the invitation to this workspace */
+  active: Scalars['Boolean'],
+  /** 
+ * if user has not accepted the invitation the url for accepting his/her
+   * invitation is sent when the request is made by workspace admin
+ **/
+  invite_url?: Maybe<Scalars['String']>,
+};
+
+export type WorkspaceUserActivity = {
+   __typename?: 'WorkspaceUserActivity',
+  /** user ID */
+  user_id: Scalars['ID'],
+  /** sum (in seconds) of time entry durations that have been created during last 7 days */
+  duration: Scalars['Int'],
+};
+
+export type WorkspaceUserInviteInput = {
+  emails: Array<Scalars['String']>,
+};
+
+/** Only the admin flag can be changed. */
+export type WorkspaceUserUpdateInput = {
+  admin: Scalars['Boolean'],
 };
 
 
@@ -419,54 +724,84 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Query: ResolverTypeWrapper<{}>,
-  UniqueIdInput: UniqueIdInput,
+  DetailedUser: ResolverTypeWrapper<DetailedUser>,
   ID: ResolverTypeWrapper<Scalars['ID']>,
-  Project: ResolverTypeWrapper<Project>,
   String: ResolverTypeWrapper<Scalars['String']>,
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>,
   Int: ResolverTypeWrapper<Scalars['Int']>,
+  Workspace: ResolverTypeWrapper<Workspace>,
   Float: ResolverTypeWrapper<Scalars['Float']>,
   DateTime: ResolverTypeWrapper<Scalars['DateTime']>,
-  DetailedUser: ResolverTypeWrapper<DetailedUser>,
-  Workspace: ResolverTypeWrapper<Workspace>,
+  WorkspaceUserActivity: ResolverTypeWrapper<WorkspaceUserActivity>,
+  WorkspaceActivity: ResolverTypeWrapper<WorkspaceActivity>,
+  WorkspaceUser: ResolverTypeWrapper<WorkspaceUser>,
+  Project: ResolverTypeWrapper<Project>,
+  ProjectUser: ResolverTypeWrapper<ProjectUser>,
+  Group: ResolverTypeWrapper<Group>,
   BlogPost: ResolverTypeWrapper<BlogPost>,
+  Client: ResolverTypeWrapper<Client>,
   Mutation: ResolverTypeWrapper<{}>,
-  ProjectCreateInput: ProjectCreateInput,
-  ProjectUpdateInput: ProjectUpdateInput,
+  TaskCreateInput: TaskCreateInput,
+  Task: ResolverTypeWrapper<Task>,
+  TaskUpdateInput: TaskUpdateInput,
   TagCreateInput: TagCreateInput,
   Tag: ResolverTypeWrapper<Tag>,
   TagUpdateInput: TagUpdateInput,
   UserCreateInput: UserCreateInput,
   User: ResolverTypeWrapper<User>,
   UserUpdateInput: UserUpdateInput,
+  WorkspaceUserInviteInput: WorkspaceUserInviteInput,
+  InvitationResponse: ResolverTypeWrapper<InvitationResponse>,
+  WorkspaceUserUpdateInput: WorkspaceUserUpdateInput,
+  GroupCreateInput: GroupCreateInput,
+  GroupUpdateInput: GroupUpdateInput,
+  ProjectCreateInput: ProjectCreateInput,
+  ProjectUpdateInput: ProjectUpdateInput,
   WorkspaceUpdateInput: WorkspaceUpdateInput,
+  ClientCreateInput: ClientCreateInput,
+  ClientUpdateInput: ClientUpdateInput,
   Obm: ResolverTypeWrapper<Obm>,
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   Query: {},
-  UniqueIdInput: UniqueIdInput,
+  DetailedUser: DetailedUser,
   ID: Scalars['ID'],
-  Project: Project,
   String: Scalars['String'],
   Boolean: Scalars['Boolean'],
   Int: Scalars['Int'],
+  Workspace: Workspace,
   Float: Scalars['Float'],
   DateTime: Scalars['DateTime'],
-  DetailedUser: DetailedUser,
-  Workspace: Workspace,
+  WorkspaceUserActivity: WorkspaceUserActivity,
+  WorkspaceActivity: WorkspaceActivity,
+  WorkspaceUser: WorkspaceUser,
+  Project: Project,
+  ProjectUser: ProjectUser,
+  Group: Group,
   BlogPost: BlogPost,
+  Client: Client,
   Mutation: {},
-  ProjectCreateInput: ProjectCreateInput,
-  ProjectUpdateInput: ProjectUpdateInput,
+  TaskCreateInput: TaskCreateInput,
+  Task: Task,
+  TaskUpdateInput: TaskUpdateInput,
   TagCreateInput: TagCreateInput,
   Tag: Tag,
   TagUpdateInput: TagUpdateInput,
   UserCreateInput: UserCreateInput,
   User: User,
   UserUpdateInput: UserUpdateInput,
+  WorkspaceUserInviteInput: WorkspaceUserInviteInput,
+  InvitationResponse: InvitationResponse,
+  WorkspaceUserUpdateInput: WorkspaceUserUpdateInput,
+  GroupCreateInput: GroupCreateInput,
+  GroupUpdateInput: GroupUpdateInput,
+  ProjectCreateInput: ProjectCreateInput,
+  ProjectUpdateInput: ProjectUpdateInput,
   WorkspaceUpdateInput: WorkspaceUpdateInput,
+  ClientCreateInput: ClientCreateInput,
+  ClientUpdateInput: ClientUpdateInput,
   Obm: Obm,
 };
 
@@ -475,6 +810,15 @@ export type BlogPostResolvers<ContextType = any, ParentType extends ResolversPar
   url?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   category?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   pub_date?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>,
+};
+
+export type ClientResolvers<ContextType = any, ParentType extends ResolversParentTypes['Client'] = ResolversParentTypes['Client']> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  wid?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
+  notes?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  at?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>,
+  projects?: Resolver<Array<ResolversTypes['Project']>, ParentType, ContextType, ClientProjectsArgs>,
 };
 
 export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['DateTime'], any> {
@@ -516,17 +860,43 @@ export type DetailedUserResolvers<ContextType = any, ParentType extends Resolver
   duration_format?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
 };
 
+export type GroupResolvers<ContextType = any, ParentType extends ResolversParentTypes['Group'] = ResolversParentTypes['Group']> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  wid?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
+  at?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>,
+};
+
+export type InvitationResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['InvitationResponse'] = ResolversParentTypes['InvitationResponse']> = {
+  workspace_users?: Resolver<Array<ResolversTypes['WorkspaceUser']>, ParentType, ContextType>,
+  notifications?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>,
+};
+
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  createProject?: Resolver<ResolversTypes['Project'], ParentType, ContextType, RequireFields<MutationCreateProjectArgs, 'data'>>,
-  updateProject?: Resolver<ResolversTypes['Project'], ParentType, ContextType, RequireFields<MutationUpdateProjectArgs, 'where' | 'data'>>,
-  deleteProject?: Resolver<Array<ResolversTypes['ID']>, ParentType, ContextType, RequireFields<MutationDeleteProjectArgs, 'where'>>,
+  createTask?: Resolver<ResolversTypes['Task'], ParentType, ContextType, RequireFields<MutationCreateTaskArgs, 'data'>>,
+  updateTask?: Resolver<ResolversTypes['Task'], ParentType, ContextType, RequireFields<MutationUpdateTaskArgs, 'task_id' | 'data'>>,
+  deleteTask?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeleteTaskArgs, 'task_id'>>,
+  updateManyTasks?: Resolver<Array<ResolversTypes['Task']>, ParentType, ContextType, RequireFields<MutationUpdateManyTasksArgs, 'task_ids' | 'data'>>,
+  deleteManyTasks?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeleteManyTasksArgs, 'task_ids'>>,
   createTag?: Resolver<ResolversTypes['Tag'], ParentType, ContextType, RequireFields<MutationCreateTagArgs, 'data'>>,
-  updateTag?: Resolver<ResolversTypes['Tag'], ParentType, ContextType, RequireFields<MutationUpdateTagArgs, 'where' | 'data'>>,
-  deleteTag?: Resolver<Array<ResolversTypes['ID']>, ParentType, ContextType, RequireFields<MutationDeleteTagArgs, 'where'>>,
+  updateTag?: Resolver<ResolversTypes['Tag'], ParentType, ContextType, RequireFields<MutationUpdateTagArgs, 'tag_id' | 'data'>>,
+  deleteTag?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeleteTagArgs, 'tag_id'>>,
   createUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'data'>>,
   updateUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationUpdateUserArgs, 'data'>>,
   resetToken?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
-  updateWorkspace?: Resolver<ResolversTypes['Workspace'], ParentType, ContextType, RequireFields<MutationUpdateWorkspaceArgs, 'where' | 'data'>>,
+  inviteWorkspaceUser?: Resolver<ResolversTypes['InvitationResponse'], ParentType, ContextType, RequireFields<MutationInviteWorkspaceUserArgs, 'workspace_id' | 'data'>>,
+  updateWorkspaceUser?: Resolver<ResolversTypes['WorkspaceUser'], ParentType, ContextType, RequireFields<MutationUpdateWorkspaceUserArgs, 'workspace_user_id' | 'data'>>,
+  deleteWorkspaceUser?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeleteWorkspaceUserArgs, 'workspace_user_id'>>,
+  createGroup?: Resolver<ResolversTypes['Group'], ParentType, ContextType, RequireFields<MutationCreateGroupArgs, 'data'>>,
+  updateGroup?: Resolver<ResolversTypes['Group'], ParentType, ContextType, RequireFields<MutationUpdateGroupArgs, 'group_id' | 'data'>>,
+  deleteGroup?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeleteGroupArgs, 'group_id'>>,
+  createProject?: Resolver<ResolversTypes['Project'], ParentType, ContextType, RequireFields<MutationCreateProjectArgs, 'data'>>,
+  updateProject?: Resolver<ResolversTypes['Project'], ParentType, ContextType, RequireFields<MutationUpdateProjectArgs, 'project_id' | 'data'>>,
+  deleteProject?: Resolver<Array<ResolversTypes['ID']>, ParentType, ContextType, RequireFields<MutationDeleteProjectArgs, 'project_id'>>,
+  updateWorkspace?: Resolver<ResolversTypes['Workspace'], ParentType, ContextType, RequireFields<MutationUpdateWorkspaceArgs, 'workspace_id' | 'data'>>,
+  createClient?: Resolver<ResolversTypes['Client'], ParentType, ContextType, RequireFields<MutationCreateClientArgs, 'data'>>,
+  updateClient?: Resolver<ResolversTypes['Client'], ParentType, ContextType, RequireFields<MutationUpdateClientArgs, 'client_id' | 'data'>>,
+  deleteClient?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeleteClientArgs, 'client_id'>>,
 };
 
 export type ObmResolvers<ContextType = any, ParentType extends ResolversParentTypes['Obm'] = ResolversParentTypes['Obm']> = {
@@ -536,6 +906,7 @@ export type ObmResolvers<ContextType = any, ParentType extends ResolversParentTy
 };
 
 export type ProjectResolvers<ContextType = any, ParentType extends ResolversParentTypes['Project'] = ResolversParentTypes['Project']> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   wid?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
   cid?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>,
@@ -550,19 +921,44 @@ export type ProjectResolvers<ContextType = any, ParentType extends ResolversPare
   hex_color?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
   rate?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>,
   at?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>,
+  users?: Resolver<Maybe<Array<Maybe<ResolversTypes['ProjectUser']>>>, ParentType, ContextType>,
+};
+
+export type ProjectUserResolvers<ContextType = any, ParentType extends ResolversParentTypes['ProjectUser'] = ResolversParentTypes['ProjectUser']> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
+  pid?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
+  uid?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
+  wid?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
+  manager?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
+  rate?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>,
+  at?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>,
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  project?: Resolver<Maybe<ResolversTypes['Project']>, ParentType, ContextType, RequireFields<QueryProjectArgs, 'where'>>,
   user?: Resolver<ResolversTypes['DetailedUser'], ParentType, ContextType>,
-  workspace?: Resolver<Maybe<ResolversTypes['Workspace']>, ParentType, ContextType, RequireFields<QueryWorkspaceArgs, 'where'>>,
+  project?: Resolver<Maybe<ResolversTypes['Project']>, ParentType, ContextType, RequireFields<QueryProjectArgs, 'project_id'>>,
+  workspace?: Resolver<Maybe<ResolversTypes['Workspace']>, ParentType, ContextType, RequireFields<QueryWorkspaceArgs, 'workspace_id'>>,
   workspaces?: Resolver<Array<ResolversTypes['Workspace']>, ParentType, ContextType>,
+  client?: Resolver<Maybe<ResolversTypes['Client']>, ParentType, ContextType, RequireFields<QueryClientArgs, 'client_id'>>,
+  clients?: Resolver<Array<ResolversTypes['Client']>, ParentType, ContextType>,
 };
 
 export type TagResolvers<ContextType = any, ParentType extends ResolversParentTypes['Tag'] = ResolversParentTypes['Tag']> = {
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   wid?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
+};
+
+export type TaskResolvers<ContextType = any, ParentType extends ResolversParentTypes['Task'] = ResolversParentTypes['Task']> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  pid?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
+  wid?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
+  uid?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>,
+  estimated_seconds?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>,
+  active?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
+  at?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>,
+  tracked_seconds?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
 };
 
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
@@ -598,19 +994,54 @@ export type WorkspaceResolvers<ContextType = any, ParentType extends ResolversPa
   api_token?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   at?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>,
   ical_enabled?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
+  user_activity?: Resolver<Array<ResolversTypes['WorkspaceUserActivity']>, ParentType, ContextType>,
+  activity?: Resolver<Array<ResolversTypes['WorkspaceActivity']>, ParentType, ContextType>,
+  users?: Resolver<Array<ResolversTypes['WorkspaceUser']>, ParentType, ContextType>,
+  projects?: Resolver<Maybe<Array<Maybe<ResolversTypes['Project']>>>, ParentType, ContextType>,
+  groups?: Resolver<Maybe<Array<Maybe<ResolversTypes['Group']>>>, ParentType, ContextType>,
+};
+
+export type WorkspaceActivityResolvers<ContextType = any, ParentType extends ResolversParentTypes['WorkspaceActivity'] = ResolversParentTypes['WorkspaceActivity']> = {
+  user_id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
+  project_id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
+  duration?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  stop?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>,
+  tid?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>,
+};
+
+export type WorkspaceUserResolvers<ContextType = any, ParentType extends ResolversParentTypes['WorkspaceUser'] = ResolversParentTypes['WorkspaceUser']> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
+  uid?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
+  admin?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
+  active?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
+  invite_url?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+};
+
+export type WorkspaceUserActivityResolvers<ContextType = any, ParentType extends ResolversParentTypes['WorkspaceUserActivity'] = ResolversParentTypes['WorkspaceUserActivity']> = {
+  user_id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
+  duration?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
 };
 
 export type Resolvers<ContextType = any> = {
   BlogPost?: BlogPostResolvers<ContextType>,
+  Client?: ClientResolvers<ContextType>,
   DateTime?: GraphQLScalarType,
   DetailedUser?: DetailedUserResolvers<ContextType>,
+  Group?: GroupResolvers<ContextType>,
+  InvitationResponse?: InvitationResponseResolvers<ContextType>,
   Mutation?: MutationResolvers<ContextType>,
   Obm?: ObmResolvers<ContextType>,
   Project?: ProjectResolvers<ContextType>,
+  ProjectUser?: ProjectUserResolvers<ContextType>,
   Query?: QueryResolvers<ContextType>,
   Tag?: TagResolvers<ContextType>,
+  Task?: TaskResolvers<ContextType>,
   User?: UserResolvers<ContextType>,
   Workspace?: WorkspaceResolvers<ContextType>,
+  WorkspaceActivity?: WorkspaceActivityResolvers<ContextType>,
+  WorkspaceUser?: WorkspaceUserResolvers<ContextType>,
+  WorkspaceUserActivity?: WorkspaceUserActivityResolvers<ContextType>,
 };
 
 

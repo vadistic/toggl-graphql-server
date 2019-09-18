@@ -8,9 +8,9 @@ import {
   User,
   UserUpdateInput,
   DetailedUser,
-} from '../generated/graphql'
-import { DataSource, AuthModule } from '../data-source'
-import { SharedModule } from './shared-module'
+} from '../generated'
+import { DataSource } from '../data-source'
+import { SharedModule } from '.'
 
 // https://github.com/toggl/toggl_api_docs/blob/master/chapters/users.md
 
@@ -156,7 +156,7 @@ const typeDefs = gql`
   }
 `
 
-export class UsersAPI extends DataSource {
+export class UserAPI extends DataSource {
   async getUser(): Promise<DetailedUser> {
     return this.get(`me`).then(res => res.data)
   }
@@ -175,19 +175,19 @@ export class UsersAPI extends DataSource {
 }
 
 const Query: QueryResolvers<ModuleContext> = {
-  user: async (root, args, { injector }, info) => injector.get(UsersAPI).getUser(),
+  user: async (root, args, { injector }, info) => injector.get(UserAPI).getUser(),
 }
 
 const Mutation: MutationResolvers<ModuleContext> = {
-  createUser: async (root, { data }, { injector }, info) => injector.get(UsersAPI).createUser(data),
-  updateUser: async (root, { data }, { injector }, info) => injector.get(UsersAPI).updateUser(data),
-  resetToken: async (root, args, { injector }, info) => injector.get(UsersAPI).resetToken(),
+  createUser: async (root, { data }, { injector }, info) => injector.get(UserAPI).createUser(data),
+  updateUser: async (root, { data }, { injector }, info) => injector.get(UserAPI).updateUser(data),
+  resetToken: async (root, args, { injector }, info) => injector.get(UserAPI).resetToken(),
 }
 
-export const UsersModule = new GraphQLModule({
+export const UserModule = new GraphQLModule({
   typeDefs,
-  imports: [SharedModule, AuthModule],
-  providers: [UsersAPI],
+  imports: [SharedModule],
+  providers: [UserAPI],
   resolvers: {
     Query,
     Mutation,
