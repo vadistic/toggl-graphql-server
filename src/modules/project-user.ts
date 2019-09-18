@@ -3,7 +3,7 @@ import gql from 'graphql-tag'
 import { DataSource } from '../data-source'
 import { MutationResolvers, ProjectResolvers, ProjectUser } from '../generated'
 import { ID } from '../types'
-import { SharedModule } from '.'
+import { SharedModule } from './shared'
 
 // https://github.com/toggl/toggl_api_docs/blob/master/chapters/project_users.md
 
@@ -31,10 +31,6 @@ const typeDefs = gql`
 
 class ProjectUserAPI extends DataSource {
   async getProjectUsers(project_id: ID): Promise<ProjectUser[]> {
-    const res = await this.get(`projects/${project_id}/project_users`)
-
-    console.log(res)
-
     return this.get(`projects/${project_id}/project_users`)
   }
 }

@@ -10,7 +10,7 @@ import {
   WorkspaceUser,
   WorkspaceResolvers,
 } from '../generated'
-import { SharedModule } from '.'
+import { SharedModule } from './shared'
 
 // https://github.com/toggl/toggl_api_docs/blob/master/chapters/workspace_users.md
 

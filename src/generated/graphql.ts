@@ -45,7 +45,7 @@ export type ClientCreateInput = {
   notes?: Maybe<Scalars['String']>,
 };
 
-/** workspace id can't be changed! */
+/** workspace_id can't be changed! */
 export type ClientUpdateInput = {
   name: Scalars['String'],
   notes?: Maybe<Scalars['String']>,
@@ -345,6 +345,7 @@ export type Project = {
   /** timestamp indicating when the project was last updated (UTC time), read-only */
   at: Scalars['DateTime'],
   users?: Maybe<Array<Maybe<ProjectUser>>>,
+  tasks?: Maybe<Array<Maybe<Task>>>,
 };
 
 export type ProjectCreateInput = {
@@ -737,12 +738,12 @@ export type ResolversTypes = {
   WorkspaceUser: ResolverTypeWrapper<WorkspaceUser>,
   Project: ResolverTypeWrapper<Project>,
   ProjectUser: ResolverTypeWrapper<ProjectUser>,
+  Task: ResolverTypeWrapper<Task>,
   Group: ResolverTypeWrapper<Group>,
   BlogPost: ResolverTypeWrapper<BlogPost>,
   Client: ResolverTypeWrapper<Client>,
   Mutation: ResolverTypeWrapper<{}>,
   TaskCreateInput: TaskCreateInput,
-  Task: ResolverTypeWrapper<Task>,
   TaskUpdateInput: TaskUpdateInput,
   TagCreateInput: TagCreateInput,
   Tag: ResolverTypeWrapper<Tag>,
@@ -779,12 +780,12 @@ export type ResolversParentTypes = {
   WorkspaceUser: WorkspaceUser,
   Project: Project,
   ProjectUser: ProjectUser,
+  Task: Task,
   Group: Group,
   BlogPost: BlogPost,
   Client: Client,
   Mutation: {},
   TaskCreateInput: TaskCreateInput,
-  Task: Task,
   TaskUpdateInput: TaskUpdateInput,
   TagCreateInput: TagCreateInput,
   Tag: Tag,
@@ -922,6 +923,7 @@ export type ProjectResolvers<ContextType = any, ParentType extends ResolversPare
   rate?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>,
   at?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>,
   users?: Resolver<Maybe<Array<Maybe<ResolversTypes['ProjectUser']>>>, ParentType, ContextType>,
+  tasks?: Resolver<Maybe<Array<Maybe<ResolversTypes['Task']>>>, ParentType, ContextType>,
 };
 
 export type ProjectUserResolvers<ContextType = any, ParentType extends ResolversParentTypes['ProjectUser'] = ResolversParentTypes['ProjectUser']> = {

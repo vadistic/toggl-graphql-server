@@ -10,7 +10,7 @@ import {
   DetailedUser,
 } from '../generated'
 import { DataSource } from '../data-source'
-import { SharedModule } from '.'
+import { SharedModule } from './shared'
 
 // https://github.com/toggl/toggl_api_docs/blob/master/chapters/users.md
 

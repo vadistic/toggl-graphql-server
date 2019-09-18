@@ -8,10 +8,14 @@ import {
   Project,
   ProjectUpdateInput,
   Scalars,
+  Task,
+  ProjectResolvers,
 } from '../generated'
 import { DataSource } from '../data-source'
 import { ID } from '../types'
-import { SharedModule, ProjectUserModule } from '.'
+import { SharedModule } from './shared'
+import { ProjectUserModule } from './project-user'
+import { TaskModule } from './task'
 
 // https://github.com/toggl/toggl_api_docs/blob/master/chapters/projects.md
 
@@ -49,8 +53,9 @@ const typeDefs = gql`
     at: DateTime!
 
     # RELATIONS
+
     users: [ProjectUser]
-    # tasks: Task!
+    tasks: [Task]
   }
 
   input ProjectCreateInput {
@@ -84,6 +89,10 @@ export class ProjectAPI extends DataSource {
     return this.get(`projects/${project_id}`).then(res => res.data)
   }
 
+  async getProjectTasks(project_id: ID): Promise<Maybe<Task[]>> {
+    return this.get(`projects/${project_id}/tasks`)
+  }
+
   async createProject(data: ProjectCreateInput): Promise<Project> {
     return this.post(`projects`, { project: data }).then(res => res.data)
   }
@@ -113,12 +122,18 @@ const Mutation: MutationResolvers<ModuleContext> = {
     injector.get(ProjectAPI).deleteProject(project_id),
 }
 
+const Project: ProjectResolvers<ModuleContext> = {
+  tasks: async (root, args, { injector }, info) =>
+    injector.get(ProjectAPI).getProjectTasks(root.id),
+}
+
 export const ProjectModule = new GraphQLModule({
   typeDefs,
-  imports: [SharedModule, ProjectUserModule],
+  imports: [SharedModule, ProjectUserModule, TaskModule],
   providers: [ProjectAPI],
   resolvers: {
     Query,
     Mutation,
+    Project,
   },
 })

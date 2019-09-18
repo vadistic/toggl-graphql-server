@@ -13,13 +13,11 @@ import {
 import { DataSource } from '../data-source'
 import { ID } from '../types'
 import { gql as graphql } from '../gql'
-import {
-  SharedModule,
-  WorkspaceActivityModule,
-  WorkspaceUserModule,
-  WorkspaceGroupModule,
-  ProjectModule,
-} from '.'
+import { SharedModule } from './shared'
+import { WorkspaceActivityModule } from './workspace-activity'
+import { WorkspaceUserModule } from './workspace-users'
+import { WorkspaceGroupModule } from './workspace-group'
+import { ProjectModule } from './project'
 
 // https://github.com/toggl/toggl_api_docs/blob/master/chapters/workspaces.md
 
@@ -142,7 +140,7 @@ const Workspace: WorkspaceResolvers<ModuleContext> = {
     injector.get(WorkspaceAPI).getWorkspaceProjects(root.id),
 }
 
-export const WorkspacModule = new GraphQLModule({
+export const WorkspaceModule = new GraphQLModule({
   typeDefs,
   imports: [
     SharedModule,

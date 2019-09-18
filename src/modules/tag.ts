@@ -3,7 +3,7 @@ import gql from 'graphql-tag'
 import { MutationResolvers, Tag, TagCreateInput, TagUpdateInput } from '../generated'
 import { DataSource } from '../data-source'
 import { ID } from '../types'
-import { SharedModule } from '.'
+import { SharedModule } from './shared'
 
 // https://github.com/toggl/toggl_api_docs/blob/master/chapters/tags.md
 

@@ -9,7 +9,7 @@ import {
 } from '../generated'
 import { DataSource } from '../data-source'
 import { ID } from '../types'
-import { SharedModule, ProjectUserModule } from '.'
+import { SharedModule } from './shared'
 
 // https://github.com/toggl/toggl_api_docs/blob/master/chapters/projects.md
 
@@ -67,15 +67,15 @@ export class TaskAPI extends DataSource {
     return this.put(`tasks/${task_id}`, { task: data }).then(res => res.data)
   }
 
-  async deleteTask(task_id: ID) {
+  async deleteTask(task_id: ID): Promise<boolean> {
     return this.delete(`tasks/${task_id}`).then(res => !!res)
   }
 
-  async updateManyTasks(task_ids: ID[], data: TaskUpdateInput) {
+  async updateManyTasks(task_ids: ID[], data: TaskUpdateInput): Promise<Task[]> {
     return this.put(`tasks/${task_ids.join(',')}`, { task: data }).then(res => res.data)
   }
 
-  async deleteManyTasks(task_ids: ID[]) {
+  async deleteManyTasks(task_ids: ID[]): Promise<boolean> {
     return this.delete(`tasks/${task_ids.join(',')}`).then(res => !!res)
   }
 }
@@ -100,7 +100,7 @@ const Mutation: MutationResolvers<ModuleContext> = {
 
 export const TaskModule = new GraphQLModule({
   typeDefs,
-  imports: [SharedModule, ProjectUserModule],
+  imports: [SharedModule],
   providers: [TaskAPI],
   resolvers: {
     Query,

@@ -12,7 +12,8 @@ import {
 } from '../generated'
 import { DataSource } from '../data-source'
 import { ID } from '../types'
-import { SharedModule, ProjectModule } from '.'
+import { SharedModule } from './shared'
+import { ProjectModule } from './project'
 
 // https://github.com/toggl/toggl_api_docs/blob/master/chapters/clients.md
 
@@ -29,6 +30,7 @@ const typeDefs = gql`
     at: DateTime!
 
     # RELATIONS
+
     "active: possible values true/false/both. By default true. If false, only archived projects are returned"
     projects(active: String): [Project!]!
   }
@@ -40,7 +42,7 @@ const typeDefs = gql`
   }
 
   """
-  workspace id can't be changed!
+  workspace_id can't be changed!
   """
   input ClientUpdateInput {
     name: String!
