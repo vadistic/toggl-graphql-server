@@ -1,6 +1,6 @@
 # toggl-graphql-server
 
-GraphQL API for [toggl](https://toggl.com) rest api.
+GraphQL API for toggl.com
 
 [ENDPOINT/PLAYGROUND](https://toggl-graphql-server.vadistic.now.sh)
 

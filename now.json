@@ -5,7 +5,7 @@
     { "src": "docs/**/*", "use": "@now/static" }
   ],
   "routes": [
-    { "src": "/docs(.*)", "dest": "/docs$1" },
+    { "src": "/docs/(.*)", "dest": "/docs/$1" },
     {
       "src": "/github",
       "status": 301,
