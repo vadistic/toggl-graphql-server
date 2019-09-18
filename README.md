@@ -1,12 +1,22 @@
 # toggl-graphql-server
 
-Server for graphql-lisation of [toggl](https://toggl.com) rest api. docs: xxx endpoint/playground: xxx
+GraphQL API for [toggl](https://toggl.com) rest api.
+
+[ENDPOINT/PLAYGROUND](https://toggl-graphql-server.vadistic.now.sh)
+
+[DOCS](https://toggl-graphql-server.vadistic.now.sh/docs/)
 
 ## Why?
 
 As a refresher and to check out `graphql-modules`
 
-Stack:
+## Auth
+
+Using Bearer token in Authorization header.
+
+Alternatively 'Authorization': 'Basic xxx', where xxx is base64 encoded token:api_key or email:apssword
+
+## Stack
 
 - typescript/ graphql/ node
 - [`graphql-modules`](https://github.com/Urigo/graphql-modules)
@@ -18,5 +28,3 @@ Stack:
 - [`graphdoc`](https://github.com/2fd/graphdoc)
 
 - [`json-to-simple-graphql`](https://github.com/walmartlabs/json-to-simple-graphql-schema) (cool idea)
-
-Auth using Beearer token in Authorization header

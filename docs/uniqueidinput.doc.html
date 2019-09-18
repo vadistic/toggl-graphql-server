@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="./styles/graphdoc.css" />
-    <title>BlogPost</title>
+    <title>UniqueIdInput</title>
     <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700" rel="stylesheet"><link type="text/css" rel="stylesheet" href="./assets/code.css" /><link type="text/css" rel="stylesheet" href="./assets/require-by.css" />
 </head>
 <body class="slds-scrollable--y">
@@ -90,7 +90,7 @@
 <div class="slds-grid slds-grid--vertical slds-navigation-list--vertical">
     <h4 class="slds-text-title--caps slds-p-around--medium">Objects</h4>
     <ul>
-        <li class="slds-is-active" title="BlogPost">
+        <li  title="BlogPost">
             <a href="blogpost.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
                 BlogPost
             </a>
@@ -180,7 +180,7 @@
                 TagUpdateInput
             </a>
         </li>
-        <li  title="UniqueIdInput">
+        <li class="slds-is-active" title="UniqueIdInput">
             <a href="uniqueidinput.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
                 UniqueIdInput
             </a>
@@ -235,9 +235,10 @@
         </div>
     </div>
     <div class="container">
-        <p class="slds-text-title--caps slds-text-color--weak">OBJECT</p>
-        <h1 class="slds-text-heading--large">BlogPost</h1>
-        <div class="slds-text-body--regular"></div>
+        <p class="slds-text-title--caps slds-text-color--weak">INPUT_OBJECT</p>
+        <h1 class="slds-text-heading--large">UniqueIdInput</h1>
+        <div class="slds-text-body--regular"><p>identifies entity by unique ID</p>
+</div>
     </div>
 </section>
 <section>
@@ -248,7 +249,7 @@
             </a>
             GraphQL Schema definition
         </h2>
-        <code class="highlight"><ul class="code" style="padding-left:42px"><li><span class="keyword operator ts">type</span> <span class="identifier">BlogPost</span> {</li><li></li><li><span class="tab"><span class="meta">title</span>: <a class="support type" href="string.doc.html">String</a>! </span></li><li></li><li><span class="tab"><span class="meta">url</span>: <a class="support type" href="string.doc.html">String</a>! </span></li><li></li><li><span class="tab"><span class="meta">category</span>: <a class="support type" href="string.doc.html">String</a>! </span></li><li></li><li><span class="tab"><span class="meta">pub_date</span>: <a class="support type" href="datetime.doc.html">DateTime</a>! </span></li><li>}</li></ul></code>
+        <code class="highlight"><ul class="code" style="padding-left:28px"><li><span class="keyword operator ts">input</span> <span class="identifier">UniqueIdInput</span> {</li><li><span class="tab"><li><span class="tab"><span class="meta">id</span>: <a class="support type" href="id.doc.html">ID</a>!</span></li></span></li><li>}</li></ul></code>
     </div>
 </section>
 <section>
@@ -259,7 +260,7 @@
             </a>
             Require by
         </h2>
-        <ul class="require-by"><li><a href="detaileduser.doc.html" title="DetailedUser - ">DetailedUser<em>null</em></a><li></ul>
+        <ul class="require-by"><li><a href="mutation.doc.html" title="Mutation - ">Mutation<em>null</em></a><li><li><a href="query.doc.html" title="Query - ">Query<em>null</em></a><li></ul>
     </div>
 </section>
 <footer>

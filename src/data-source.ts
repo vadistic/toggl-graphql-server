@@ -21,7 +21,7 @@ export const AuthModule = new GraphQLModule({
 
     if (!authToken)
       throw new AuthenticationError(
-        'Not autenticated. Add Bearer of base64 encoded Basic token in Authorization header',
+        `Not autenticated. Add Bearer token or base64 encoded Basic token in 'Authorization' header`,
       )
 
     const [prefix, token] = authToken.split(' ')

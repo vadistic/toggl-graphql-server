@@ -1,9 +1,10 @@
 {
   "name": "toggl-graphql-server",
   "version": "0.1.0",
-  "description": "Server for graphql-lisation of toggl API",
+  "description": "GraphQL API for [toggl](https://toggl.com) rest api. [ENDPOINT](https://toggl-graphql-server.vadistic.now.sh) [DOCS](https://toggl-graphql-server.vadistic.now.sh/docs/)",
   "main": "src/index.ts",
   "repository": "https://github.com/vadistic/toggl-graphql-server",
+  "homepage": "https://toggl-graphql-server.vadistic.now.sh",
   "author": "Jakub Wadas <vadistic@gmail.com>",
   "license": "MIT",
   "private": false,
@@ -11,7 +12,9 @@
     "start": "micro ./build/index.js",
     "dev": "node -r ts-node/register node_modules/.bin/micro-dev ./src/index.ts",
     "build": "tsc -b",
-    "generate": "graphql-codegen --config codegen.yml"
+    "gen:doc": "graphdoc --force -e http://localhost:3000 -o ./docs",
+    "gen:gql": "graphql-codegen --config codegen.yml",
+    "gen": "yarn gen:doc && yarn gen:gql"
   },
   "dependencies": {
     "@graphql-modules/core": "^0.7.12",

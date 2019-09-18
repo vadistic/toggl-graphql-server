@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="./styles/graphdoc.css" />
-    <title>ID</title>
+    <title>UserCreateInput</title>
     <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700" rel="stylesheet"><link type="text/css" rel="stylesheet" href="./assets/code.css" /><link type="text/css" rel="stylesheet" href="./assets/require-by.css" />
 </head>
 <body class="slds-scrollable--y">
@@ -55,7 +55,7 @@
                 Float
             </a>
         </li>
-        <li class="slds-is-active" title="ID">
+        <li  title="ID">
             <a href="id.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
                 ID
             </a>
@@ -185,7 +185,7 @@
                 UniqueIdInput
             </a>
         </li>
-        <li  title="UserCreateInput">
+        <li class="slds-is-active" title="UserCreateInput">
             <a href="usercreateinput.doc.html" class="slds-navigation-list--vertical__action slds-text-link--reset slds-truncate">
                 UserCreateInput
             </a>
@@ -235,10 +235,9 @@
         </div>
     </div>
     <div class="container">
-        <p class="slds-text-title--caps slds-text-color--weak">SCALAR</p>
-        <h1 class="slds-text-heading--large">ID</h1>
-        <div class="slds-text-body--regular"><p>The <code>ID</code> scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as <code>&quot;4&quot;</code>) or integer (such as <code>4</code>) input value will be accepted as an ID.</p>
-</div>
+        <p class="slds-text-title--caps slds-text-color--weak">INPUT_OBJECT</p>
+        <h1 class="slds-text-heading--large">UserCreateInput</h1>
+        <div class="slds-text-body--regular"></div>
     </div>
 </section>
 <section>
@@ -249,7 +248,7 @@
             </a>
             GraphQL Schema definition
         </h2>
-        <code class="highlight"><ul class="code" style="padding-left:28px"><li><span class="keyword operator ts">scalar</span> <span class="identifier">ID</span></li></ul></code>
+        <code class="highlight"><ul class="code" style="padding-left:42px"><li><span class="keyword operator ts">input</span> <span class="identifier">UserCreateInput</span> {</li><li><span class="tab"><li><span class="tab"><span class="comment line">#   a valid email</span></span></li><li><span class="tab"><span class="meta">email</span>: <a class="support type" href="string.doc.html">String</a>!</span></li></span></li><li><span class="tab"><li><span class="tab"><span class="comment line">#   password at least 6 characters long</span></span></li><li><span class="tab"><span class="meta">password</span>: <a class="support type" href="string.doc.html">String</a>!</span></li></span></li><li><span class="tab"><li><span class="tab"><span class="comment line">#   for example 'Etc/UTC'</span></span></li><li><span class="tab"><span class="meta">timezone</span>: <a class="support type" href="string.doc.html">String</a>!</span></li></span></li><li><span class="tab"><li><span class="tab"><span class="comment line">#   in free form, name of the app that signed the user app</span></span></li><li><span class="tab"><span class="meta">created_with</span>: <a class="support type" href="string.doc.html">String</a>!</span></li></span></li><li>}</li></ul></code>
     </div>
 </section>
 <section>
@@ -260,7 +259,7 @@
             </a>
             Require by
         </h2>
-        <ul class="require-by"><li><a href="detaileduser.doc.html" title="DetailedUser - ">DetailedUser<em>null</em></a><li><li><a href="mutation.doc.html" title="Mutation - ">Mutation<em>null</em></a><li><li><a href="project.doc.html" title="Project - ">Project<em>null</em></a><li><li><a href="projectcreateinput.doc.html" title="ProjectCreateInput - ">ProjectCreateInput<em>null</em></a><li><li><a href="projectupdateinput.doc.html" title="ProjectUpdateInput - ">ProjectUpdateInput<em>null</em></a><li><li><a href="tag.doc.html" title="Tag - ">Tag<em>null</em></a><li><li><a href="tagcreateinput.doc.html" title="TagCreateInput - ">TagCreateInput<em>null</em></a><li><li><a href="uniqueidinput.doc.html" title="UniqueIdInput - ">UniqueIdInput<em>null</em></a><li><li><a href="user.doc.html" title="User - ">User<em>null</em></a><li><li><a href="workspace.doc.html" title="Workspace - ">Workspace<em>null</em></a><li></ul>
+        <ul class="require-by"><li><a href="mutation.doc.html" title="Mutation - ">Mutation<em>null</em></a><li></ul>
     </div>
 </section>
 <footer>

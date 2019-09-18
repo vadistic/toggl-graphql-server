@@ -20,39 +20,70 @@ export type BlogPost = {
 };
 
 
+/** detailed user data */
 export type DetailedUser = {
    __typename?: 'DetailedUser',
   id: Scalars['ID'],
+  /** default workspace id */
   default_wid: Scalars['ID'],
+  /** user's email */
   email: Scalars['String'],
+  /** user's full name */
   fullname: Scalars['String'],
+  /** eg. 'h:i A' */
   jquery_timeofday_format: Scalars['String'],
+  /** eg. 'h:i A' */
   jquery_date_format: Scalars['String'],
+  /** eg. 'h:mm A' */
   timeofday_format: Scalars['String'],
+  /** eg. MM/DD/YYYY */
   date_format: Scalars['String'],
+  /** whether start and stop time are saved on time entry */
   store_start_and_stop_time: Scalars['Boolean'],
+  /** integer 0-6 (Sunday=0) */
   beginning_of_week: Scalars['Int'],
+  /** should a piechart be shown on the sidebar */
   sidebar_piechart: Scalars['Boolean'],
+  /** ??? */
   timeline_experiment: Scalars['Boolean'],
   workspaces: Array<Maybe<Workspace>>,
+  /** user's language */
   language: Scalars['String'],
+  /** url with the user's profile picture */
   image_url?: Maybe<Scalars['String']>,
+  /** timestamp of last changes */
   at: Scalars['DateTime'],
+  /** account create date */
   created_at: Scalars['DateTime'],
+  /** an object with toggl blog post title and link */
   new_blog_post?: Maybe<BlogPost>,
+  /** toggl can send newsletters over e-mail to the user */
   send_product_emails: Scalars['Boolean'],
+  /** if user receives weekly report */
   send_weekly_report: Scalars['Boolean'],
+  /** email user about long-running (more than 8 hours) tasks */
   send_timer_notifications: Scalars['Boolean'],
+  /** ??? */
   openid_email?: Maybe<Scalars['String']>,
+  /** openid_enabled: (boolean) google signin enabled */
   openid_enabled: Scalars['Boolean'],
+  /** timezone user has set on the 'My profile' page (IANA TZ timezones) */
   timezone: Scalars['String'],
+  /** ??? */
   retention?: Maybe<Scalars['Int']>,
+  /** ??? */
   record_timeline?: Maybe<Scalars['Boolean']>,
+  /** ??? */
   render_timeline?: Maybe<Scalars['Boolean']>,
+  /** ??? */
   timeline_enabled?: Maybe<Scalars['Boolean']>,
+  /** ??? */
   should_upgrade?: Maybe<Scalars['Boolean']>,
+  /** ??? */
   achievements_enabled?: Maybe<Scalars['Boolean']>,
+  /** ??? TODO: Check type! */
   last_blog_entry?: Maybe<Scalars['String']>,
+  /** ??? */
   duration_format?: Maybe<Scalars['String']>,
 };
 
@@ -118,6 +149,7 @@ export type MutationUpdateWorkspaceArgs = {
   data: WorkspaceUpdateInput
 };
 
+/** ??? */
 export type Obm = {
    __typename?: 'Obm',
   included: Scalars['Boolean'],
@@ -182,6 +214,7 @@ export type ProjectUpdateInput = {
 export type Query = {
    __typename?: 'Query',
   project?: Maybe<Project>,
+  /** get current user data */
   user: DetailedUser,
   workspace?: Maybe<Workspace>,
   workspaces: Array<Workspace>,
@@ -199,11 +232,11 @@ export type QueryWorkspaceArgs = {
 
 export type Tag = {
    __typename?: 'Tag',
-  /** Unique ID of the tag (integer, required) */
+  /** Unique ID of the tag */
   id: Scalars['ID'],
-  /** The name of the tag (string, required, unique in workspace) */
+  /** The name of the tag (unique in workspace) */
   name: Scalars['String'],
-  /** workspace ID, where the tag will be used (integer, required) */
+  /** workspace ID, where the tag will be used */
   wid: Scalars['ID'],
 };
 
@@ -216,43 +249,65 @@ export type TagUpdateInput = {
   name: Scalars['String'],
 };
 
+/** identifies entity by unique ID */
 export type UniqueIdInput = {
   id: Scalars['ID'],
 };
 
+/** basic user data */
 export type User = {
    __typename?: 'User',
   id: Scalars['ID'],
+  /** default workspace id */
   default_wid: Scalars['ID'],
+  /** user's email */
   email: Scalars['String'],
+  /** user's full name */
   fullname: Scalars['String'],
+  /** eg. 'h:i A' */
   jquery_timeofday_format: Scalars['String'],
+  /** eg. 'h:i A' */
   jquery_date_format: Scalars['String'],
+  /** eg. 'h:mm A' */
   timeofday_format: Scalars['String'],
+  /** eg. MM/DD/YYYY */
   date_format: Scalars['String'],
+  /** whether start and stop time are saved on time entry */
   store_start_and_stop_time: Scalars['Boolean'],
+  /** integer 0-6 (Sunday=0) */
   beginning_of_week: Scalars['Int'],
+  /** should a piechart be shown on the sidebar */
   sidebar_piechart: Scalars['Boolean'],
+  /** ??? */
   timeline_experiment: Scalars['Boolean'],
 };
 
 export type UserCreateInput = {
+  /** a valid email */
   email: Scalars['String'],
+  /** password at least 6 characters long */
   password: Scalars['String'],
+  /** for example 'Etc/UTC' */
   timezone: Scalars['String'],
+  /** in free form, name of the app that signed the user app */
   created_with: Scalars['String'],
 };
 
 export type UserUpdateInput = {
   fullname?: Maybe<Scalars['String']>,
+  /** a valid email */
   email?: Maybe<Scalars['String']>,
   send_product_emails?: Maybe<Scalars['Boolean']>,
   send_weekly_report?: Maybe<Scalars['Boolean']>,
   send_timer_notifications?: Maybe<Scalars['Boolean']>,
   store_start_and_stop_time?: Maybe<Scalars['Boolean']>,
+  /** integer 0-6 (Sunday=0) */
   beginning_of_week?: Maybe<Scalars['Int']>,
+  /** IANA TZ timezones */
   timezone?: Maybe<Scalars['String']>,
+  /** 'YYYY-MM-DD', 'DD.MM.YYYY', 'DD-MM-YYYY', 'MM/DD/YYYY', 'DD/MM/YYYY', 'MM-DD-YYYY' */
   timeofday_format?: Maybe<Scalars['String']>,
+  /** 'H:mm' for 24-hour format, 'h:mm A' for 12-hour format (AM/PM) */
   date_format?: Maybe<Scalars['String']>,
 };
 

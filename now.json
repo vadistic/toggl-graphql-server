@@ -2,12 +2,16 @@
   "version": 2,
   "builds": [
     { "src": "src/index.ts", "use": "@now/node" },
-    { "src": "doc/index.html", "use": "@now/static" }
+    { "src": "docs/**/*", "use": "@now/static" }
   ],
   "routes": [
-    { "src": "/graphql/(.*)", "dest": "/src/index.ts" },
-    { "src": "/doc/(.*)", "dest": "/doc/index.html" },
-    { "src": "/(.*)", "dest": "https://github.com/vadistic/toggl-graphql-server" }
+    { "src": "/docs(.*)", "dest": "/docs$1" },
+    {
+      "src": "/github",
+      "status": 301,
+      "headers": { "Location": "https://github.com/vadistic/toggl-graphql-server" }
+    },
+    { "src": "/(.*)", "dest": "/src/index.ts" }
   ],
   "public": true
 }
