@@ -54,6 +54,7 @@ export class WorkspaceActivityAPI extends DataSource {
 const Workspace: WorkspaceResolvers<ModuleContext> = {
   activity: async (root, args, { injector }, info) =>
     injector.get(WorkspaceActivityAPI).getWorkspaceActivity(root.id),
+
   user_activity: async (root, args, { injector }, info) =>
     injector.get(WorkspaceActivityAPI).getWorkspaceUserActivity(root.id),
 }

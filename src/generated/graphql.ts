@@ -165,6 +165,12 @@ export type Mutation = {
   createGroup: Group,
   updateGroup: Group,
   deleteGroup: Scalars['Boolean'],
+  createProjectUser: ProjectUser,
+  updateProjectUser: ProjectUser,
+  deleteProjectUser: Scalars['Boolean'],
+  createManyProjectUsers: Array<ProjectUser>,
+  updateManyProjectUsers: Array<ProjectUser>,
+  deleteManyProjectUsers: Scalars['Boolean'],
   createProject: Project,
   updateProject: Project,
   deleteProject: Array<Scalars['ID']>,
@@ -258,6 +264,38 @@ export type MutationUpdateGroupArgs = {
 
 export type MutationDeleteGroupArgs = {
   group_id: Scalars['ID']
+};
+
+
+export type MutationCreateProjectUserArgs = {
+  data: ProjectUserCreateInput
+};
+
+
+export type MutationUpdateProjectUserArgs = {
+  project_user_id: Scalars['ID'],
+  data: ProjectUserUpdateInput
+};
+
+
+export type MutationDeleteProjectUserArgs = {
+  project_user_id: Scalars['ID']
+};
+
+
+export type MutationCreateManyProjectUsersArgs = {
+  data: ProjectUserCreateManyInput
+};
+
+
+export type MutationUpdateManyProjectUsersArgs = {
+  project_user_ids: Array<Scalars['ID']>,
+  data: ProjectUserUpdateManyInput
+};
+
+
+export type MutationDeleteManyProjectUsersArgs = {
+  project_user_ids: Array<Scalars['ID']>
 };
 
 
@@ -382,6 +420,50 @@ export type ProjectUser = {
   rate?: Maybe<Scalars['Float']>,
   /** when the project user was last updated */
   at: Scalars['DateTime'],
+};
+
+export type ProjectUserCreateInput = {
+  /** project ID */
+  pid: Scalars['ID'],
+  /** user ID */
+  uid: Scalars['ID'],
+  /** workspace id */
+  wid: Scalars['ID'],
+  /** admin rights for this project (default false */
+  manager?: Maybe<Scalars['Boolean']>,
+  /** hourly rate for project user (only for pro workspaces, in the workspace currency) */
+  rate?: Maybe<Scalars['Float']>,
+};
+
+export type ProjectUserCreateManyInput = {
+  /** project ID */
+  pid: Scalars['ID'],
+  /** user ID */
+  uid: Array<Scalars['ID']>,
+  /** workspace id */
+  wid: Scalars['ID'],
+  /** admin rights for this project (default false */
+  manager?: Maybe<Scalars['Boolean']>,
+  /** hourly rate for project user (only for pro workspaces, in the workspace currency) */
+  rate?: Maybe<Scalars['Float']>,
+};
+
+export type ProjectUserUpdateInput = {
+  /** project ID */
+  pid: Scalars['ID'],
+  /** user ID */
+  uid: Scalars['ID'],
+  /** admin rights for this project (default false */
+  manager?: Maybe<Scalars['Boolean']>,
+  /** hourly rate for project user (only for pro workspaces, in the workspace currency) */
+  rate?: Maybe<Scalars['Float']>,
+};
+
+export type ProjectUserUpdateManyInput = {
+  /** admin rights for this project (default false */
+  manager?: Maybe<Scalars['Boolean']>,
+  /** hourly rate for project user (only for pro workspaces, in the workspace currency) */
+  rate?: Maybe<Scalars['Float']>,
 };
 
 export type Query = {
@@ -756,6 +838,10 @@ export type ResolversTypes = {
   WorkspaceUserUpdateInput: WorkspaceUserUpdateInput,
   GroupCreateInput: GroupCreateInput,
   GroupUpdateInput: GroupUpdateInput,
+  ProjectUserCreateInput: ProjectUserCreateInput,
+  ProjectUserUpdateInput: ProjectUserUpdateInput,
+  ProjectUserCreateManyInput: ProjectUserCreateManyInput,
+  ProjectUserUpdateManyInput: ProjectUserUpdateManyInput,
   ProjectCreateInput: ProjectCreateInput,
   ProjectUpdateInput: ProjectUpdateInput,
   WorkspaceUpdateInput: WorkspaceUpdateInput,
@@ -798,6 +884,10 @@ export type ResolversParentTypes = {
   WorkspaceUserUpdateInput: WorkspaceUserUpdateInput,
   GroupCreateInput: GroupCreateInput,
   GroupUpdateInput: GroupUpdateInput,
+  ProjectUserCreateInput: ProjectUserCreateInput,
+  ProjectUserUpdateInput: ProjectUserUpdateInput,
+  ProjectUserCreateManyInput: ProjectUserCreateManyInput,
+  ProjectUserUpdateManyInput: ProjectUserUpdateManyInput,
   ProjectCreateInput: ProjectCreateInput,
   ProjectUpdateInput: ProjectUpdateInput,
   WorkspaceUpdateInput: WorkspaceUpdateInput,
@@ -891,6 +981,12 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   createGroup?: Resolver<ResolversTypes['Group'], ParentType, ContextType, RequireFields<MutationCreateGroupArgs, 'data'>>,
   updateGroup?: Resolver<ResolversTypes['Group'], ParentType, ContextType, RequireFields<MutationUpdateGroupArgs, 'group_id' | 'data'>>,
   deleteGroup?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeleteGroupArgs, 'group_id'>>,
+  createProjectUser?: Resolver<ResolversTypes['ProjectUser'], ParentType, ContextType, RequireFields<MutationCreateProjectUserArgs, 'data'>>,
+  updateProjectUser?: Resolver<ResolversTypes['ProjectUser'], ParentType, ContextType, RequireFields<MutationUpdateProjectUserArgs, 'project_user_id' | 'data'>>,
+  deleteProjectUser?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeleteProjectUserArgs, 'project_user_id'>>,
+  createManyProjectUsers?: Resolver<Array<ResolversTypes['ProjectUser']>, ParentType, ContextType, RequireFields<MutationCreateManyProjectUsersArgs, 'data'>>,
+  updateManyProjectUsers?: Resolver<Array<ResolversTypes['ProjectUser']>, ParentType, ContextType, RequireFields<MutationUpdateManyProjectUsersArgs, 'project_user_ids' | 'data'>>,
+  deleteManyProjectUsers?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationDeleteManyProjectUsersArgs, 'project_user_ids'>>,
   createProject?: Resolver<ResolversTypes['Project'], ParentType, ContextType, RequireFields<MutationCreateProjectArgs, 'data'>>,
   updateProject?: Resolver<ResolversTypes['Project'], ParentType, ContextType, RequireFields<MutationUpdateProjectArgs, 'project_id' | 'data'>>,
   deleteProject?: Resolver<Array<ResolversTypes['ID']>, ParentType, ContextType, RequireFields<MutationDeleteProjectArgs, 'project_id'>>,

@@ -125,6 +125,7 @@ class WorkspaceAPI extends DataSource {
 const Query: QueryResolvers<ModuleContext> = {
   workspace: async (root, { workspace_id }, { injector }, info) =>
     injector.get(WorkspaceAPI).getWorkspace(workspace_id),
+
   workspaces: async (root, args, { injector }, info) => injector.get(WorkspaceAPI).getWorkspaces(),
 }
 
@@ -136,6 +137,7 @@ const Mutation: MutationResolvers<ModuleContext> = {
 const Workspace: WorkspaceResolvers<ModuleContext> = {
   groups: async (root, args, { injector }, info) =>
     injector.get(WorkspaceAPI).getWorkspaceGroups(root.id),
+
   projects: async (root, args, { injector }, info) =>
     injector.get(WorkspaceAPI).getWorkspaceProjects(root.id),
 }

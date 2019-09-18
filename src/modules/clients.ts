@@ -90,14 +90,17 @@ export class ClientAPI extends DataSource {
 const Query: QueryResolvers<ModuleContext> = {
   client: async (root, { client_id }, { injector }, info) =>
     injector.get(ClientAPI).getClient(client_id),
+
   clients: async (root, args, { injector }, info) => injector.get(ClientAPI).getClients(),
 }
 
 const Mutation: MutationResolvers<ModuleContext> = {
   createClient: async (root, { data }, { injector }, info) =>
     injector.get(ClientAPI).createClient(data),
+
   updateClient: async (root, { client_id, data }, { injector }, info) =>
     injector.get(ClientAPI).updateClient(client_id, data),
+
   deleteClient: async (root, { client_id }, { injector }, info) =>
     injector.get(ClientAPI).deleteClient(client_id),
 }
@@ -114,5 +117,6 @@ export const ClientModule = new GraphQLModule({
   resolvers: {
     Query,
     Mutation,
+    Client,
   },
 })

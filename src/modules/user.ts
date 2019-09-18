@@ -180,7 +180,9 @@ const Query: QueryResolvers<ModuleContext> = {
 
 const Mutation: MutationResolvers<ModuleContext> = {
   createUser: async (root, { data }, { injector }, info) => injector.get(UserAPI).createUser(data),
+
   updateUser: async (root, { data }, { injector }, info) => injector.get(UserAPI).updateUser(data),
+
   resetToken: async (root, args, { injector }, info) => injector.get(UserAPI).resetToken(),
 }
 
