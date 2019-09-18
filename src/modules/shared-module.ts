@@ -5,6 +5,9 @@ export const SharedModule = new GraphQLModule({
   typeDefs: gql`
     scalar DateTime
 
+    """
+    identifies entity by unique ID
+    """
     input UniqueIdInput {
       id: ID!
     }
@@ -16,7 +19,9 @@ export const SharedModule = new GraphQLModule({
       pub_date: DateTime!
     }
 
-    # the f is this?
+    """
+    ???
+    """
     type Obm {
       included: Boolean!
       nr: Int!

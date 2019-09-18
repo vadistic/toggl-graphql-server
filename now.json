@@ -1,6 +1,13 @@
 {
   "version": 2,
-  "builds": [{ "src": "src/index.ts", "use": "@now/node" }],
-  "routes": [{ "src": "/(.*)", "dest": "/src/index.ts" }],
+  "builds": [
+    { "src": "src/index.ts", "use": "@now/node" },
+    { "src": "doc/index.html", "use": "@now/static" }
+  ],
+  "routes": [
+    { "src": "/graphql/(.*)", "dest": "/src/index.ts" },
+    { "src": "/doc/(.*)", "dest": "/doc/index.html" },
+    { "src": "/(.*)", "dest": "https://github.com/vadistic/toggl-graphql-server" }
+  ],
   "public": true
 }

@@ -15,11 +15,11 @@ import { DataSource, AuthModule } from '../data-source'
 
 const typeDefs = gql`
   type Tag {
-    "Unique ID of the tag (integer, required)"
+    "Unique ID of the tag"
     id: ID!
-    "The name of the tag (string, required, unique in workspace)"
+    "The name of the tag (unique in workspace)"
     name: String!
-    "workspace ID, where the tag will be used (integer, required)"
+    "workspace ID, where the tag will be used"
     wid: ID!
   }
 
