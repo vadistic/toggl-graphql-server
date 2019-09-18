@@ -3,18 +3,19 @@ import gql from 'graphql-tag'
 import {
   QueryResolvers,
   MutationResolvers,
-  MutationCreateProjectArgs,
   ProjectCreateInput,
   Maybe,
   Project,
   ProjectUpdateInput,
+  Scalars,
+  UniqueIdInput,
 } from '../generated/graphql'
+import { DataSource, AuthModule } from '../data-source'
 import { SharedModule } from './shared-module'
-import { DataSource } from '../data-source'
-import { AuthModule } from './auth-module'
+
+// https://github.com/toggl/toggl_api_docs/blob/master/chapters/projects.md
 
 const typeDefs = gql`
-  # https://github.com/toggl/toggl_api_docs/blob/master/chapters/projects.md
   type Project {
     "the name of the project (string, required, unique for client and workspace)"
     name: String!
@@ -62,18 +63,18 @@ const typeDefs = gql`
   }
 
   type Query {
-    project(where: WhereUniqueId!): Project
+    project(where: UniqueIdInput!): Project
   }
 
   type Mutation {
     createProject(data: ProjectCreateInput!): Project!
-    updateProject(where: WhereUniqueId!, data: ProjectUpdateInput!): Project!
-    deleteProject(where: WhereUniqueId!): [ID!]!
+    updateProject(where: UniqueIdInput!, data: ProjectUpdateInput!): Project!
+    deleteProject(where: UniqueIdInput!): [ID!]!
   }
 `
 
-export class ProjectSource extends DataSource {
-  async getProject(id: string): Promise<Maybe<Project>> {
+export class ProjectsAPI extends DataSource {
+  async getProject({ id }: UniqueIdInput): Promise<Maybe<Project>> {
     return this.get(`projects/${id}`).then(res => res.data)
   }
 
@@ -81,35 +82,35 @@ export class ProjectSource extends DataSource {
     return this.post(`projects`, { project: data }).then(res => res.data)
   }
 
-  async updateProject(data: ProjectUpdateInput, id: string): Promise<Project> {
+  async updateProject({ id }: UniqueIdInput, data: ProjectUpdateInput): Promise<Project> {
     return this.put(`projects/${id}`, { project: data }).then(res => res.data)
   }
 
-  async deleteProject(id: string): Promise<string[]> {
+  async deleteProject({ id }: UniqueIdInput): Promise<Scalars['ID'][]> {
     return this.delete(`projects/${id}`).then(res => res.data)
   }
 }
 
 const Query: QueryResolvers<ModuleContext> = {
-  project: async (root, { where: { id } }, { injector }, info) =>
-    injector.get(ProjectSource).getProject(id),
+  project: async (root, { where }, { injector }, info) =>
+    injector.get(ProjectsAPI).getProject(where),
 }
 
 const Mutation: MutationResolvers<ModuleContext> = {
   createProject: async (root, { data }, { injector }, info) =>
-    injector.get(ProjectSource).createProject(data),
+    injector.get(ProjectsAPI).createProject(data),
 
-  updateProject: async (root, { where: { id }, data }, { injector }, info) =>
-    injector.get(ProjectSource).updateProject(data, id),
+  updateProject: async (root, { where, data }, { injector }, info) =>
+    injector.get(ProjectsAPI).updateProject(where, data),
 
-  deleteProject: async (root, { where: { id } }, { injector }, info) =>
-    injector.get(ProjectSource).deleteProject(id),
+  deleteProject: async (root, { where }, { injector }, info) =>
+    injector.get(ProjectsAPI).deleteProject(where),
 }
 
 export const ProjectsModule = new GraphQLModule({
   typeDefs,
-  providers: [ProjectSource],
   imports: [SharedModule, AuthModule],
+  providers: [ProjectsAPI],
   resolvers: {
     Query,
     Mutation,

@@ -11,37 +11,43 @@ export interface Session {
   res: Response
 }
 
-export const AuthModule = new GraphQLModule({
-  async context(session: Session) {
-    const authorization = session.req.headers.authorization
+export interface AuthContext {
+  authToken: string
+}
 
-    if (!authorization)
+export const AuthModule = new GraphQLModule({
+  context(session: Session): AuthContext {
+    const authToken = session.req.headers.authorization
+
+    if (!authToken)
       throw new AuthenticationError(
         'Not autenticated. Add Bearer of base64 encoded Basic token in Authorization header',
       )
 
-    const [prefix, token] = authorization.split(' ')
+    const [prefix, token] = authToken.split(' ')
 
     // allow Basic tokens for log/password
-    if (prefix === 'Basic' && token) return { authorization }
+    if (prefix === 'Basic' && token) return { authToken }
     // and standard Bearer api token
     if (prefix === 'Bearer' && token)
-      return { authorization: 'Basic ' + base64.encode(token + ':api_token') }
+      return { authToken: 'Basic ' + base64.encode(token + ':api_token') }
 
     throw new AuthenticationError('Invalid authentication token.')
   },
 })
 
-@Injectable({
-  scope: ProviderScope.Session,
-})
-export class DataSource extends RESTDataSource {
+@Injectable({ scope: ProviderScope.Session })
+export class DataSource extends RESTDataSource<AuthContext> {
   constructor() {
     super()
     this.baseURL = ENDPOINT
   }
 
   willSendRequest(req: RequestOptions) {
-    req.headers.set('Authorization', this.context.auth)
+    req.headers.set('Authorization', this.context.authToken)
+  }
+
+  async test() {
+    return this.get('me')
   }
 }

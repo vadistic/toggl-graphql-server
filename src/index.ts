@@ -1,10 +1,18 @@
 import 'reflect-metadata'
 
-import { ApolloServer, gql } from 'apollo-server-micro'
+import { ApolloServer } from 'apollo-server-micro'
 import { ProjectsModule } from './modules/projects-module'
+import { TagsModule } from './modules/tags-module'
+import { GraphQLModule } from '@graphql-modules/core'
+import { UsersModule } from './modules/users-module'
+import { WorkspacesModule } from './modules/workspace-module'
+
+const AppModule = new GraphQLModule({
+  imports: [ProjectsModule, TagsModule, UsersModule, WorkspacesModule],
+})
 
 const server = new ApolloServer({
-  modules: [ProjectsModule],
+  modules: [AppModule],
   context: session => session,
   introspection: true,
   debug: true,

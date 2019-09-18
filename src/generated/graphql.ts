@@ -8,15 +8,66 @@ export type Scalars = {
   Boolean: boolean,
   Int: number,
   Float: number,
-  DateTime: any,
+  DateTime: string,
 };
 
+export type BlogPost = {
+   __typename?: 'BlogPost',
+  title: Scalars['String'],
+  url: Scalars['String'],
+  category: Scalars['String'],
+  pub_date: Scalars['DateTime'],
+};
+
+
+export type DetailedUser = {
+   __typename?: 'DetailedUser',
+  id: Scalars['ID'],
+  default_wid: Scalars['ID'],
+  email: Scalars['String'],
+  fullname: Scalars['String'],
+  jquery_timeofday_format: Scalars['String'],
+  jquery_date_format: Scalars['String'],
+  timeofday_format: Scalars['String'],
+  date_format: Scalars['String'],
+  store_start_and_stop_time: Scalars['Boolean'],
+  beginning_of_week: Scalars['Int'],
+  sidebar_piechart: Scalars['Boolean'],
+  timeline_experiment: Scalars['Boolean'],
+  workspaces: Array<Maybe<Workspace>>,
+  language: Scalars['String'],
+  image_url?: Maybe<Scalars['String']>,
+  at: Scalars['DateTime'],
+  created_at: Scalars['DateTime'],
+  new_blog_post?: Maybe<BlogPost>,
+  send_product_emails: Scalars['Boolean'],
+  send_weekly_report: Scalars['Boolean'],
+  send_timer_notifications: Scalars['Boolean'],
+  openid_email?: Maybe<Scalars['String']>,
+  openid_enabled: Scalars['Boolean'],
+  timezone: Scalars['String'],
+  retention?: Maybe<Scalars['Int']>,
+  record_timeline?: Maybe<Scalars['Boolean']>,
+  render_timeline?: Maybe<Scalars['Boolean']>,
+  timeline_enabled?: Maybe<Scalars['Boolean']>,
+  should_upgrade?: Maybe<Scalars['Boolean']>,
+  achievements_enabled?: Maybe<Scalars['Boolean']>,
+  last_blog_entry?: Maybe<Scalars['String']>,
+  duration_format?: Maybe<Scalars['String']>,
+};
 
 export type Mutation = {
    __typename?: 'Mutation',
   createProject: Project,
   updateProject: Project,
   deleteProject: Array<Scalars['ID']>,
+  createTag: Tag,
+  updateTag: Tag,
+  deleteTag: Array<Scalars['ID']>,
+  createUser: User,
+  updateUser: User,
+  resetToken: Scalars['String'],
+  updateWorkspace: Workspace,
 };
 
 
@@ -26,13 +77,52 @@ export type MutationCreateProjectArgs = {
 
 
 export type MutationUpdateProjectArgs = {
-  where: WhereUniqueId,
+  where: UniqueIdInput,
   data: ProjectUpdateInput
 };
 
 
 export type MutationDeleteProjectArgs = {
-  where: WhereUniqueId
+  where: UniqueIdInput
+};
+
+
+export type MutationCreateTagArgs = {
+  data: TagCreateInput
+};
+
+
+export type MutationUpdateTagArgs = {
+  where: UniqueIdInput,
+  data: TagUpdateInput
+};
+
+
+export type MutationDeleteTagArgs = {
+  where: UniqueIdInput
+};
+
+
+export type MutationCreateUserArgs = {
+  data: UserCreateInput
+};
+
+
+export type MutationUpdateUserArgs = {
+  data: UserUpdateInput
+};
+
+
+export type MutationUpdateWorkspaceArgs = {
+  where: UniqueIdInput,
+  data: WorkspaceUpdateInput
+};
+
+export type Obm = {
+   __typename?: 'Obm',
+  included: Scalars['Boolean'],
+  nr: Scalars['Int'],
+  actions: Scalars['String'],
 };
 
 export type Project = {
@@ -92,15 +182,115 @@ export type ProjectUpdateInput = {
 export type Query = {
    __typename?: 'Query',
   project?: Maybe<Project>,
+  user: DetailedUser,
+  workspace?: Maybe<Workspace>,
+  workspaces: Array<Workspace>,
 };
 
 
 export type QueryProjectArgs = {
-  where: WhereUniqueId
+  where: UniqueIdInput
 };
 
-export type WhereUniqueId = {
+
+export type QueryWorkspaceArgs = {
+  where: UniqueIdInput
+};
+
+export type Tag = {
+   __typename?: 'Tag',
+  /** Unique ID of the tag (integer, required) */
   id: Scalars['ID'],
+  /** The name of the tag (string, required, unique in workspace) */
+  name: Scalars['String'],
+  /** workspace ID, where the tag will be used (integer, required) */
+  wid: Scalars['ID'],
+};
+
+export type TagCreateInput = {
+  name: Scalars['String'],
+  wid: Scalars['ID'],
+};
+
+export type TagUpdateInput = {
+  name: Scalars['String'],
+};
+
+export type UniqueIdInput = {
+  id: Scalars['ID'],
+};
+
+export type User = {
+   __typename?: 'User',
+  id: Scalars['ID'],
+  default_wid: Scalars['ID'],
+  email: Scalars['String'],
+  fullname: Scalars['String'],
+  jquery_timeofday_format: Scalars['String'],
+  jquery_date_format: Scalars['String'],
+  timeofday_format: Scalars['String'],
+  date_format: Scalars['String'],
+  store_start_and_stop_time: Scalars['Boolean'],
+  beginning_of_week: Scalars['Int'],
+  sidebar_piechart: Scalars['Boolean'],
+  timeline_experiment: Scalars['Boolean'],
+};
+
+export type UserCreateInput = {
+  email: Scalars['String'],
+  password: Scalars['String'],
+  timezone: Scalars['String'],
+  created_with: Scalars['String'],
+};
+
+export type UserUpdateInput = {
+  fullname?: Maybe<Scalars['String']>,
+  email?: Maybe<Scalars['String']>,
+  send_product_emails?: Maybe<Scalars['Boolean']>,
+  send_weekly_report?: Maybe<Scalars['Boolean']>,
+  send_timer_notifications?: Maybe<Scalars['Boolean']>,
+  store_start_and_stop_time?: Maybe<Scalars['Boolean']>,
+  beginning_of_week?: Maybe<Scalars['Int']>,
+  timezone?: Maybe<Scalars['String']>,
+  timeofday_format?: Maybe<Scalars['String']>,
+  date_format?: Maybe<Scalars['String']>,
+};
+
+export type Workspace = {
+   __typename?: 'Workspace',
+  id: Scalars['ID'],
+  name: Scalars['String'],
+  logo_url?: Maybe<Scalars['String']>,
+  profile?: Maybe<Scalars['Int']>,
+  premium: Scalars['Boolean'],
+  admin: Scalars['Boolean'],
+  default_hourly_rate?: Maybe<Scalars['Float']>,
+  default_currency?: Maybe<Scalars['String']>,
+  only_admins_may_create_projects: Scalars['Boolean'],
+  only_admins_see_billable_rates: Scalars['Boolean'],
+  only_admins_see_team_dashboard: Scalars['Boolean'],
+  projects_billable_by_default: Scalars['Boolean'],
+  rounding: Scalars['Int'],
+  rounding_minutes: Scalars['Int'],
+  api_token: Scalars['String'],
+  at: Scalars['DateTime'],
+  ical_enabled: Scalars['Boolean'],
+};
+
+export type WorkspaceUpdateInput = {
+  name: Scalars['String'],
+  logo_url?: Maybe<Scalars['String']>,
+  profile?: Maybe<Scalars['Int']>,
+  premium: Scalars['Boolean'],
+  admin: Scalars['Boolean'],
+  default_hourly_rate?: Maybe<Scalars['Float']>,
+  default_currency?: Maybe<Scalars['String']>,
+  only_admins_may_create_projects: Scalars['Boolean'],
+  only_admins_see_billable_rates: Scalars['Boolean'],
+  only_admins_see_team_dashboard: Scalars['Boolean'],
+  projects_billable_by_default: Scalars['Boolean'],
+  rounding: Scalars['Int'],
+  rounding_minutes: Scalars['Int'],
 };
 
 
@@ -174,7 +364,7 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Query: ResolverTypeWrapper<{}>,
-  WhereUniqueId: WhereUniqueId,
+  UniqueIdInput: UniqueIdInput,
   ID: ResolverTypeWrapper<Scalars['ID']>,
   Project: ResolverTypeWrapper<Project>,
   String: ResolverTypeWrapper<Scalars['String']>,
@@ -182,15 +372,26 @@ export type ResolversTypes = {
   Int: ResolverTypeWrapper<Scalars['Int']>,
   Float: ResolverTypeWrapper<Scalars['Float']>,
   DateTime: ResolverTypeWrapper<Scalars['DateTime']>,
+  DetailedUser: ResolverTypeWrapper<DetailedUser>,
+  Workspace: ResolverTypeWrapper<Workspace>,
+  BlogPost: ResolverTypeWrapper<BlogPost>,
   Mutation: ResolverTypeWrapper<{}>,
   ProjectCreateInput: ProjectCreateInput,
   ProjectUpdateInput: ProjectUpdateInput,
+  TagCreateInput: TagCreateInput,
+  Tag: ResolverTypeWrapper<Tag>,
+  TagUpdateInput: TagUpdateInput,
+  UserCreateInput: UserCreateInput,
+  User: ResolverTypeWrapper<User>,
+  UserUpdateInput: UserUpdateInput,
+  WorkspaceUpdateInput: WorkspaceUpdateInput,
+  Obm: ResolverTypeWrapper<Obm>,
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   Query: {},
-  WhereUniqueId: WhereUniqueId,
+  UniqueIdInput: UniqueIdInput,
   ID: Scalars['ID'],
   Project: Project,
   String: Scalars['String'],
@@ -198,19 +399,85 @@ export type ResolversParentTypes = {
   Int: Scalars['Int'],
   Float: Scalars['Float'],
   DateTime: Scalars['DateTime'],
+  DetailedUser: DetailedUser,
+  Workspace: Workspace,
+  BlogPost: BlogPost,
   Mutation: {},
   ProjectCreateInput: ProjectCreateInput,
   ProjectUpdateInput: ProjectUpdateInput,
+  TagCreateInput: TagCreateInput,
+  Tag: Tag,
+  TagUpdateInput: TagUpdateInput,
+  UserCreateInput: UserCreateInput,
+  User: User,
+  UserUpdateInput: UserUpdateInput,
+  WorkspaceUpdateInput: WorkspaceUpdateInput,
+  Obm: Obm,
+};
+
+export type BlogPostResolvers<ContextType = any, ParentType extends ResolversParentTypes['BlogPost'] = ResolversParentTypes['BlogPost']> = {
+  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  url?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  category?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  pub_date?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>,
 };
 
 export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['DateTime'], any> {
   name: 'DateTime'
 }
 
+export type DetailedUserResolvers<ContextType = any, ParentType extends ResolversParentTypes['DetailedUser'] = ResolversParentTypes['DetailedUser']> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
+  default_wid?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
+  email?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  fullname?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  jquery_timeofday_format?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  jquery_date_format?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  timeofday_format?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  date_format?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  store_start_and_stop_time?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
+  beginning_of_week?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  sidebar_piechart?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
+  timeline_experiment?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
+  workspaces?: Resolver<Array<Maybe<ResolversTypes['Workspace']>>, ParentType, ContextType>,
+  language?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  image_url?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  at?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>,
+  created_at?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>,
+  new_blog_post?: Resolver<Maybe<ResolversTypes['BlogPost']>, ParentType, ContextType>,
+  send_product_emails?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
+  send_weekly_report?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
+  send_timer_notifications?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
+  openid_email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  openid_enabled?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
+  timezone?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  retention?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>,
+  record_timeline?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>,
+  render_timeline?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>,
+  timeline_enabled?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>,
+  should_upgrade?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>,
+  achievements_enabled?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>,
+  last_blog_entry?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  duration_format?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+};
+
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   createProject?: Resolver<ResolversTypes['Project'], ParentType, ContextType, RequireFields<MutationCreateProjectArgs, 'data'>>,
   updateProject?: Resolver<ResolversTypes['Project'], ParentType, ContextType, RequireFields<MutationUpdateProjectArgs, 'where' | 'data'>>,
   deleteProject?: Resolver<Array<ResolversTypes['ID']>, ParentType, ContextType, RequireFields<MutationDeleteProjectArgs, 'where'>>,
+  createTag?: Resolver<ResolversTypes['Tag'], ParentType, ContextType, RequireFields<MutationCreateTagArgs, 'data'>>,
+  updateTag?: Resolver<ResolversTypes['Tag'], ParentType, ContextType, RequireFields<MutationUpdateTagArgs, 'where' | 'data'>>,
+  deleteTag?: Resolver<Array<ResolversTypes['ID']>, ParentType, ContextType, RequireFields<MutationDeleteTagArgs, 'where'>>,
+  createUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'data'>>,
+  updateUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationUpdateUserArgs, 'data'>>,
+  resetToken?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  updateWorkspace?: Resolver<ResolversTypes['Workspace'], ParentType, ContextType, RequireFields<MutationUpdateWorkspaceArgs, 'where' | 'data'>>,
+};
+
+export type ObmResolvers<ContextType = any, ParentType extends ResolversParentTypes['Obm'] = ResolversParentTypes['Obm']> = {
+  included?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
+  nr?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  actions?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
 };
 
 export type ProjectResolvers<ContextType = any, ParentType extends ResolversParentTypes['Project'] = ResolversParentTypes['Project']> = {
@@ -232,13 +499,63 @@ export type ProjectResolvers<ContextType = any, ParentType extends ResolversPare
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   project?: Resolver<Maybe<ResolversTypes['Project']>, ParentType, ContextType, RequireFields<QueryProjectArgs, 'where'>>,
+  user?: Resolver<ResolversTypes['DetailedUser'], ParentType, ContextType>,
+  workspace?: Resolver<Maybe<ResolversTypes['Workspace']>, ParentType, ContextType, RequireFields<QueryWorkspaceArgs, 'where'>>,
+  workspaces?: Resolver<Array<ResolversTypes['Workspace']>, ParentType, ContextType>,
+};
+
+export type TagResolvers<ContextType = any, ParentType extends ResolversParentTypes['Tag'] = ResolversParentTypes['Tag']> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  wid?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
+};
+
+export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
+  default_wid?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
+  email?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  fullname?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  jquery_timeofday_format?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  jquery_date_format?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  timeofday_format?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  date_format?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  store_start_and_stop_time?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
+  beginning_of_week?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  sidebar_piechart?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
+  timeline_experiment?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
+};
+
+export type WorkspaceResolvers<ContextType = any, ParentType extends ResolversParentTypes['Workspace'] = ResolversParentTypes['Workspace']> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  logo_url?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  profile?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>,
+  premium?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
+  admin?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
+  default_hourly_rate?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>,
+  default_currency?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  only_admins_may_create_projects?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
+  only_admins_see_billable_rates?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
+  only_admins_see_team_dashboard?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
+  projects_billable_by_default?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
+  rounding?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  rounding_minutes?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  api_token?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  at?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>,
+  ical_enabled?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
 };
 
 export type Resolvers<ContextType = any> = {
+  BlogPost?: BlogPostResolvers<ContextType>,
   DateTime?: GraphQLScalarType,
+  DetailedUser?: DetailedUserResolvers<ContextType>,
   Mutation?: MutationResolvers<ContextType>,
+  Obm?: ObmResolvers<ContextType>,
   Project?: ProjectResolvers<ContextType>,
   Query?: QueryResolvers<ContextType>,
+  Tag?: TagResolvers<ContextType>,
+  User?: UserResolvers<ContextType>,
+  Workspace?: WorkspaceResolvers<ContextType>,
 };
 
 

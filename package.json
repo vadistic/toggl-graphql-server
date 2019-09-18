@@ -24,6 +24,7 @@
     "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
+    "@2fd/graphdoc": "^2.4.0",
     "@graphql-codegen/cli": "^1.7.0",
     "@graphql-codegen/introspection": "^1.7.0",
     "@graphql-codegen/typescript": "1.7.0",
