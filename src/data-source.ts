@@ -1,6 +1,6 @@
 import { RESTDataSource, RequestOptions } from 'apollo-datasource-rest'
 import { Injectable, ProviderScope } from '@graphql-modules/di'
-import { AuthContext } from './modules'
+import { AuthContext } from './modules/shared'
 
 const ENDPOINT = `https://www.toggl.com/api/v8/`
 
