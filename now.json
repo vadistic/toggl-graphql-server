@@ -2,10 +2,11 @@
   "version": 2,
   "builds": [
     { "src": "src/index.ts", "use": "@now/node" },
-    { "src": "public/docs/**/*", "use": "@now/static" }
+    { "src": "public/**/*", "use": "@now/static" }
   ],
   "routes": [
-    { "src": "/docs(.*)", "dest": "/public/docs$1" },
+    { "src": "/docs/(.*)", "dest": "/public/docs/$1" },
+    { "src": "/docs", "status": 308, "headers": { "Location": "/docs/" } },
     {
       "src": "/github",
       "status": 301,
