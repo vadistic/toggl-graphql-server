@@ -1,28 +1,12 @@
-import { GraphQLModule, ModuleContext } from '@graphql-modules/core'
-import gql from 'graphql-tag'
-
-import {
-  QueryResolvers,
-  MutationResolvers,
-  WorkspaceUpdateInput,
-  Workspace,
-  Maybe,
-  WorkspaceResolvers,
-  Project,
-  Group,
-} from '../generated'
+/* eslint-disable @typescript-eslint/camelcase */
 import { DataSource } from '../data-source'
-import { ID } from '../types'
-import { gql as graphql } from '../gql'
-import { SharedModule } from './shared'
-import { WorkspaceActivityModule } from './workspace-activity'
-import { WorkspaceUserModule } from './workspace-users'
-import { WorkspaceGroupModule } from './workspace-group'
-import { ProjectModule } from './project'
+import { Group, Maybe, Project, Resolvers, Workspace, WorkspaceUpdateInput } from '../generated'
+import { gql } from '../noop-gql'
+import { ID, ModuleContext } from '../types'
 
 // https://github.com/toggl/toggl_api_docs/blob/master/chapters/workspaces.md
 
-const workspaceFields = graphql`
+const workspaceFields = /* GraphQL */ `
     "the name of the workspace"
     name: String!
     "(if set, otherwise omited)"
@@ -88,12 +72,12 @@ const typeDefs = gql`
   }
 
 
-  type Query {
+  extend type Query {
     workspace(workspace_id: ID!): Workspace
     workspaces: [Workspace!]!
   }
 
-  type Mutation {
+  extend type Mutation {
     updateWorkspace(workspace_id: ID!, data: WorkspaceUpdateInput!): Workspace!
   }
 `
@@ -120,39 +104,31 @@ class WorkspaceAPI extends DataSource {
   }
 }
 
-const Query: QueryResolvers<ModuleContext> = {
-  workspace: async (root, { workspace_id }, { injector }, info) =>
-    injector.get(WorkspaceAPI).getWorkspace(workspace_id),
+const resolvers: Resolvers<ModuleContext<{ workspaceAPI: WorkspaceAPI }>> = {
+  Query: {
+    workspace: async (root, { workspace_id }, { dataSources }, info) =>
+      dataSources.workspaceAPI.getWorkspace(workspace_id),
 
-  workspaces: async (root, args, { injector }, info) => injector.get(WorkspaceAPI).getWorkspaces(),
-}
-
-const Mutation: MutationResolvers<ModuleContext> = {
-  updateWorkspace: async (root, { workspace_id, data }, { injector }, info) =>
-    injector.get(WorkspaceAPI).updateWorkspace(workspace_id, data),
-}
-
-const Workspace: WorkspaceResolvers<ModuleContext> = {
-  groups: async (root, args, { injector }, info) =>
-    injector.get(WorkspaceAPI).getWorkspaceGroups(root.id),
-
-  projects: async (root, args, { injector }, info) =>
-    injector.get(WorkspaceAPI).getWorkspaceProjects(root.id),
-}
-
-export const WorkspaceModule = new GraphQLModule({
-  typeDefs,
-  imports: [
-    SharedModule,
-    WorkspaceActivityModule,
-    WorkspaceUserModule,
-    WorkspaceGroupModule,
-    ProjectModule,
-  ],
-  providers: [WorkspaceAPI],
-  resolvers: {
-    Query,
-    Mutation,
-    Workspace,
+    workspaces: async (root, args, { dataSources }, info) =>
+      dataSources.workspaceAPI.getWorkspaces(),
   },
-})
+  Mutation: {
+    updateWorkspace: async (root, { workspace_id, data }, { dataSources }, info) =>
+      dataSources.workspaceAPI.updateWorkspace(workspace_id, data),
+  },
+  Workspace: {
+    groups: async (root, args, { dataSources }, info) =>
+      dataSources.workspaceAPI.getWorkspaceGroups(root.id),
+
+    projects: async (root, args, { dataSources }, info) =>
+      dataSources.workspaceAPI.getWorkspaceProjects(root.id),
+  },
+}
+
+export const workspaceModule = {
+  typeDefs,
+  resolvers,
+  dataSources: {
+    WorkspaceAPI,
+  },
+}

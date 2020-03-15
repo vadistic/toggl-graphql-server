@@ -1,28 +1,49 @@
+import { NowRequest, NowResponse } from '@now/node'
+import { ApolloServer, Config, IResolvers } from 'apollo-server-express'
+import express from 'express'
 import 'reflect-metadata'
+import { dataSources, resolvers, typeDefs } from './api'
+import { context } from './context'
 
-import { ApolloServer } from 'apollo-server-micro'
-import { GraphQLModule } from '@graphql-modules/core'
+const query = /* GraphQL */ `
+  # 1) Provide AUTH_TOKEN in HTTP HEADERS
+  # 2) Write your query or mutation
 
-import { TaskModule } from './modules/task'
-import { TagModule } from './modules/tag'
-import { UserModule } from './modules/user'
-import { WorkspaceModule } from './modules/workspace'
-import { ClientModule } from './modules/clients'
-import { TimeEntriesModule } from './modules/time-entries'
+  query Me {
+    user {
+      fullname
+    }
+  }
+`
 
-const AppModule = new GraphQLModule({
-  imports: [TaskModule, TagModule, UserModule, WorkspaceModule, ClientModule, TimeEntriesModule],
-})
-
-const server = new ApolloServer({
-  modules: [AppModule],
-  context: session => session,
+const serverConfig: Config = {
+  typeDefs,
+  // assertion beacuse of missing index signatures and partialis of generated Resolvers
+  resolvers: (resolvers as unknown) as IResolvers,
+  dataSources,
+  context,
+  playground: {
+    title: 'Toggl GraphQL API',
+    tabs: [
+      {
+        endpoint: '/',
+        query,
+        headers: { Authorization: 'Bearer AUTH_TOKEN' },
+      },
+    ],
+  },
   introspection: true,
   debug: true,
-  playground: true,
-})
+}
 
-const graphqlPath = '/'
-const graphqlHandler = server.createHandler({ path: graphqlPath })
+const server = new ApolloServer(serverConfig)
 
-module.exports = graphqlHandler
+const instance = express()
+
+server.applyMiddleware({ app: instance, path: '/' })
+
+export { server, instance }
+
+export default async (req: NowRequest, res: NowResponse) => {
+  return instance(req, res)
+}

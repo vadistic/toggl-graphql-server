@@ -3,11 +3,12 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "module": "commonjs",
+    "moduleResolution": "node",
     "outDir": "./build",
     "resolveJsonModule": true,
     "strict": true,
     "sourceMap": true,
-    "target": "esnext",
+    "target": "es2018",
     "experimentalDecorators": true
   },
   "include": ["./src/**/*"],

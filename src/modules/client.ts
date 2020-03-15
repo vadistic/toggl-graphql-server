@@ -1,24 +1,18 @@
-import { GraphQLModule, ModuleContext } from '@graphql-modules/core'
-import gql from 'graphql-tag'
-
+/* eslint-disable @typescript-eslint/camelcase */
+import { DataSource } from '../data-source'
 import {
-  QueryResolvers,
-  MutationResolvers,
-  Maybe,
   Client,
   ClientCreateInput,
   ClientUpdateInput,
+  Maybe,
   Project,
-  ClientResolvers,
+  Resolvers,
 } from '../generated'
-import { DataSource } from '../data-source'
-import { ID } from '../types'
-import { SharedModule } from './shared'
-import { ProjectModule } from './project'
+import { ID, ModuleContext, Nullable } from '../types'
 
 // https://github.com/toggl/toggl_api_docs/blob/master/chapters/clients.md
 
-const typeDefs = gql`
+const typeDefs = /* GraphQL */ `
   type Client {
     id: ID!
     "the name of the client"
@@ -31,8 +25,8 @@ const typeDefs = gql`
     at: DateTime!
 
     # RELATIONS
-
-    projects(active: String): [Project!]!
+    "get client projects - by default both active and unactive"
+    projects(active: Boolean): [Project!]!
   }
 
   input ClientCreateInput {
@@ -49,12 +43,12 @@ const typeDefs = gql`
     notes: String
   }
 
-  type Query {
+  extend type Query {
     client(client_id: ID!): Client
     clients: [Client!]!
   }
 
-  type Mutation {
+  extend type Mutation {
     createClient(data: ClientCreateInput!): Client!
     updateClient(client_id: ID!, data: ClientUpdateInput!): Client!
     deleteClient(client_id: ID!): Boolean!
@@ -70,8 +64,10 @@ export class ClientAPI extends DataSource {
     return this.get(`clients`)
   }
 
-  async getClientProjects(client_id: ID, active?: string): Promise<Project[]> {
-    return this.get(`clients/${client_id}/projects`)
+  async getClientProjects(client_id: ID, active: Nullable<boolean>): Promise<Project[]> {
+    return this.get(`clients/${client_id}/projects`, {
+      active: active ?? 'both',
+    })
   }
 
   async createClient(data: ClientCreateInput): Promise<Client> {
@@ -87,36 +83,33 @@ export class ClientAPI extends DataSource {
   }
 }
 
-const Query: QueryResolvers<ModuleContext> = {
-  client: async (root, { client_id }, { injector }, info) =>
-    injector.get(ClientAPI).getClient(client_id),
+const resolvers: Resolvers<ModuleContext<{ clientAPI: ClientAPI }>> = {
+  Query: {
+    client: async (root, { client_id }, { dataSources }, info) =>
+      dataSources.clientAPI.getClient(client_id),
 
-  clients: async (root, args, { injector }, info) => injector.get(ClientAPI).getClients(),
-}
-
-const Mutation: MutationResolvers<ModuleContext> = {
-  createClient: async (root, { data }, { injector }, info) =>
-    injector.get(ClientAPI).createClient(data),
-
-  updateClient: async (root, { client_id, data }, { injector }, info) =>
-    injector.get(ClientAPI).updateClient(client_id, data),
-
-  deleteClient: async (root, { client_id }, { injector }, info) =>
-    injector.get(ClientAPI).deleteClient(client_id),
-}
-
-const Client: ClientResolvers = {
-  projects: async (root, { active }, { injector }, info) =>
-    injector.get(ClientAPI).getClientProjects(root.id, active),
-}
-
-export const ClientModule = new GraphQLModule({
-  typeDefs,
-  imports: [SharedModule, ProjectModule],
-  providers: [ClientAPI],
-  resolvers: {
-    Query,
-    Mutation,
-    Client,
+    clients: async (root, args, { dataSources }, info) => dataSources.clientAPI.getClients(),
   },
-})
+  Mutation: {
+    createClient: async (root, { data }, { dataSources }, info) =>
+      dataSources.clientAPI.createClient(data),
+
+    updateClient: async (root, { client_id, data }, { dataSources }, info) =>
+      dataSources.clientAPI.updateClient(client_id, data),
+
+    deleteClient: async (root, { client_id }, { dataSources }, info) =>
+      dataSources.clientAPI.deleteClient(client_id),
+  },
+  Client: {
+    projects: async (root, { active }, { dataSources }, info) =>
+      dataSources.clientAPI.getClientProjects(root.id, active),
+  },
+}
+
+export const clientModule = {
+  typeDefs,
+  resolvers,
+  dataSources: {
+    ClientAPI,
+  },
+}

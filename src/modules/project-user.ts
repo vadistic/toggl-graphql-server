@@ -1,24 +1,20 @@
-import { GraphQLModule, ModuleContext } from '@graphql-modules/core'
-import gql from 'graphql-tag'
-
+/* eslint-disable @typescript-eslint/camelcase */
 import { DataSource } from '../data-source'
 import {
-  MutationResolvers,
-  ProjectResolvers,
   ProjectUser,
   ProjectUserCreateInput,
   ProjectUserCreateManyInput,
-  ProjectUserUpdateManyInput,
   ProjectUserUpdateInput,
+  ProjectUserUpdateManyInput,
+  Resolvers,
 } from '../generated'
-import { ID } from '../types'
-import { SharedModule } from './shared'
+import { ID, ModuleContext } from '../types'
 
 // https://github.com/toggl/toggl_api_docs/blob/master/chapters/project_users.md
 
 // TODO: check if this weridness with "fields: fullname" is fixed in v9
 
-const typeDefs = gql`
+const typeDefs = /* GraphQL */ `
   type ProjectUser {
     id: ID!
     "project ID"
@@ -83,7 +79,7 @@ const typeDefs = gql`
     rate: Float
   }
 
-  type Mutation {
+  extend type Mutation {
     createProjectUser(data: ProjectUserCreateInput!): ProjectUser!
     updateProjectUser(project_user_id: ID!, data: ProjectUserUpdateInput!): ProjectUser!
     deleteProjectUser(project_user_id: ID!): Boolean!
@@ -132,37 +128,36 @@ class ProjectUserAPI extends DataSource {
   }
 }
 
-const Mutation: MutationResolvers<ModuleContext> = {
-  createProjectUser: async (root, { data }, { injector }, info) =>
-    injector.get(ProjectUserAPI).createProjectUser(data),
+const resolvers: Resolvers<ModuleContext<{ projectUserAPI: ProjectUserAPI }>> = {
+  Mutation: {
+    createProjectUser: async (root, { data }, { dataSources }, info) =>
+      dataSources.projectUserAPI.createProjectUser(data),
 
-  updateProjectUser: async (root, { project_user_id, data }, { injector }, info) =>
-    injector.get(ProjectUserAPI).updateProjectUser(project_user_id, data),
+    updateProjectUser: async (root, { project_user_id, data }, { dataSources }, info) =>
+      dataSources.projectUserAPI.updateProjectUser(project_user_id, data),
 
-  deleteProjectUser: async (root, { project_user_id }, { injector }, info) =>
-    injector.get(ProjectUserAPI).deleteProjectUser(project_user_id),
+    deleteProjectUser: async (root, { project_user_id }, { dataSources }, info) =>
+      dataSources.projectUserAPI.deleteProjectUser(project_user_id),
 
-  createManyProjectUsers: async (root, { data }, { injector }, info) =>
-    injector.get(ProjectUserAPI).createManyProjectUsers(data),
+    createManyProjectUsers: async (root, { data }, { dataSources }, info) =>
+      dataSources.projectUserAPI.createManyProjectUsers(data),
 
-  updateManyProjectUsers: async (root, { project_user_ids, data }, { injector }, info) =>
-    injector.get(ProjectUserAPI).updateManmyProjectUsers(project_user_ids, data),
+    updateManyProjectUsers: async (root, { project_user_ids, data }, { dataSources }, info) =>
+      dataSources.projectUserAPI.updateManmyProjectUsers(project_user_ids, data),
 
-  deleteManyProjectUsers: async (root, { project_user_ids }, { injector }, info) =>
-    injector.get(ProjectUserAPI).deleteManyProjectUsers(project_user_ids),
-}
-
-const Project: ProjectResolvers<ModuleContext> = {
-  users: async (root, args, { injector }, info) =>
-    injector.get(ProjectUserAPI).getProjectUsers(root.id),
-}
-
-export const ProjectUserModule = new GraphQLModule({
-  typeDefs,
-  imports: [SharedModule],
-  providers: [ProjectUserAPI],
-  resolvers: {
-    Mutation,
-    Project,
+    deleteManyProjectUsers: async (root, { project_user_ids }, { dataSources }, info) =>
+      dataSources.projectUserAPI.deleteManyProjectUsers(project_user_ids),
   },
-})
+  Project: {
+    users: async (root, args, { dataSources }, info) =>
+      dataSources.projectUserAPI.getProjectUsers(root.id),
+  },
+}
+
+export const projectUserModule = {
+  typeDefs,
+  resolvers,
+  dataSources: {
+    ProjectUserAPI,
+  },
+}

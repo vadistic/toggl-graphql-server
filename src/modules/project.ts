@@ -1,26 +1,19 @@
-import { GraphQLModule, ModuleContext } from '@graphql-modules/core'
-import gql from 'graphql-tag'
-
+/* eslint-disable @typescript-eslint/camelcase */
+import { DataSource } from '../data-source'
 import {
-  QueryResolvers,
-  MutationResolvers,
-  ProjectCreateInput,
   Maybe,
   Project,
+  ProjectCreateInput,
   ProjectUpdateInput,
+  Resolvers,
   Scalars,
   Task,
-  ProjectResolvers,
 } from '../generated'
-import { DataSource } from '../data-source'
-import { ID } from '../types'
-import { SharedModule } from './shared'
-import { ProjectUserModule } from './project-user'
-import { TaskModule } from './task'
+import { ID, ModuleContext } from '../types'
 
 // https://github.com/toggl/toggl_api_docs/blob/master/chapters/projects.md
 
-const typeDefs = gql`
+const typeDefs = /* GraphQL */ `
   type Project {
     id: ID!
 
@@ -74,11 +67,11 @@ const typeDefs = gql`
     color: Int
   }
 
-  type Query {
+  extend type Query {
     project(project_id: ID!): Project
   }
 
-  type Mutation {
+  extend type Mutation {
     createProject(data: ProjectCreateInput!): Project!
     updateProject(project_id: ID!, data: ProjectUpdateInput!): Project!
     deleteProject(project_id: ID!): [ID!]!
@@ -107,34 +100,31 @@ export class ProjectAPI extends DataSource {
   }
 }
 
-const Query: QueryResolvers<ModuleContext> = {
-  project: async (root, { project_id }, { injector }, info) =>
-    injector.get(ProjectAPI).getProject(project_id),
-}
-
-const Mutation: MutationResolvers<ModuleContext> = {
-  createProject: async (root, { data }, { injector }, info) =>
-    injector.get(ProjectAPI).createProject(data),
-
-  updateProject: async (root, { project_id, data }, { injector }, info) =>
-    injector.get(ProjectAPI).updateProject(project_id, data),
-
-  deleteProject: async (root, { project_id }, { injector }, info) =>
-    injector.get(ProjectAPI).deleteProject(project_id),
-}
-
-const Project: ProjectResolvers<ModuleContext> = {
-  tasks: async (root, args, { injector }, info) =>
-    injector.get(ProjectAPI).getProjectTasks(root.id),
-}
-
-export const ProjectModule = new GraphQLModule({
-  typeDefs,
-  imports: [SharedModule, ProjectUserModule, TaskModule],
-  providers: [ProjectAPI],
-  resolvers: {
-    Query,
-    Mutation,
-    Project,
+const resolvers: Resolvers<ModuleContext<{ projectAPI: ProjectAPI }>> = {
+  Query: {
+    project: async (root, { project_id }, { dataSources }, info) =>
+      dataSources.projectAPI.getProject(project_id),
   },
-})
+  Mutation: {
+    createProject: async (root, { data }, { dataSources }, info) =>
+      dataSources.projectAPI.createProject(data),
+
+    updateProject: async (root, { project_id, data }, { dataSources }, info) =>
+      dataSources.projectAPI.updateProject(project_id, data),
+
+    deleteProject: async (root, { project_id }, { dataSources }, info) =>
+      dataSources.projectAPI.deleteProject(project_id),
+  },
+  Project: {
+    tasks: async (root, args, { dataSources }, info) =>
+      dataSources.projectAPI.getProjectTasks(root.id),
+  },
+}
+
+export const projectModule = {
+  typeDefs,
+  resolvers,
+  dataSources: {
+    ProjectAPI,
+  },
+}

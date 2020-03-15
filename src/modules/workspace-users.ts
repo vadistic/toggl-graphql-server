@@ -1,17 +1,14 @@
-import { GraphQLModule, ModuleContext } from '@graphql-modules/core'
-import gql from 'graphql-tag'
-
+/* eslint-disable @typescript-eslint/camelcase */
 import { DataSource } from '../data-source'
-import { ID } from '../types'
 import {
-  WorkspaceUserInviteInput,
   InvitationResponse,
-  MutationResolvers,
-  WorkspaceUserUpdateInput,
+  Resolvers,
   WorkspaceUser,
-  WorkspaceResolvers,
+  WorkspaceUserInviteInput,
+  WorkspaceUserUpdateInput,
 } from '../generated'
-import { SharedModule } from './shared'
+import { gql } from '../noop-gql'
+import { ID, ModuleContext } from '../types'
 
 // https://github.com/toggl/toggl_api_docs/blob/master/chapters/workspace_users.md
 
@@ -44,7 +41,7 @@ const typeDefs = gql`
     admin: Boolean!
   }
 
-  type Mutation {
+  extend type Mutation {
     inviteWorkspaceUser(workspace_id: ID!, data: WorkspaceUserInviteInput!): InvitationResponse!
     updateWorkspaceUser(workspace_user_id: ID!, data: WorkspaceUserUpdateInput!): WorkspaceUser!
     deleteWorkspaceUser(workspace_user_id: ID!): Boolean!
@@ -80,28 +77,27 @@ class WorkspaceUserAPI extends DataSource {
   }
 }
 
-const Mutation: MutationResolvers<ModuleContext> = {
-  inviteWorkspaceUser: async (root, { workspace_id, data }, { injector }, info) =>
-    injector.get(WorkspaceUserAPI).inviteWorkspaceUser(workspace_id, data),
+const resolvers: Resolvers<ModuleContext<{ workspaceUserAPI: WorkspaceUserAPI }>> = {
+  Mutation: {
+    inviteWorkspaceUser: async (root, { workspace_id, data }, { dataSources }, info) =>
+      dataSources.workspaceUserAPI.inviteWorkspaceUser(workspace_id, data),
 
-  updateWorkspaceUser: async (root, { workspace_user_id, data }, { injector }, info) =>
-    injector.get(WorkspaceUserAPI).updateWorkspaceUser(workspace_user_id, data),
+    updateWorkspaceUser: async (root, { workspace_user_id, data }, { dataSources }, info) =>
+      dataSources.workspaceUserAPI.updateWorkspaceUser(workspace_user_id, data),
 
-  deleteWorkspaceUser: async (root, { workspace_user_id }, { injector }, info) =>
-    injector.get(WorkspaceUserAPI).deleteWorkspaceUser(workspace_user_id),
-}
-
-const Workspace: WorkspaceResolvers<ModuleContext> = {
-  users: async (root, args, { injector }, info) =>
-    injector.get(WorkspaceUserAPI).getWorkspaceUsers(root.id),
-}
-
-export const WorkspaceUserModule = new GraphQLModule({
-  typeDefs,
-  imports: [SharedModule],
-  providers: [WorkspaceUserAPI],
-  resolvers: {
-    Mutation,
-    Workspace,
+    deleteWorkspaceUser: async (root, { workspace_user_id }, { dataSources }, info) =>
+      dataSources.workspaceUserAPI.deleteWorkspaceUser(workspace_user_id),
   },
-})
+  Workspace: {
+    users: async (root, args, { dataSources }, info) =>
+      dataSources.workspaceUserAPI.getWorkspaceUsers(root.id),
+  },
+}
+
+export const workspaceUserModule = {
+  typeDefs,
+  resolvers,
+  dataSources: {
+    WorkspaceUserAPI,
+  },
+}

@@ -1,10 +1,8 @@
-import { GraphQLModule, ModuleContext } from '@graphql-modules/core'
-import gql from 'graphql-tag'
-
-import { MutationResolvers, Tag, TagCreateInput, TagUpdateInput } from '../generated'
+/* eslint-disable @typescript-eslint/camelcase */
 import { DataSource } from '../data-source'
-import { ID } from '../types'
-import { SharedModule } from './shared'
+import { Resolvers, Tag, TagCreateInput, TagUpdateInput } from '../generated'
+import { gql } from '../noop-gql'
+import { ID, ModuleContext } from '../types'
 
 // https://github.com/toggl/toggl_api_docs/blob/master/chapters/tags.md
 
@@ -27,7 +25,7 @@ const typeDefs = gql`
     name: String!
   }
 
-  type Mutation {
+  extend type Mutation {
     createTag(data: TagCreateInput!): Tag!
     updateTag(tag_id: ID!, data: TagUpdateInput!): Tag!
     deleteTag(tag_id: ID!): Boolean!
@@ -50,20 +48,22 @@ export class TagAPI extends DataSource {
   }
 }
 
-const Mutation: MutationResolvers<ModuleContext> = {
-  createTag: async (root, { data }, { injector }, info) => injector.get(TagAPI).createTag(data),
+const resolvers: Resolvers<ModuleContext<{ tagAPI: TagAPI }>> = {
+  Mutation: {
+    createTag: async (root, { data }, { dataSources }, info) => dataSources.tagAPI.createTag(data),
 
-  updateTag: async (root, { tag_id, data }, { injector }, info) =>
-    injector.get(TagAPI).updateTag(tag_id, data),
+    updateTag: async (root, { tag_id, data }, { dataSources }, info) =>
+      dataSources.tagAPI.updateTag(tag_id, data),
 
-  deleteTag: async (root, { tag_id }, { injector }, info) => injector.get(TagAPI).deleteTag(tag_id),
+    deleteTag: async (root, { tag_id }, { dataSources }, info) =>
+      dataSources.tagAPI.deleteTag(tag_id),
+  },
 }
 
-export const TagModule = new GraphQLModule({
+export const tagModule = {
   typeDefs,
-  providers: [TagAPI],
-  imports: [SharedModule],
-  resolvers: {
-    Mutation,
+  resolvers,
+  dataSources: {
+    TagAPI,
   },
-})
+}

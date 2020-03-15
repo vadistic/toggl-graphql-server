@@ -8,13 +8,15 @@ GraphQL API for toggl.com
 
 ## Why?
 
-As a refresher and to check out `graphql-modules`
+As a refresher and to check out [`graphql-modules`](https://graphql-modules.com/)
+
+**Update**: At some point `graphql-modules` author decided to disable cross-module references and I do not see the point of them anymore. Refactored them out.
 
 ## Auth
 
 Using Bearer token in Authorization header.
 
-Alternatively 'Authorization': 'Basic xxx', where xxx is base64 encoded token:api_key or email:apssword
+Alternatively `'Authorization': 'Basic xxx'`, where `xxx` is base64 encoded `token:api_key` or `email:password`
 
 ## Stack
 
@@ -32,3 +34,4 @@ Alternatively 'Authorization': 'Basic xxx', where xxx is base64 encoded token:ap
 ## TODO
 
 - Implement reports
+- Implement premium apis (tasks etc.)

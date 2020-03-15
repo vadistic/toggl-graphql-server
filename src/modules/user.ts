@@ -1,21 +1,10 @@
-import { GraphQLModule, ModuleContext } from '@graphql-modules/core'
-import { gql } from 'apollo-server-micro'
-
-import { gql as graphql } from '../gql'
-import {
-  QueryResolvers,
-  MutationResolvers,
-  UserCreateInput,
-  User,
-  UserUpdateInput,
-  DetailedUser,
-} from '../generated'
 import { DataSource } from '../data-source'
-import { SharedModule } from './shared'
+import { DetailedUser, Resolvers, User, UserCreateInput, UserUpdateInput } from '../generated'
+import { ModuleContext } from '../types'
 
 // https://github.com/toggl/toggl_api_docs/blob/master/chapters/users.md
 
-const userFields = graphql`
+const userFields = /* GraphQL */ `
     "default workspace id"
     default_wid: ID!
     "user's email"
@@ -40,7 +29,7 @@ const userFields = graphql`
     timeline_experiment: Boolean!
 `
 
-const typeDefs = gql`
+const typeDefs = /* GraphQL */ `
   """
   basic user data
   """
@@ -133,12 +122,12 @@ const typeDefs = gql`
     date_format: String
   }
 
-  type Query {
+  extend type Query {
     "get current user data"
     user: DetailedUser!
   }
 
-  type Mutation {
+  extend type Mutation {
     createUser(data: UserCreateInput!): User!
     updateUser(data: UserUpdateInput!): User!
     resetToken: String!
@@ -163,24 +152,23 @@ export class UserAPI extends DataSource {
   }
 }
 
-const Query: QueryResolvers<ModuleContext> = {
-  user: async (root, args, { injector }, info) => injector.get(UserAPI).getUser(),
-}
-
-const Mutation: MutationResolvers<ModuleContext> = {
-  createUser: async (root, { data }, { injector }, info) => injector.get(UserAPI).createUser(data),
-
-  updateUser: async (root, { data }, { injector }, info) => injector.get(UserAPI).updateUser(data),
-
-  resetToken: async (root, args, { injector }, info) => injector.get(UserAPI).resetToken(),
-}
-
-export const UserModule = new GraphQLModule({
-  typeDefs,
-  imports: [SharedModule],
-  providers: [UserAPI],
-  resolvers: {
-    Query,
-    Mutation,
+const resolvers: Resolvers<ModuleContext<{ userAPI: UserAPI }>> = {
+  Query: {
+    user: async (root, args, { dataSources }, info) => dataSources.userAPI.getUser(),
   },
-})
+  Mutation: {
+    createUser: async (root, { data }, { dataSources }, info) =>
+      dataSources.userAPI.createUser(data),
+
+    updateUser: async (root, { data }, { dataSources }, info) =>
+      dataSources.userAPI.updateUser(data),
+
+    resetToken: async (root, args, { dataSources }, info) => dataSources.userAPI.resetToken(),
+  },
+}
+
+export const userModule = {
+  typeDefs,
+  resolvers,
+  dataSources: { UserAPI },
+}

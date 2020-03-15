@@ -1,10 +1,8 @@
-import { GraphQLModule, ModuleContext } from '@graphql-modules/core'
-import gql from 'graphql-tag'
-
-import { MutationResolvers, Group, GroupCreateInput, GroupUpdateInput } from '../generated'
+/* eslint-disable @typescript-eslint/camelcase */
 import { DataSource } from '../data-source'
-import { ID } from '../types'
-import { SharedModule } from './shared'
+import { Group, GroupCreateInput, GroupUpdateInput, Resolvers } from '../generated'
+import { gql } from '../noop-gql'
+import { ID, ModuleContext } from '../types'
 
 // https://github.com/toggl/toggl_api_docs/blob/master/chapters/tags.md
 
@@ -29,14 +27,14 @@ const typeDefs = gql`
     name: String!
   }
 
-  type Mutation {
+  extend type Mutation {
     createGroup(data: GroupCreateInput!): Group!
     updateGroup(group_id: ID!, data: GroupUpdateInput!): Group!
     deleteGroup(group_id: ID!): Boolean!
   }
 `
 
-export class GroupAPI extends DataSource {
+export class WorkspaceGroupAPI extends DataSource {
   // add custom get group by id?
 
   async createGroup(data: GroupCreateInput): Promise<Group> {
@@ -52,22 +50,21 @@ export class GroupAPI extends DataSource {
   }
 }
 
-const Mutation: MutationResolvers<ModuleContext> = {
-  createGroup: async (root, { data }, { injector }, info) =>
-    injector.get(GroupAPI).createGroup(data),
+const resolvers: Resolvers<ModuleContext<{ workspaceGroupAPI: WorkspaceGroupAPI }>> = {
+  Mutation: {
+    createGroup: async (root, { data }, { dataSources }, info) =>
+      dataSources.workspaceGroupAPI.createGroup(data),
 
-  updateGroup: async (root, { group_id, data }, { injector }, info) =>
-    injector.get(GroupAPI).updateGroup(group_id, data),
+    updateGroup: async (root, { group_id, data }, { dataSources }, info) =>
+      dataSources.workspaceGroupAPI.updateGroup(group_id, data),
 
-  deleteGroup: async (root, { group_id }, { injector }, info) =>
-    injector.get(GroupAPI).deleteGroup(group_id),
+    deleteGroup: async (root, { group_id }, { dataSources }, info) =>
+      dataSources.workspaceGroupAPI.deleteGroup(group_id),
+  },
 }
 
-export const WorkspaceGroupModule = new GraphQLModule({
+export const workspaceGroupModule = {
   typeDefs,
-  providers: [GroupAPI],
-  imports: [SharedModule],
-  resolvers: {
-    Mutation,
-  },
-})
+  resolvers,
+  dataSources: { WorkspaceGroupAPI },
+}

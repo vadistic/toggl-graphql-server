@@ -1,16 +1,8 @@
-import { GraphQLModule, ModuleContext } from '@graphql-modules/core'
-import gql from 'graphql-tag'
-
-import {
-  QueryResolvers,
-  MutationResolvers,
-  TaskCreateInput,
-  Task,
-  TaskUpdateInput,
-} from '../generated'
+/* eslint-disable @typescript-eslint/camelcase */
 import { DataSource } from '../data-source'
-import { ID } from '../types'
-import { SharedModule } from './shared'
+import { Resolvers, Task, TaskCreateInput, TaskUpdateInput } from '../generated'
+import { gql } from '../noop-gql'
+import { ID, ModuleContext } from '../types'
 
 // https://github.com/toggl/toggl_api_docs/blob/master/chapters/projects.md
 
@@ -50,7 +42,7 @@ const typeDefs = gql`
     active: Boolean
   }
 
-  type Mutation {
+  extend type Mutation {
     createTask(data: TaskCreateInput!): Task!
     updateTask(task_id: ID!, data: TaskUpdateInput!): Task!
     deleteTask(task_id: ID!): Boolean!
@@ -81,30 +73,29 @@ export class TaskAPI extends DataSource {
   }
 }
 
-const Query: QueryResolvers<ModuleContext> = {}
+const resolvers: Resolvers<ModuleContext<{ taskAPI: TaskAPI }>> = {
+  Mutation: {
+    createTask: async (root, { data }, { dataSources }, info) =>
+      dataSources.taskAPI.createTask(data),
 
-const Mutation: MutationResolvers<ModuleContext> = {
-  createTask: async (root, { data }, { injector }, info) => injector.get(TaskAPI).createTask(data),
+    updateTask: async (root, { task_id, data }, { dataSources }, info) =>
+      dataSources.taskAPI.updateTask(task_id, data),
 
-  updateTask: async (root, { task_id, data }, { injector }, info) =>
-    injector.get(TaskAPI).updateTask(task_id, data),
+    deleteTask: async (root, { task_id }, { dataSources }, info) =>
+      dataSources.taskAPI.deleteTask(task_id),
 
-  deleteTask: async (root, { task_id }, { injector }, info) =>
-    injector.get(TaskAPI).deleteTask(task_id),
+    updateManyTasks: async (root, { task_ids, data }, { dataSources }, info) =>
+      dataSources.taskAPI.updateManyTasks(task_ids, data),
 
-  updateManyTasks: async (root, { task_ids, data }, { injector }, info) =>
-    injector.get(TaskAPI).updateManyTasks(task_ids, data),
-
-  deleteManyTasks: async (root, { task_ids }, { injector }, info) =>
-    injector.get(TaskAPI).deleteManyTasks(task_ids),
+    deleteManyTasks: async (root, { task_ids }, { dataSources }, info) =>
+      dataSources.taskAPI.deleteManyTasks(task_ids),
+  },
 }
 
-export const TaskModule = new GraphQLModule({
+export const taskModule = {
   typeDefs,
-  imports: [SharedModule],
-  providers: [TaskAPI],
-  resolvers: {
-    Query,
-    Mutation,
+  resolvers,
+  dataSources: {
+    TaskAPI,
   },
-})
+}

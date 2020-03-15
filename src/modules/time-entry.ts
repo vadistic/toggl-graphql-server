@@ -1,25 +1,19 @@
-import { GraphQLModule, ModuleContext } from '@graphql-modules/core'
-import gql from 'graphql-tag'
-import { URLSearchParams } from 'apollo-server-env'
-
-import {
-  MutationResolvers,
-  TimeEntryCreateInput,
-  TimeEntryUpdateInput,
-  TimeEntryStartInput,
-  TimeEntry,
-  Maybe,
-  TimeEntryUpdateManyInput,
-  QueryResolvers,
-} from '../generated'
+/* eslint-disable @typescript-eslint/camelcase */
 import { DataSource } from '../data-source'
-import { SharedModule } from './shared'
-import { gql as graphql } from '../gql'
-import { ID } from '../types'
+import {
+  Maybe,
+  Resolvers,
+  TimeEntry,
+  TimeEntryCreateInput,
+  TimeEntryStartInput,
+  TimeEntryUpdateInput,
+  TimeEntryUpdateManyInput,
+} from '../generated'
+import { ID, ModuleContext } from '../types'
 
 // https://github.com/toggl/toggl_api_docs/blob/master/chapters/tags.md
 
-const timeEntryInfoFields = graphql`
+const timeEntryInfoFields = /* GraphQL */ `
     "strongly suggested to be used"
     description: String
     "workspace ID (required if pid or tid not supplied)"
@@ -38,7 +32,7 @@ const timeEntryInfoFields = graphql`
     duronly: Boolean
 `
 
-const timeEntryDurationFields = graphql`
+const timeEntryDurationFields = /* GraphQL */ `
     """
     time entry duration in seconds
 
@@ -51,14 +45,14 @@ const timeEntryDurationFields = graphql`
     duration: Int!
 `
 
-const timeEntryStartStopFields = graphql`
+const timeEntryStartStopFields = /* GraphQL */ `
     "time entry start time (ISO 8601 date and time)"
     start: DateTime!
     "time entry stop time (ISO 8601 date and time)"
     stop: DateTime
 `
 
-const typeDefs = gql`
+const typeDefs = /* GraphQL */ `
   type TimeEntry {
     id: ID!
 
@@ -93,13 +87,13 @@ const typeDefs = gql`
     tag_action: String!
   }
 
-  type Query {
+  extend type Query {
     timeEntry(time_entry_id: ID!): TimeEntry
     currentTimeEntry: TimeEntry
     timeEntries(start_date: DateTime, end_date: DateTime): [TimeEntry]
   }
 
-  type Mutation {
+  extend type Mutation {
     createTimeEntry(data:TimeEntryCreateInput!): TimeEntry!
     updateTimeEntry(time_entry_id: ID!, data:TimeEntryUpdateInput!): TimeEntry!
     deleteTimeEntry(time_entry_id: ID!): Boolean!
@@ -160,43 +154,36 @@ export class TimeEntryAPI extends DataSource {
   }
 }
 
-const Query: QueryResolvers<ModuleContext> = {
-  timeEntry: async (root, { time_entry_id }, { injector }, info) =>
-    injector.get(TimeEntryAPI).getTimeEntry(time_entry_id),
+const resolvers: Resolvers<ModuleContext<{ timeEntryAPI: TimeEntryAPI }>> = {
+  Query: {
+    timeEntry: async (root, { time_entry_id }, { dataSources }, info) =>
+      dataSources.timeEntryAPI.getTimeEntry(time_entry_id),
 
-  currentTimeEntry: async (root, args, { injector }, info) =>
-    injector.get(TimeEntryAPI).getCurrentTimeEntry(),
+    currentTimeEntry: async (root, args, { dataSources }, info) =>
+      dataSources.timeEntryAPI.getCurrentTimeEntry(),
 
-  timeEntries: async (root, { start_date, end_date }, { injector }, info) =>
-    injector.get(TimeEntryAPI).getTimeEntries(start_date, end_date),
-}
-
-const Mutation: MutationResolvers<ModuleContext> = {
-  createTimeEntry: async (root, { data }, { injector }, info) =>
-    injector.get(TimeEntryAPI).createTimeEntry(data),
-
-  updateTimeEntry: async (root, { time_entry_id, data }, { injector }, info) =>
-    injector.get(TimeEntryAPI).updateTimeEntry(time_entry_id, data),
-
-  deleteTimeEntry: async (root, { time_entry_id }, { injector }, info) =>
-    injector.get(TimeEntryAPI).deleteTimeEntry(time_entry_id),
-
-  startTimeEntry: async (root, { data }, { injector }, info) =>
-    injector.get(TimeEntryAPI).startTimeEntry(data),
-
-  stopTimeEntry: async (root, { time_entry_id }, { injector }, info) =>
-    injector.get(TimeEntryAPI).stopTimeEntry(time_entry_id),
-
-  updateManyTimeEntries: async (root, { time_entry_ids, data }, { injector }, info) =>
-    injector.get(TimeEntryAPI).updateManyTimeEntries(time_entry_ids, data),
-}
-
-export const TimeEntriesModule = new GraphQLModule({
-  typeDefs,
-  providers: [TimeEntryAPI],
-  imports: [SharedModule],
-  resolvers: {
-    Query,
-    Mutation,
+    timeEntries: async (root, { start_date, end_date }, { dataSources }, info) =>
+      dataSources.timeEntryAPI.getTimeEntries(start_date, end_date),
   },
-})
+  Mutation: {
+    createTimeEntry: async (root, { data }, { dataSources }, info) =>
+      dataSources.timeEntryAPI.createTimeEntry(data),
+
+    updateTimeEntry: async (root, { time_entry_id, data }, { dataSources }, info) =>
+      dataSources.timeEntryAPI.updateTimeEntry(time_entry_id, data),
+
+    deleteTimeEntry: async (root, { time_entry_id }, { dataSources }, info) =>
+      dataSources.timeEntryAPI.deleteTimeEntry(time_entry_id),
+
+    startTimeEntry: async (root, { data }, { dataSources }, info) =>
+      dataSources.timeEntryAPI.startTimeEntry(data),
+
+    stopTimeEntry: async (root, { time_entry_id }, { dataSources }, info) =>
+      dataSources.timeEntryAPI.stopTimeEntry(time_entry_id),
+
+    updateManyTimeEntries: async (root, { time_entry_ids, data }, { dataSources }, info) =>
+      dataSources.timeEntryAPI.updateManyTimeEntries(time_entry_ids, data),
+  },
+}
+
+export const timeEntryModule = { typeDefs, resolvers, dataSources: { TimeEntryAPI } }

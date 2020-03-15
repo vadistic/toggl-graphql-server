@@ -1,15 +1,8 @@
-import { GraphQLModule, ModuleContext } from '@graphql-modules/core'
-import gql from 'graphql-tag'
-
-import {
-  Workspace,
-  WorkspaceUserActivity,
-  WorkspaceActivity,
-  WorkspaceResolvers,
-} from '../generated'
+/* eslint-disable @typescript-eslint/camelcase */
 import { DataSource } from '../data-source'
-import { ID } from '../types'
-import { SharedModule } from './shared'
+import { Resolvers, WorkspaceActivity, WorkspaceUserActivity } from '../generated'
+import { gql } from '../noop-gql'
+import { ID, ModuleContext } from '../types'
 
 // https://github.com/toggl/toggl_api_docs/blob/master/chapters/dashboard.md
 
@@ -52,19 +45,18 @@ export class WorkspaceActivityAPI extends DataSource {
   }
 }
 
-const Workspace: WorkspaceResolvers<ModuleContext> = {
-  activity: async (root, args, { injector }, info) =>
-    injector.get(WorkspaceActivityAPI).getWorkspaceActivity(root.id),
+const resolvers: Resolvers<ModuleContext<{ workspaceActivityAPI: WorkspaceActivityAPI }>> = {
+  Workspace: {
+    activity: async (root, args, { dataSources }, info) =>
+      dataSources.workspaceActivityAPI.getWorkspaceActivity(root.id),
 
-  user_activity: async (root, args, { injector }, info) =>
-    injector.get(WorkspaceActivityAPI).getWorkspaceUserActivity(root.id),
+    user_activity: async (root, args, { dataSources }, info) =>
+      dataSources.workspaceActivityAPI.getWorkspaceUserActivity(root.id),
+  },
 }
 
-export const WorkspaceActivityModule = new GraphQLModule({
+export const workspaceActivityModule = {
   typeDefs,
-  imports: [SharedModule],
-  providers: [WorkspaceActivityAPI],
-  resolvers: {
-    Workspace,
-  },
-})
+  resolvers,
+  dataSources: { WorkspaceActivityAPI },
+}
