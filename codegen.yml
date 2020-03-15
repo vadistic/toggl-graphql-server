@@ -1,5 +1,5 @@
 overwrite: true
-schema: src/typedefs.ts
+schema: ./src/api.ts
 documents: null
 require:
   - 'ts-node/register/transpile-only'
@@ -11,6 +11,16 @@ generates:
     plugins:
       - 'typescript'
       - 'typescript-resolvers'
-  # src/generated/graphql.schema.json:
-  #   plugins:
-  #     - 'introspection'
+  src/generated/schema.json:
+    plugins:
+      - 'introspection'
+      # fix for: https://github.com/2fd/graphdoc/issues/54
+      - add:
+          placement: 'prepend'
+          content: '{ "data": '
+      - add:
+          placement: 'append'
+          content: '}'
+    hooks:
+      afterOneFileWrite:
+        - prettier --write

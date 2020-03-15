@@ -25,17 +25,16 @@ export const dataSources = () => ({
   workspaceAPI: new workspaceModule.dataSources.WorkspaceAPI(),
 })
 
-const root = /* GraphQL */ `
-  type Query {
-    root: String
-  }
-  type Mutation {
-    root: String
-  }
-`
-
 export const typeDefs = [
-  root,
+  // ! do not tag or codegen will take only this part
+  `
+    type Query {
+      root: String
+    }
+    type Mutation {
+      root: String
+    }
+  `,
   clientModule.typeDefs,
   projectUserModule.typeDefs,
   projectModule.typeDefs,

@@ -33,7 +33,7 @@ const serverConfig: Config = {
     ],
   },
   introspection: true,
-  debug: true,
+  debug: process.env.NODE_END === 'development',
 }
 
 const server = new ApolloServer(serverConfig)
