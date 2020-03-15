@@ -13,7 +13,7 @@
     "dev": "tsc-watch -b ./tsconfig.json --onSuccess \"node ./build/main.js\"",
     "build": "tsc -b",
     "now-build": "yarn gen:doc",
-    "gen:doc": "graphdoc --force --schema-file src/generated/schema.json -o ./docs -f",
+    "gen:doc": "graphdoc --force --schema-file src/generated/schema.json -o ./public/docs -f",
     "gen:gql": "graphql-codegen --config codegen.yml",
     "gen": "yarn gen:gql && yarn gen:doc",
     "format": "prettier --write \"src/**/*.ts\"",

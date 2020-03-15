@@ -7,7 +7,7 @@
 # production
 /build
 /dist
-/docs
+/public/docs
 
 # misc
 .DS_Store

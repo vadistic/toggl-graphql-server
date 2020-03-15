@@ -2,10 +2,10 @@
   "version": 2,
   "builds": [
     { "src": "src/index.ts", "use": "@now/node" },
-    { "src": "docs/**/*", "use": "@now/static" }
+    { "src": "public/docs/**/*", "use": "@now/static" }
   ],
   "routes": [
-    { "src": "/docs/(.*)", "dest": "/docs/$1" },
+    { "src": "/docs(.*)", "dest": "/public/docs$1" },
     {
       "src": "/github",
       "status": 301,
