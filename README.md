@@ -1,6 +1,6 @@
 # toggl-graphql-server
 
-GraphQL API for toggl.com
+> Server for graphql-lisation of toggl rest api.
 
 [ENDPOINT/PLAYGROUND](https://toggl-graphql-server.vadistic.now.sh)
 
@@ -21,7 +21,6 @@ Alternatively `'Authorization': 'Basic xxx'`, where `xxx` is base64 encoded `tok
 ## Stack
 
 - typescript/ graphql/ node
-- [`graphql-modules`](https://github.com/Urigo/graphql-modules)
 - [`graphql-code-generator`](https://github.com/dotansimha/graphql-code-generator)
 - [`apollo-server`](https://github.com/apollographql/apollo-server)
 - [`apollo-datasource-rest`](https://github.com/apollographql/apollo-server/tree/master/packages/apollo-datasource-rest)
@@ -31,7 +30,7 @@ Alternatively `'Authorization': 'Basic xxx'`, where `xxx` is base64 encoded `tok
 
 - [`json-to-simple-graphql`](https://github.com/walmartlabs/json-to-simple-graphql-schema) (cool idea)
 
-## TODO
+## Not implemented
 
-- Implement reports
-- Implement premium apis (tasks etc.)
+- reports
+- premium apis - I don't have premium to test it :)
